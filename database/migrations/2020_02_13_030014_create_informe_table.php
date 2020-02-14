@@ -66,10 +66,10 @@ class CreateInformeTable extends Migration {
          */
          $table->foreign('programa_id')->references('id')->on('programa')->onDelete('cascade');
 
-         $table->foreign('modalidad_id')->references('id')->on('modalidad')->onDelete('cascade');
-         $table->foreign('prioridad_id')->references('id')->on('prioridad')->onDelete('cascade');
-         $table->foreign('linea_id')->references('id')->on('linea')->onDelete('cascade');
-         $table->foreign('fuente_financiamiento')->references('id')->on('fuente_financiamiento')->onDelete('cascade');
+         $table->foreign('modalidad_id')->references('id')->on('attribute')->onDelete('cascade');
+         $table->foreign('prioridad_id')->references('id')->on('attribute')->onDelete('cascade');
+         $table->foreign('linea_id')->references('id')->on('attribute')->onDelete('cascade');
+         $table->foreign('fuente_financiamiento')->references('id')->on('attribute')->onDelete('cascade');
 
          $table->foreign('asesor')->references('codigo')->on('docente')->onDelete('cascade');
          $table->foreign('jurado1')->references('codigo')->on('docente')->onDelete('cascade');
@@ -77,21 +77,21 @@ class CreateInformeTable extends Migration {
          $table->foreign('jurado3')->references('codigo')->on('docente')->onDelete('cascade');
          $table->foreign('jurado4')->references('codigo')->on('docente')->onDelete('cascade');
 
-         $table->foreign('naturaleza_id')->references('id')->on('naturaleza')->onDelete('cascade');
-         $table->foreign('enfoque_id')->references('id')->on('enfoque')->onDelete('cascade');
-         $table->foreign('corte_id')->references('id')->on('corte')->onDelete('cascade');
-         $table->foreign('temporalidad_id')->references('id')->on('temporalidad')->onDelete('cascade');
-         $table->foreign('diseno_id')->references('id')->on('diseno')->onDelete('cascade');
-         $table->foreign('nivel_id')->references('id')->on('nivel')->onDelete('cascade');
+         $table->foreign('naturaleza_id')->references('id')->on('attribute')->onDelete('cascade');
+         $table->foreign('enfoque_id')->references('id')->on('attribute')->onDelete('cascade');
+         $table->foreign('corte_id')->references('id')->on('attribute')->onDelete('cascade');
+         $table->foreign('temporalidad_id')->references('id')->on('attribute')->onDelete('cascade');
+         $table->foreign('diseno_id')->references('id')->on('attribute')->onDelete('cascade');
+         $table->foreign('nivel_id')->references('id')->on('attribute')->onDelete('cascade');
 
-         $table->foreign('poblacion_id')->references('id')->on('poblacion')->onDelete('cascade');
-         $table->foreign('muestra_id')->references('id')->on('muestra')->onDelete('cascade');
-         $table->foreign('unidad_analisis_id')->references('id')->on('unidad_analisis')->onDelete('cascade');
+         $table->foreign('poblacion_id')->references('id')->on('attribute')->onDelete('cascade');
+         $table->foreign('muestra_id')->references('id')->on('attribute')->onDelete('cascade');
+         $table->foreign('unidad_analisis_id')->references('id')->on('attribute')->onDelete('cascade');
 
          $table->foreign('ubigeo_id')->references('id')->on('ubigeo')->onDelete('cascade');
-         $table->foreign('area_estudio_id')->references('id')->on('area_estudio')->onDelete('cascade');
+         $table->foreign('area_estudio_id')->references('id')->on('attribute')->onDelete('cascade');
 
-         $table->foreign('producto_id')->references('id')->on('producto')->onDelete('cascade');
+         $table->foreign('producto_id')->references('id')->on('attribute')->onDelete('cascade');
       });
    }
 

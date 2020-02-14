@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Autor extends Model {
 
-   protected $primaryKey = 'id'
-   protected $fillable = ['alumno', 'docente', 'informe_id', 'condicion_id', 'genero']
+	protected $table = 'autor';
+   protected $primaryKey = 'id';
+   protected $fillable = ['alumno', 'docente', 'informe_id', 'condicion_id', 'genero'];
+	public $timestamps = False;
 
 
    public function docente(){  // DOCENTE fk

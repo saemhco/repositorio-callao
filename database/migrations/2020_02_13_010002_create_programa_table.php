@@ -13,7 +13,7 @@ class CreateProgramaTable extends Migration {
          $table->unsignedBigInteger('tipo_programa_id'); // Tipo programa fk
          $table->unsignedBigInteger('programa_id'); // Programa fk
 
-         $table->foreign('tipo_programa_id')->references('id')->on('programa_tipo')->onDelete('cascade');
+         $table->foreign('tipo_programa_id')->references('id')->on('attribute')->onDelete('cascade');
          $table->foreign('programa_id')->references('id')->on('programa')->onDelete('cascade');
       });
    }
