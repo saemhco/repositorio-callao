@@ -11,22 +11,20 @@
 |
 */
 
+Route::get('login2', function () {
+    return view('welcome');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('home2', function () {
-    return view('layouts.horizontal');
-});
-
-
-Auth::routes();
-
+//Rutas AUTH
+Route::get('login', function(){return view('auth.login');})->name('login');
+Route::post('validaracceso', 'Auth\LoginController@login')->name('validaracceso');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+//Fin Auth
 
 //Rutas de Bryan
 Route::get('buscador', 'BuscadorController@index')->name('buscador');
