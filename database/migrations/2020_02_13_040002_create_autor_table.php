@@ -18,7 +18,7 @@ class CreateAutorTable extends Migration {
          $table->foreign('alumno')->references('codigo')->on('alumno')->onDelete('cascade');
          $table->foreign('docente')->references('codigo')->on('docente')->onDelete('cascade');
          $table->foreign('informe_id')->references('id')->on('informe')->onDelete('cascade');
-         $table->foreign('condicion_id')->references('id')->on('condicion_autor')->onDelete('cascade');
+         $table->foreign('condicion_id')->references('id')->on('attribute')->onDelete('cascade');
       });
    }
 
