@@ -13,13 +13,8 @@ class UserTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'dni' => '12345678',
-                'nombres' => 'Administrador',
-                'apellidos' => 'ap',
-                'sexo'=>'1',
-                'rol' => '0',
+                'username' => 'Administrador',
                 'password' => bcrypt('12345678')
-
             ]
          ]);
     }
