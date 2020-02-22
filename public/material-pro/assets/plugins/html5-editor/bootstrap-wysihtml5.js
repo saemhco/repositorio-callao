@@ -21,9 +21,9 @@
             var size = (options && options.size) ? ' btn-'+options.size : '';
             return "<li>" +
               "<div class='btn-group'>" +
-                "<a class='btn" + size + "' data-wysihtml5-command='bold' title='CTRL+B'>" + locale.emphasis.bold + "</a>" +
-                "<a class='btn" + size + "' data-wysihtml5-command='italic' title='CTRL+I'>" + locale.emphasis.italic + "</a>" +
-                "<a class='btn" + size + "' data-wysihtml5-command='underline' title='CTRL+U'>" + locale.emphasis.underline + "</a>" +
+                "<a class='btn" + size + "' data-wysihtml5-command='bold' title='Negrita: CTRL+B'>" + locale.emphasis.bold + "</a>" +
+                "<a class='btn" + size + "' data-wysihtml5-command='italic' title='Cursiva: CTRL+I'>" + locale.emphasis.italic + "</a>" +
+                "<a class='btn" + size + "' data-wysihtml5-command='underline' title='Subrayado: CTRL+U'>" + locale.emphasis.underline + "</a>" +
               "</div>" +
             "</li>";
         },
@@ -377,8 +377,8 @@
         "emphasis": true,
         "lists": true,
         "html": false,
-        "link": true,
-        "image": true,
+        "link": false,
+        "image": false,
         events: {},
         parserRules: {
             classes: {
@@ -433,8 +433,8 @@
                 "div": 1
             }
         },
-        stylesheets: ["../assets/plugins/html5-editor/lib/css/wysiwyg-color.css"], // (path_to_project/lib/css/wysiwyg-color.css)
-        locale: "en"
+        stylesheets: ["../material-pro/assets/plugins/html5-editor/lib/css/wysiwyg-color.css"], // (path_to_project/lib/css/wysiwyg-color.css)
+        locale: "es"
     };
 
     if (typeof $.fn.wysihtml5.defaultOptionsCache === 'undefined') {
@@ -467,6 +467,49 @@
             image: {
                 insert: "Insert image",
                 cancel: "Cancel"
+            },
+            html: {
+                edit: "Edit HTML"
+            },
+            colours: {
+                black: "Black",
+                silver: "Silver",
+                gray: "Grey",
+                maroon: "Maroon",
+                red: "Red",
+                purple: "Purple",
+                green: "Green",
+                olive: "Olive",
+                navy: "Navy",
+                blue: "Blue",
+                orange: "Orange"
+            }
+        },
+    es: {
+            font_styles: {
+                normal: "Texto normal",
+                h1: "Título 1",
+                h2: "Título 2",
+                h3: "Título 3"
+            },
+            emphasis: {
+                bold: "N",
+                italic: "K",
+                underline: "S"
+            },
+            lists: {
+                unordered: "Listar",
+                ordered: "Numerar",
+                outdent: "Quitar sangria",
+                indent: "Aumentar sangria"
+            },
+            link: {
+                insert: "Insertar enlace",
+                cancel: "Cancelar"
+            },
+            image: {
+                insert: "Insertar imagen",
+                cancel: "Cancelar"
             },
             html: {
                 edit: "Edit HTML"

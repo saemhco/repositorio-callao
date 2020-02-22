@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('rol')->default('2'); //0:admin,1=reg,2=otro
             $table->rememberToken();
             $table->timestamps();
-        }
+        });
    }
 
    public function down(){

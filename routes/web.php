@@ -17,6 +17,9 @@ Route::get('login2', function () {
 
 Route::get('/', function () {
     return view('welcome');
+})->name('index');
+Route::get('inicio', function () {
+    return view('registrar_informe.index');
 });
 
 //Rutas AUTH
