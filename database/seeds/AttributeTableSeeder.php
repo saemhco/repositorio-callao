@@ -7,12 +7,34 @@ class AttributeTableSeeder extends Seeder {
 
 	public function run(){
 		$tipo_programa = [
-			'Escuela profesional', 'segunda especialidad profesional',
-			'Maestria', 'Doctorado'
+			'Pregrado', 'segunda especialidad profesional', 'Maestria', 'Doctorado'
 		];
 		$modalidad = ['con ciclo taller de tesis', 'sin ciclo taller de tesis'];
-		$prioridad = [];  // NO ESPECIFICADO
-		$linea = [];  // NO ESPECIFICADO
+		$prioridad = [  // 2019 - 2023 (MINSA)
+			'Infecciones Respiratorias y Neumonía', 'Salud Ambiental y Ocupacional',
+			'Enfermedades Metabólicas y Cardiovasculares', 'Salud Mental', 'Cáncer',
+			'Enfermedades Metaxénicas y Zoonóticas', 'Malnutrición y Anemia',
+			'Accidentes de Tránsito', 'Salud Materna, Perinatal y Neonatal',
+			'Infecciones de Transmisión Sexual y VIH-SIDA'
+		];
+		/* LINEAS DE INVESTIGACION SEGÚN ESCUELA */
+		$linea_enfermeria = [
+			'Medio Ambiente y Salud del Adulto y Adulto Mayor', 'Salud y Género',
+			'Cuidado y Educación de Enfermería en Siglo XXI', 'Calidad de Vida',
+			'Promoción y Desarrollo de la Salud del Niño y del Adolescente',
+			'Gestión del Cuidado de Enfermería'
+		];
+		$linea_fisica = [
+			'Educación Física Escolar como Materia Curricular', 'Deporte para todos',
+			'Deporte de Competición Reglada', 'Gestión y Organización'
+		];
+
+		$linea_general = [
+			'Ciencias de la Tierra y del Ambiente', 'Ciencias de la Educación',
+			'Ciencias sociales y Desarrollo Humano', 'Ingeniería y Tecnología',
+			'Ciencias de la Salud', 'Ciencias Naturales',
+		];
+		/**/
 		$fuente_financiamiento = [
 			'Autofinanciado', 'FEDU UNAC', 'Región Callao', 'Fondos concursables',
 			'Otro'
@@ -101,10 +123,10 @@ class AttributeTableSeeder extends Seeder {
 
 
 		$types = [  // Attribute types
-			$tipo_programa, $modalidad, $prioridad, $linea, $fuente_financiamiento,
-			$naturaleza, $enfoque, $corte, $temporalidad, $diseno, $nivel,
-			$poblacion, $muestra, $unidad_analisis, $area_estudio, $producto,
-			$condicion_autor
+			$tipo_programa, $modalidad, $prioridad, $fuente_financiamiento, $nivel,
+			$naturaleza, $enfoque, $corte, $temporalidad, $diseno, $area_estudio,
+			$poblacion, $muestra, $unidad_analisis, $producto, $condicion_autor,
+			$linea_fisica, $linea_enfermeria, $linea_general
 		];
 
 		// Walk all types fields
@@ -117,6 +139,5 @@ class AttributeTableSeeder extends Seeder {
 				unset($temp); // Unset variable $temp
 			}
 		}
-
 	}
 }

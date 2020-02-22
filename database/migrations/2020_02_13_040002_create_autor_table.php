@@ -8,19 +8,16 @@ class CreateAutorTable extends Migration {
 
    public function up(){
       Schema::create('autor', function(Blueprint $table){
-         $table->bigIncrements('id');
-         $table->char('alumno', 8)->nullable(); // Alumno fk
-         $table->char('docente', 8)->nullable(); // Docente fk
-         $table->unsignedBigInteger('informe_id'); // Informe fk
-         $table->unsignedBigInteger('condicion_id'); // Condicion fk
-         $table->char('genero', 1); // Male: 1, Female: 2
+         $table->unsignedBigInteger('persona_id');  // Persona fk
+         $table->unsignedBigInteger('informe_id');  // Informe fk
+         $table->unsignedBigInteger('condicion_id');  // Condicion fk
 
-         $table->foreign('alumno')->references('codigo')->on('alumno')->onDelete('cascade');
-         $table->foreign('docente')->references('codigo')->on('docente')->onDelete('cascade');
+         $table->primary('persona_id');  // Primary Key
          $table->foreign('informe_id')->references('id')->on('informe')->onDelete('cascade');
          $table->foreign('condicion_id')->references('id')->on('attribute')->onDelete('cascade');
       });
    }
+#   Tabla autor (persona_id,informe_id,condicion)
 
    public function down(){
       Schema::dropIfExists('autor');

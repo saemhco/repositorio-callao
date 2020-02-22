@@ -7,16 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Autor extends Model {
 
 	protected $table = 'autor';
-   protected $primaryKey = 'id';
-   protected $fillable = ['alumno', 'docente', 'informe_id', 'condicion_id', 'genero'];
+   protected $primaryKey = 'persona_id';
+   protected $fillable = ['informe_id', 'condicion_id'];
 	public $timestamps = False;
 
 
-   public function docente(){  // DOCENTE fk
-      return $this->belongsto(Docente::class, 'docente', 'codigo');
-   }
-   public function alumno(){  // USER fk
-      return $this->belongsto(Alumno::class, 'alumno', 'codigo');
+   public function persona(){  // PERSONA fk
+      return $this->belongsto(Persona::class, 'persona_id', 'dni');
    }
    public function informe(){  // INFORME fk
       return $this->belongsto(Informe::class, 'informe_id', 'id');

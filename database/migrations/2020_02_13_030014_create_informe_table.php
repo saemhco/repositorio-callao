@@ -71,11 +71,11 @@ class CreateInformeTable extends Migration {
          $table->foreign('linea_id')->references('id')->on('attribute')->onDelete('cascade');
          $table->foreign('fuente_financiamiento')->references('id')->on('attribute')->onDelete('cascade');
 
-         $table->foreign('asesor')->references('codigo')->on('docente')->onDelete('cascade');
-         $table->foreign('jurado1')->references('codigo')->on('docente')->onDelete('cascade');
-         $table->foreign('jurado2')->references('codigo')->on('docente')->onDelete('cascade');
-         $table->foreign('jurado3')->references('codigo')->on('docente')->onDelete('cascade');
-         $table->foreign('jurado4')->references('codigo')->on('docente')->onDelete('cascade');
+         $table->foreign('asesor')->references('dni')->on('persona')->onDelete('cascade');
+         $table->foreign('jurado1')->references('dni')->on('persona')->onDelete('cascade');
+         $table->foreign('jurado2')->references('dni')->on('persona')->onDelete('cascade');
+         $table->foreign('jurado3')->references('dni')->on('persona')->onDelete('cascade');
+         $table->foreign('jurado4')->references('dni')->on('persona')->onDelete('cascade');
 
          $table->foreign('naturaleza_id')->references('id')->on('attribute')->onDelete('cascade');
          $table->foreign('enfoque_id')->references('id')->on('attribute')->onDelete('cascade');
