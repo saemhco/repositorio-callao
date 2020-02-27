@@ -5,6 +5,7 @@
 <link href="{{asset('material-pro/assets/plugins/datatables.net-bs4/css/responsive.dataTables.min.css')}}" id="theme" rel="stylesheet">
 <link href="{{asset('material-pro/assets/plugins/wizard/steps.css')}}" rel="stylesheet" type="text/css">
 <link rel="stylesheet"href="{{asset('material-pro/assets/plugins/html5-editor/bootstrap-wysihtml5.css')}}" />
+<link href="{{asset('material-pro/assets/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
 
 @endsection
 @section('title','Registrar')
@@ -59,7 +60,7 @@
                                                             <option value="Frankfurt">DOCTORADO</option>
                                                         </select>
                                                         <span class="bar"></span>
-                                                        <label for="prog">Seleccione Programa </label>
+                                                        <label for="prog">Nivel académico </label>
                                                     </div>  
                                                 </div>
                                                 <div class="form-group col-md-12">
@@ -130,25 +131,26 @@
                                             <a href="#" class="col-12">
                                                 <i class="fa fa-plus"></i> Ir al módulo USUARIOS
                                             </a><br><br><br>
-                                                <select class="select2 form-control col-md-6">
-                                                    <option>Autores</option>
-                                                    <option value="AK">Nombres y Apellidos 1</option>
-                                                    <option value="HI">Nombres y Apellidos 2</option>
-                                                    <option value="CA">Nombres y Apellidos 3</option>
-                                                    <option value="NV">Nombres y Apellidos 4</option>
-                                                    <option value="OR">Nombres y Apellidos 5</option>
-                                                    <option value="WA">Nombres y Apellidos 6</option>
-                                                </select>
-                                                <select class="select2 form-control col-md-3">
+                                                <div class="col-md-7">
+                                                    <select class="select2 form-control"  style="width: 100%">
+                                                        <option>Autores</option>
+                                                        <option value="AK">Nombres y Apellidos 1</option>
+                                                        <option value="HI">Nombres y Apellidos 2</option>
+                                                        <option value="CA">Nombres y Apellidos 3</option>
+                                                        <option value="NV">Nombres y Apellidos 4</option>
+                                                        <option value="OR">Nombres y Apellidos 5</option>
+                                                        <option value="WA">Nombres y Apellidos 6</option>
+                                                    </select>
+                                                </div>
+                                                <select class="form-control col-md-3">
                                                     <option>Responsabilidad</option>
                                                     <option value="AK">Autor</option>
                                                     <option value="HI">Coautor</option>
                                                     <option value="CA">Estudiante</option>
                                                 </select>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <button class="btn btn-primary">Añadir</button>
                                                 </div>
-                                                
                                                 <table id="myTable2" class="table table-bordered table-striped no-wrap col-sm-12">
                                                     <thead>
                                                         <tr>
@@ -173,23 +175,27 @@
                                                         </tr>
                                                     </tbody>
                                                 </table><br><br><br><br><br>
-
-                                                <select class="select2 form-control col-md-6">
-                                                    <option>Jurados</option>
-                                                    <option value="AK">Nombres y Apellidos 1</option>
-                                                    <option value="HI">Nombres y Apellidos 2</option>
-                                                    <option value="CA">Nombres y Apellidos 3</option>
-                                                    <option value="NV">Nombres y Apellidos 4</option>
-                                                    <option value="OR">Nombres y Apellidos 5</option>
-                                                    <option value="WA">Nombres y Apellidos 6</option>
-                                                </select>
-                                                <select class="select2 form-control col-md-3">
-                                                    <option>Responsabilidad</option>
-                                                    <option value="AK">Presidente</option>
-                                                    <option value="HI">Secretario</option>
-                                                    <option value="CA">Vocal</option>
-                                                </select>
+                                                
+                                                <div class="col-md-7">
+                                                    <select class="select2 form-control"  style="width: 100%">
+                                                        <option>Jurados</option>
+                                                        <option value="AK">Nombres y Apellidos 1</option>
+                                                        <option value="HI">Nombres y Apellidos 2</option>
+                                                        <option value="CA">Nombres y Apellidos 3</option>
+                                                        <option value="NV">Nombres y Apellidos 4</option>
+                                                        <option value="OR">Nombres y Apellidos 5</option>
+                                                        <option value="WA">Nombres y Apellidos 6</option>
+                                                    </select>
+                                                </div>
                                                 <div class="col-md-3">
+                                                    <select class="select2 form-control" style="width: 100%">
+                                                        <option>Responsabilidad</option>
+                                                        <option value="AK">Presidente</option>
+                                                        <option value="HI">Secretario</option>
+                                                        <option value="CA">Vocal</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2">
                                                     <button class="btn btn-primary">Añadir</button>
                                                 </div>
                                                 <table id="myTable2" class="table table-bordered table-striped no-wrap col-sm-12">
@@ -216,16 +222,17 @@
                                                         </tr>
                                                     </tbody>
                                                 </table><br><br><br><br><br>
-
-                                                <select class="select2 form-control col-md-8">
-                                                    <option>Asesor</option>
-                                                    <option value="AK">Nombres y Apellidos 1</option>
-                                                    <option value="HI">Nombres y Apellidos 2</option>
-                                                    <option value="CA">Nombres y Apellidos 3</option>
-                                                    <option value="NV">Nombres y Apellidos 4</option>
-                                                    <option value="OR">Nombres y Apellidos 5</option>
-                                                    <option value="WA">Nombres y Apellidos 6</option>
-                                                </select>
+                                                <div class="col-md-8">
+                                                    <select class="select2 form-control"  style="width: 100%">
+                                                        <option>Asesor</option>
+                                                        <option value="AK">Nombres y Apellidos 1</option>
+                                                        <option value="HI">Nombres y Apellidos 2</option>
+                                                        <option value="CA">Nombres y Apellidos 3</option>
+                                                        <option value="NV">Nombres y Apellidos 4</option>
+                                                        <option value="OR">Nombres y Apellidos 5</option>
+                                                        <option value="WA">Nombres y Apellidos 6</option>
+                                                    </select>
+                                                </div>
                                                 <div class="col-md-4">
                                                     <button class="btn btn-primary">Añadir</button>
                                                 </div>
@@ -252,103 +259,246 @@
                                     <h6>Financiamiento y población</h6>
                                     <section>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="int1">Interview For :</label>
-                                                    <input type="text" class="form-control" id="int1"> </div>
-                                                <div class="form-group">
-                                                    <label for="intType1">Interview Type :</label>
-                                                    <select class="custom-select form-control" id="intType1" data-placeholder="Type to search cities" name="intType1">
-                                                        <option value="Banquet">Normal</option>
-                                                        <option value="Fund Raiser">Difficult</option>
-                                                        <option value="Dinner Party">Hard</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="Location1">Location :</label>
-                                                    <select class="custom-select form-control" id="Location1" name="location">
-                                                        <option value="">Select City</option>
-                                                        <option value="India">India</option>
-                                                        <option value="USA">USA</option>
-                                                        <option value="Dubai">Dubai</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="jobTitle2">Interview Date :</label>
-                                                    <input type="date" class="form-control" id="jobTitle2">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Requirements :</label>
-                                                    <div class="mb-2">
-                                                        <label class="custom-control custom-radio">
-                                                            <input id="radio5" name="radio" type="radio" class="custom-control-input">
-                                                            <span class="custom-control-label">Employee</span>
-                                                        </label>
-                                                        <label class="custom-control custom-radio">
-                                                            <input id="radio6" name="radio" type="radio" class="custom-control-input">
-                                                            <span class="custom-control-label">Membership</span>
-                                                        </label>
+                                            <div class="col-md-6 floating-labels mt-4">
+                                                <div class="row">
+                                                    <div class="form-group col-md-12">
+                                                        <select class="custom-select form-control" id="departamento" name="location">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">Departamento 1</option>
+                                                            <option value="Berlin">Departamento 2</option>
+                                                            <option value="Frankfurt">Departamento 3</option>
+                                                            <option value="Frankfurt">Departamento 4</option>
+                                                            <option value="Frankfurt">Departamento 5</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="departamento">Departamento </label>
                                                     </div>
+                                                    <div class="form-group col-md-12">
+                                                        <select class="custom-select form-control" id="Provincia" name="location">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">Provincia 1</option>
+                                                            <option value="Berlin">Provincia 2</option>
+                                                            <option value="Frankfurt">Provincia 3</option>
+                                                            <option value="Frankfurt">Provincia 4</option>
+                                                            <option value="Frankfurt">Provincia 5</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="Provincia">Provincia </label>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <select class="custom-select form-control" id="Distrito" name="location">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">Distrito 1</option>
+                                                            <option value="Berlin">Distrito 2</option>
+                                                            <option value="Frankfurt">Distrito 3</option>
+                                                            <option value="Frankfurt">Distrito 4</option>
+                                                            <option value="Frankfurt">Distrito 5</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="Distrito">Distrito </label>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <select class="custom-select form-control" id="fac" name="location">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">200 a más</option>
+                                                            <option value="Berlin">100 a 199</option>
+                                                            <option value="Frankfurt">60 a 99</option>
+                                                            <option value="Frankfurt">30 a 59</option>
+                                                            <option value="Frankfurt">menos de 30</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="fac">Población </label>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <select class="custom-select form-control" id="prog" name="location">
+                                                            <option value=""></option>
+                                                            <option value="">Trabajo con toda la población</option>
+                                                            <option value="Amsterdam">200 a más</option>
+                                                            <option value="Berlin">100 a 199</option>
+                                                            <option value="Frankfurt">60 a 99</option>
+                                                            <option value="Frankfurt">30 a 59</option>
+                                                            <option value="Frankfurt">menos de 30</option>
+                                                            <option value="Frankfurt">No aplica (menos de 30)</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="prog">Muestra </label>
+                                                    </div>  
+                                                </div><br>
+                                            </div>
+                                            <div class="col-md-6 floating-labels mt-4">
+                                                <div class="form-group col-md-12">
+                                                    <input type="text" class="form-control" rows="2" id="titulo"></input>
+                                                    <span class="bar"></span>
+                                                    <label for="titulo">Presupuesto </label>
                                                 </div>
+                                                <div class="row">
+                                                      <div class="form-group col-md-12">
+                                                        <select class="custom-select form-control" id="fac" name="location">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">200 a más</option>
+                                                            <option value="Berlin">100 a 199</option>
+                                                            <option value="Frankfurt">60 a 99</option>
+                                                            <option value="Frankfurt">30 a 59</option>
+                                                            <option value="Frankfurt">menos de 30</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="fac">Fuente de financiamiento </label>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <input type="text" class="form-control" rows="2" id="otra_fuente"></input>
+                                                        <span class="bar"></span>
+                                                        <label for="otra_fuente">Otra fuente de financiamiento </label>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <select class="custom-select form-control" id="prod" name="location">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">Tesis de pregrado</option>
+                                                            <option value="Berlin">Tesis de postgrado</option>
+                                                            <option value="Frankfurt">Artículo</option>
+                                                            <option value="Frankfurt">Patente</option>
+                                                            <option value="Frankfurt">Otro</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="prod">Producto</label>
+                                                    </div> 
+                                                     <div class="form-group col-md-6">
+                                                        <input type="text" id="otro" class="form-control">
+                                                        <span class="bar"></span>
+                                                        <label for="otro">Otro producto</label>
+                                                    </div>
+                                                </div><br>
                                             </div>
                                         </div>
+                                        
                                     </section>
                                     <!-- Step 4 -->
                                     <h6>Otros</h6>
                                     <section>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="behName1">Behaviour :</label>
-                                                    <input type="text" class="form-control" id="behName1">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="participants1">Confidance</label>
-                                                    <input type="text" class="form-control" id="participants1">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="participants1">Result</label>
-                                                    <select class="custom-select form-control" id="participants1" name="location">
-                                                        <option value="">Select Result</option>
-                                                        <option value="Selected">Selected</option>
-                                                        <option value="Rejected">Rejected</option>
-                                                        <option value="Call Second-time">Call Second-time</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="decisions1">Comments</label>
-                                                    <textarea name="decisions" id="decisions1" rows="4" class="form-control"></textarea>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Rate Interviwer :</label>
-                                                    <div class="c-inputs-stacked">
-                                                        <label class="inline custom-control custom-checkbox block">
-                                                            <input type="checkbox" class="custom-control-input">
-                                                            <span class="custom-control-label ml-0">1 star</span>
-                                                        </label>
-                                                        <label class="inline custom-control custom-checkbox block">
-                                                            <input type="checkbox" class="custom-control-input">
-                                                            <span class="custom-control-label ml-0">2 star</span>
-                                                        </label>
-                                                        <label class="inline custom-control custom-checkbox block">
-                                                            <input type="checkbox" class="custom-control-input">
-                                                            <span class="custom-control-label ml-0">3 star</span>
-                                                        </label>
-                                                        <label class="inline custom-control custom-checkbox block">
-                                                            <input type="checkbox" class="custom-control-input">
-                                                            <span class="custom-control-label ml-0">4 star</span>
-                                                        </label>
-                                                        <label class="inline custom-control custom-checkbox block">
-                                                            <input type="checkbox" class="custom-control-input">
-                                                            <span class="custom-control-label ml-0">5 star</span>
-                                                        </label>
+                                            <div class="col-md-12 floating-labels mt-4">
+                                                <div class="row">
+                                                    <div class="form-group col-md-4">
+                                                        <select class="custom-select form-control" id="naturaleza" name="location">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">Distrito 1</option>
+                                                            <option value="Berlin">Básica</option>
+                                                            <option value="Frankfurt">Aplicada</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="naturaleza">Naturaleza </label>
                                                     </div>
+                                                    <div class="form-group col-md-4">
+                                                        <select class="custom-select form-control" id="enfoque" name="">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">Cuantitativo</option>
+                                                            <option value="Berlin">Cualitativo</option>
+                                                            <option value="Frankfurt">Mixto</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="enfoque">Enfoque</label>
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <select class="custom-select form-control" id="corte" name="">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">Transversal</option>
+                                                            <option value="Frankfurt">Longitudinal</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="corte">Corte</label>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <select class="custom-select form-control" id="diseño" name="">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">No experimental</option>
+                                                            <option value="Frankfurt">Experimental puro</option>
+                                                            <option value="Frankfurt">Pre experimwntal</option>
+                                                            <option value="Frankfurt">Cuasi experimental</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="diseño">Diseño</label>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <select class="custom-select form-control" id="diseño" name="">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">Aplicativo</option>
+                                                            <option value="Frankfurt">Predictivo</option>
+                                                            <option value="Frankfurt">Explicativo</option>
+                                                            <option value="Frankfurt">Relacional</option>
+                                                            <option value="Frankfurt">Comparativo</option>
+                                                            <option value="Frankfurt">Descriptivo</option>
+                                                            <option value="Frankfurt">Ocupacional</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="diseño">Nivel</label>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <select class="custom-select form-control" id="area" name="">
+                                                            <option value=""></option>
+                                                            <option value="Amsterdam">Hospital MINSA</option>
+                                                            <option value="Frankfurt">Hospital ESSALUD</option>
+                                                            <option value="Frankfurt">Clinicas</option>
+                                                            <option value="Frankfurt">Policlínicos - EPS</option>
+                                                            <option value="Frankfurt">Instituciones educativas</option>
+                                                            <option value="Frankfurt">Universidades</option>
+                                                            <option value="Frankfurt">Estableciminetos de salud</option>
+                                                            <option value="Frankfurt">Empresas</option>
+                                                            <option value="Frankfurt">Comunidad</option>
+                                                            <option value="Frankfurt">Otros</option>
+                                                        </select>
+                                                        <span class="bar"></span>
+                                                        <label for="area">Área de estudio</label>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <input type="text" id="area_otros" class="form-control" name="">
+                                                        <span class="bar"></span>
+                                                        <label for="area_otro">Otra área de estudio</label>
+                                                    </div>                                                     
                                                 </div>
                                             </div>
+                                            <div class="col-md-12 floating-labels mt-12">
+                                                <h3>Unidad de análisis</h3>
+                                                <div class="row">
+                                                    <div class="form-group col-md-12 demo-checkbox">
+                                                        <input type="checkbox" id="check_1" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_1">Registros (Documentos)</label>
+                                                        <input type="checkbox" id="check_2" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_2">Pacientes</label>
+                                                        <input type="checkbox" id="check_3" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_3">Familiares de pacientes</label>
+                                                        <input type="checkbox" id="check_4" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_4">Familias</label>
+                                                        <input type="checkbox" id="check_5" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_5">Personal de salud</label>
+                                                        <input type="checkbox" id="check_6" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_6">Docentes universitarios</label>
+                                                        <input type="checkbox" id="check_7" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_7">Docentes institutos</label>
+                                                        <input type="checkbox" id="check_8" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_8">docentes académicos</label>
+                                                        <input type="checkbox" id="check_9" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_9">Docentes EBR</label>
+                                                        <input type="checkbox" id="check_10" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_10">Estudiantes universitarios</label>
+                                                        <input type="checkbox" id="check_11" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_11">Estudiantes institutos</label>
+                                                        <input type="checkbox" id="check_12" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_12">Estudiantes academias</label>
+                                                        <input type="checkbox" id="check_13" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_13">Estudiantes EBR secundaria</label>
+                                                        <input type="checkbox" id="check_14" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_14">Estudiantes EBR primaria</label>
+                                                        <input type="checkbox" id="check_15" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_15">Estudiantes EBR inicial</label>
+                                                        <input type="checkbox" id="check_16" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_16">Madres</label>
+                                                        <input type="checkbox" id="check_17" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_17">Niños (no escolares)</label>
+                                                        <input type="checkbox" id="check_18" class="filled-in chk-col-light-blue" checked="">
+                                                        <label for="check_18">Otros</label>
+                                                    </div>                                             
+                                                </div><br>
+                                            </div>
+
                                         </div>
                                     </section>
                                 </form>
@@ -468,14 +618,14 @@
     </div>
 </div>
 
- {{-- <div class="card">
+ <div class="card">
     <div class="card-body">
         <h4 class="card-title">Data Table</h4>
         <h6 class="card-subtitle">Data table example</h6>
         <div class="table-responsive mt-4"><label>s34</label>
         </div>
     </div>
-</div> --}}
+</div>
 @endsection
 @section('js')
 <!-- This is data table -->
@@ -497,10 +647,16 @@
     <!-- wysuhtml5 Plugin JavaScript -->
     <script src="{{asset('material-pro/assets/plugins/html5-editor/wysihtml5-0.3.0.js')}}"></script>
     <script src="{{asset('material-pro/assets/plugins/html5-editor/bootstrap-wysihtml5.js')}}"></script>
+    {{-- Select2 --}}
+    <script src="{{asset('material-pro/assets/plugins/select2/dist/js/select2.full.min.js')}}"></script>
+    <script src="{{asset('material-pro/assets/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
+
     <script>
     $(document).ready(function() {
         $('#textarea_editor1').wysihtml5();
         $('#textarea_editor2').wysihtml5();
+        // For select 2
+        $(".select2").select2();
 
     });
     </script>

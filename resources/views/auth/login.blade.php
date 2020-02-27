@@ -45,8 +45,8 @@
                         <h3 class="p-2 rounded-title mb-3">Iniciar Sesión</h3>
                         <div class="form-group ">
                             <div class="col-xs-12">
-                                <input id="dni" type="text" class="form-control @error('dni') is-invalid @enderror" name="dni" value="{{ old('dni') }}" required autocomplete="username" placeholder="Usuario" autofocus>
-                                @error('dni')
+                                <input id="dni" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="Usuario" autofocus>
+                                @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

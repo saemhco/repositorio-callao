@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateUsersTable extends Migration {
    public function up(){
       Schema::create('users', function(Blueprint $table){
-         $table->bigIncrements('id');
+         $table->increments('id');
          $table->string('username');
          $table->string('password');
          $table->string('email')->nullable();
