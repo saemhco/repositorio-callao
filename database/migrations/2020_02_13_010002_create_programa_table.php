@@ -10,8 +10,8 @@ class CreateProgramaTable extends Migration {
       Schema::create('programa', function(Blueprint $table){
          $table->bigIncrements('id');
          $table->char('descripcion', 255);
-         $table->unsignedBigInteger('tipo_programa_id'); // Tipo programa fk
-         $table->unsignedBigInteger('programa_id'); // Programa fk
+         $table->unsignedBigInteger('tipo_programa_id')->nullable(); // Tipo programa fk
+         $table->unsignedBigInteger('programa_id')->nullable(); // Programa fk
 
          $table->foreign('tipo_programa_id')->references('id')->on('attribute')->onDelete('cascade');
          $table->foreign('programa_id')->references('id')->on('programa')->onDelete('cascade');
