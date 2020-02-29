@@ -10,19 +10,41 @@ class ReportController extends Controller {
 
    public function __construct(){
       $this->middleware('auth');
-      $this->middleware('admin');
+      $this->DB_TO_SELECT = [
+         'informe.titulo'
+      ];
+   }
+   public function index(){  // SEARCH - RESULT view
+      $asd = 1;
+      return view('buscador.buscador', compact('asd'));
    }
 
-   private function saveInforme($data){
-      return False;
+   private function saveInforme($data){  // SAVE REPORT
+      return var_dump(false);
    }
 
-   private function BasicSearch($keyword){  // $keyword = 'something to search for'
-      return False;
-   }
+   public function BasicSearch(Request $r){
+      $params = $r->data;  // Get data from request
 
-   private function IntermediateSearch($params){
-      /* $params = [
+      // $keyword = 'something to search for'
+      $to_select = $this->DB_TO_SELECT;
+      // Query
+      $reg = DB::table('informe')->select($to_select);
+      $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
+
+      $reg = $reg->get();
+      return var_dump($reg);
+      /* If we woudl like to search the keyword in more than one field we should use
+      $query->orWhere('table.field_1', 'like', '%'.$keyword.'%')
+         ->orWhere('table.field_2', 'like', '%'.$keyword.'%')
+      */
+   }
+   public function IntermediateSearch(Request $r){
+      $params = $r->data;  // Get data from request
+
+      /*
+      $params = [
+         'keyword' => 'something to search for',
          'exposition' => [
             'from_date' => '',
             'to_date' => ''
@@ -35,7 +57,14 @@ class ReportController extends Controller {
             'school' => '',
             'type' => ''
          ]
-      ] */
+      ]; */
+      $to_select = $this->BD_TO_SELECT;
+
+      // Query
+      $reg = DB::table('informe')->select($to_select);
+
+      # PALABRA CLAVE
+      $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
       # PRESENTACION
       if(key_exists('exposition', $params) && count($params['exposition'])!=0){
          $temp = $params['exposition'];
@@ -67,6 +96,10 @@ class ReportController extends Controller {
       # PROGRAMA
       if(key_exists('program', $params) && count($params['program'])!=0){
          $temp = $params['program'];
+         # TIPO
+         if(key_exists('type', $temp)){
+            $reg->where('informe.tipo_programa_id', $temp['type']);
+         }
          # ESCUELA
          if(key_exists('school', $temp)){  // If school is specified
             $reg->where('informe.programa_id', $temp['school']);
@@ -75,13 +108,17 @@ class ReportController extends Controller {
             $reg->where('informe.programa_id', $temp['faculty']);
          }
       }
+      $reg = $reg->get(); // Get data
+
       return var_dump($reg);
    }
+   public function AdvancedSearch(Request $r){
+      $params = $r->data;  // Get data from request
 
-   private function AdvancedSearch($params){
       /* Values are Attribute's id
       $params = [
-         'product' => ''
+         'keyword' => 'something to search for',
+         'product' => '',
          'exposition' => [
             'from_date' => '',
             'to_date' => ''
@@ -89,7 +126,7 @@ class ReportController extends Controller {
          'budget' => [
             'min' => '',
             'max' => '',
-            'financed' => ''
+            'financed' => ''  // OTHER
          ],
          'author' => [
             'dni' => '',
@@ -98,9 +135,8 @@ class ReportController extends Controller {
          'program' => [
             'faculty' => '',
             'school' => '',
-            'type' => '',
-            'program' => ''  // ¿###?
-         ]
+            'type' => ''
+         ],
          'research' => [
             'line' => '',
             'nature' => '',
@@ -109,21 +145,21 @@ class ReportController extends Controller {
             'temporality' => '',
             'design' => '',
             'level' => '',
-            'population' => '',
-            'sample' => ''
-         ]
-         'analysis_unity' => ['']
-         'place' => ''
-         'area' => ''
-      ] */
-      $to_select = [
-         'persona.nombre'
-      ];
+            'population' => '',  // OTHER
+            'sample' => '',  // OTHER
+         ],
+         'analysis_unity' => ['', ''],  // OTHER
+         'place' => '',
+         'area' => ''  // OTHER
+      ]; */
+      $to_select = $this->DB_TO_SELECT;
 
       // Query
-      $reg = DB::table($_table)->select($to_select);
+      $reg = DB::table('informe')->select($to_select);
 
       /*** SPECIFIC FILTERS ***/
+      # PALABRA CLAVE
+      $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
       # PRODUCTO
       if(key_exists('product', $params)){
          $reg->where('informe.producto_id', $params['product']);
@@ -134,13 +170,22 @@ class ReportController extends Controller {
       }
       # AREA
       if(key_exists('area', $params)){
-         $reg->where('informe.area_estudio_id', $params['area']);
+         if( is_numeric($params['area']) ){  # LLAVE FORANEA
+            $reg->where('informe.area_estudio_id', $params['area']);
+         }else{  # OTRO
+            $reg->whereNull('informe.area_estudio_id');
+            $reg->where('informe.area_estudio_otro', 'like', '%'.$params['area'].'%');
+         }
       }
 
       /*** ARRAY FILTERS ***/
       # PROGRAMA
       if(key_exists('program', $params) && count($params['program'])!=0){
          $temp = $params['program'];
+         # TIPO
+         if(key_exists('type', $temp)){
+            $reg->where('informe.tipo_programa_id', $temp['type']);
+         }
          # ESCUELA
          if(key_exists('school', $temp)){  // If school is specified
             $reg->where('informe.programa_id', $temp['school']);
@@ -182,16 +227,31 @@ class ReportController extends Controller {
          }
          # POBLACIÓN
          if(key_exists('population', $temp)){
-            $reg->where('informe.poblacion_id', $temp['population']);
+            if( is_numeric($temp['population']) ){  # LLAVE FORANEA
+               $reg->where('informe.poblacion_id', $temp['population']);
+            }else{  # OTRO
+               $reg->whereNull('informe.poblacion_id');
+               $reg->where('informe.poblacion_otro', 'like', '%'.$temp['population'].'%');
+            }
          }
          # MUESTRA
          if(key_exists('sample', $temp)){
-            $reg->where('informe.muestra_id', $temp['sample']);
+            if( is_numeric($temp['sample']) ){  # LLAVE FORANEA
+               $reg->where('informe.muestra_id', $temp['sample']);
+            }else{  # OTRO
+               $reg->whereNull('informe.muestra_id');
+               $reg->where('informe.muestra_otro', 'like', '%'.$temp['sample'].'%');
+            }
          }
       }
       # UNIDAD DE ANALISIS
       if(key_exists('analysis_unity', $params) && count($params['analysis_unity'])!=0){
-         $reg->whereIn('informe.analysis_unity', $params['analysis_unity']);
+         if( is_array($params['analysis_unity']) ){  # LLAVES FORANEAS
+            $reg->whereIn('informe.unidad_analisis_id', $params['analysis_unity']);
+         }else{  # OTRO
+            $reg->whereNull('informe.unidad_analisis_id');
+            $reg->where('informe.unidad_analisis_otro', 'like', '%'.$params['analysis_unity'].'%');
+         }
       }
       /*** SPECIAL CASES ***/
       # PRESENTACION
@@ -219,7 +279,12 @@ class ReportController extends Controller {
          }
          # FINANCIADO POR
          if(key_exists('financed', $temp)){
-            $reg->where('informe.fuente_financiamiento_id', '<=', $temp['financed']);
+            if( is_numeric($temp['financed']) ){  # LLAVE FORANEA
+               $reg->where('informe.fuente_financiamiento_id', $temp['financed']);
+            }else{  # OTRO
+               $reg->whereNull('informe.fuente_financiamiento_id');
+               $reg->where('informe.fuente_financiamiento_otro', 'like', '%'.$temp['financed'].'%');
+            }
          }
       }
       # AUTOR

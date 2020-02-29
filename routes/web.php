@@ -10,9 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('bryan.buscador');
-})->name('index');
+Route::get('/', 'ReportController@index')->name('index');
 
 
 Route::get('inicio', function () {
@@ -25,7 +23,7 @@ Route::post('validaracceso', 'Auth\LoginController@login')->name('validaracceso'
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/home', 'HomeController@index')->name('home');
 //Fin Auth
-
-//Rutas de Bryan
-Route::get('buscador', 'BuscadorController@index')->name('buscador');
-//
+// Rutas Report
+Route::post('/report/basic', 'ReportController@BasicSearch')->name('search.basic');
+Route::post('/report/intermediate', 'ReportController@IntermediateSearch')->name('search.intermediate');
+Route::post('/report/advanced', 'ReportController@AdvancedSearch')->name('search.advanced');
