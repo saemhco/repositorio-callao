@@ -15,19 +15,20 @@ class ReportController extends Controller {
       ];
    }
    public function index(){  // SEARCH - RESULT view
-      $asd = 1;
-      return view('buscador.buscador', compact('asd'));
+      $attr = $this->getAttributes();
+      return view('buscador.buscador', compact('attr'));
    }
 
    private function saveInforme($data){  // SAVE REPORT
       return var_dump(false);
    }
-
    public function BasicSearch(Request $r){
       $params = $r->data;  // Get data from request
 
-      // $keyword = 'something to search for'
-      $to_select = $this->DB_TO_SELECT;
+      # PALABRA CLAVE
+      if(key_exists('keyword', $params)){
+         $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
+      }
       // Query
       $reg = DB::table('informe')->select($to_select);
       $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
@@ -58,13 +59,15 @@ class ReportController extends Controller {
             'type' => ''
          ]
       ]; */
-      $to_select = $this->BD_TO_SELECT;
+      $to_select = $this->DB_TO_SELECT;
 
       // Query
       $reg = DB::table('informe')->select($to_select);
 
       # PALABRA CLAVE
-      $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
+      if(key_exists('keyword', $params)){
+         $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
+      }
       # PRESENTACION
       if(key_exists('exposition', $params) && count($params['exposition'])!=0){
          $temp = $params['exposition'];
@@ -159,7 +162,10 @@ class ReportController extends Controller {
 
       /*** SPECIFIC FILTERS ***/
       # PALABRA CLAVE
-      $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
+      # PALABRA CLAVE
+      if(key_exists('keyword', $params)){
+         $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
+      }
       # PRODUCTO
       if(key_exists('product', $params)){
          $reg->where('informe.producto_id', $params['product']);
@@ -306,5 +312,35 @@ class ReportController extends Controller {
       $reg = $reg->get(); // Get data
 
       return var_dump($reg);
+   }
+   private function getAttributes(){
+      $attr = [  // Attribute types
+			'tipo_programa' => [],  // 1
+         'modalidad' => [],  // 2
+         'prioridad' => [],  // 3
+         'fuente_financiamiento' => [],  // 4
+         'nivel' => [],  // 5
+         'naturaleza' => [],  // 6
+         'enfoque' => [],  // 7
+         'corte' => [],  // 8
+         'temporalidad' => [],  // 9
+         'diseno' => [],  // 10
+         'area_estudio' => [],  // 11
+         'poblacion' => [],  // 12
+         'muestra' => [],  // 13
+         'unidad_analisis' => [],  // 14
+         'producto' => [],  // 15
+         'condicion_autor' => [],  // 16
+         'linea_fisica' => [],  // 17
+         'linea_enfermeria' => [],  // 18
+         'linea_general' => []  // 19
+		];
+      $_i = 1;
+      foreach($attr as $k=>$at) {
+         $temp = DB::table('attribute')->where('type', $_i)->get();
+         $attr[$k] = $temp;
+         $_i++;
+      }
+      return $attr;
    }
 }
