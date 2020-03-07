@@ -16,6 +16,10 @@ Route::get('/', 'ReportController@index')->name('index');
 Route::get('inicio', function () {
     return view('registrar_informe.index');
 });
+//Informe
+Route::group(['prefix' => 'informe'], function () {
+    Route::get('/', 'InformeController@index')->name('informe.index');
+});
 
 //Rutas AUTH
 Route::get('login', function(){return view('auth.login');})->name('login');

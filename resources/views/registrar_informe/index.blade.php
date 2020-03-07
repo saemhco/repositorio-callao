@@ -6,7 +6,6 @@
 <link href="{{asset('material-pro/assets/plugins/wizard/steps.css')}}" rel="stylesheet" type="text/css">
 <link rel="stylesheet"href="{{asset('material-pro/assets/plugins/html5-editor/bootstrap-wysihtml5.css')}}" />
 <link href="{{asset('material-pro/assets/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
-
 @endsection
 @section('title','Registrar')
 @section('routes')
@@ -42,36 +41,20 @@
                                                 </div><br>
                                                 <div class="row">
                                                       <div class="form-group col-md-6">
-                                                        <select class="custom-select form-control" id="fac" name="location">
-                                                            <option value=""></option>
-                                                            <option value="Amsterdam">India</option>
-                                                            <option value="Berlin">USA</option>
-                                                            <option value="Frankfurt">Dubai</option>
-                                                        </select>
+                                                        {!!Form::select('facultad',$facultades,null,['id'=>'fac','class'=>'custom-select form-control', 'placeholder'=>''])!!}
                                                         <span class="bar"></span>
                                                         <label for="fac">Seleccione Facultad </label>
-                                                    </div>
+                                                      </div>
                                                     <div class="form-group col-md-6">
-                                                        <select class="custom-select form-control" id="prog" name="location">
-                                                            <option value=""></option>
-                                                            <option value="">(PREGRADO) ESCUELA PROFESIONAL</option>
-                                                            <option value="Amsterdam">SEGUNDA ESPECIALIDAD PROFESIONAL</option>
-                                                            <option value="Berlin">MAESTRÍA</option>
-                                                            <option value="Frankfurt">DOCTORADO</option>
-                                                        </select>
+                                                        {!!Form::select('n_acad',$niveles_academicos,1,['id'=>'n_acad','class'=>'custom-select form-control','placeholder'=>''])!!}
                                                         <span class="bar"></span>
                                                         <label for="prog">Nivel académico </label>
                                                     </div>  
                                                 </div>
                                                 <div class="form-group col-md-12">
-                                                    <select class="custom-select form-control" id="prog_d" name="location">
-                                                        <option value=""></option>
-                                                        <option value="Amsterdam">SEGUNDA ESPECIALIDAD PROFESIONAL</option>
-                                                        <option value="Berlin">MAESTRÍA</option>
-                                                        <option value="Frankfurt">DOCTORADO</option>
-                                                    </select>
+                                                    {!!Form::select('n_acad',$niveles_academicos,2,['id'=>'n_acad','class'=>'custom-select form-control','placeholder'=>''])!!}
                                                     <span class="bar"></span>
-                                                        <label for="prog_d">Descripción del programa</label>
+                                                        <label for="n_acad">Descripción del programa</label>
                                                 </div><br>
                                                 <div class="row">
                                                     <div class="form-group col-md-6 col-sm-12">
@@ -80,30 +63,17 @@
                                                         <label for="fecha">Fecha de sustentación</label>
                                                     </div>
                                                      <div class="form-group col-md-6 col-sm-12">
-                                                        <select class="custom-select form-control" id="mod" name="location">
-                                                            <option value=""></option>
-                                                            <option value="Amsterdam">Con ciclo de TESIS</option>
-                                                            <option value="Berlin">Sin ciclo de TESIS</option>
-                                                        </select>
+                                                        {!!Form::select('mod',$modalidades,null,['id'=>'mod','class'=>'custom-select form-control','placeholder'=>''])!!}
                                                         <span class="bar"></span>
                                                         <label for="mod">Seleccione Modalidad </label>
                                                     </div>
                                                     <div class="form-group col-md-6 col-sm-12">
-                                                        <select class="custom-select form-control" id="linea">
-                                                            <option value=""></option>
-                                                            <option value="Amsterdam">Línea N°1</option>
-                                                            <option value="Berlin">Línea N°2</option>
-                                                            <option value="Frankfurt">Línea N°3</option>
-                                                        </select>
+                                                        {!!Form::select('mod',$linea_enfermeria,null,['id'=>'linea','class'=>'custom-select form-control','placeholder'=>''])!!}
                                                         <span class="bar"></span>
                                                         <label for="linea">Linea de investigación UNAC</label>
                                                     </div>
                                                     <div class="form-group col-md-6 col-sm-12">
-                                                        <select class="custom-select form-control" id="prioridad">
-                                                            <option value=""></option>
-                                                            <option value="Berlin">Prioridad N Salud 2</option>
-                                                            <option value="Frankfurt">Prioridad N Salud 3</option>
-                                                        </select>
+                                                        {!!Form::select('mod',$prioridad,null,['id'=>'prioridad','class'=>'custom-select form-control','placeholder'=>''])!!}
                                                         <span class="bar"></span>
                                                         <label for="prioridad">Prioridad nacional de salud</label>
                                                     </div>

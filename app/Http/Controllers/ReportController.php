@@ -9,7 +9,7 @@ use DB;
 class ReportController extends Controller {
 
    public function __construct(){
-      $this->middleware('auth');
+      $this->middleware('auth')->except('index');
       $this->DB_TO_SELECT = [
          'informe.titulo'
       ];

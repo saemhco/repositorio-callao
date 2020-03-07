@@ -9,7 +9,7 @@ class DatabaseSeeder extends Seeder {
             UserTableSeeder::class,
             AttributeTableSeeder::class,
             ProgramaTableSeeder::class,
-            UbigeoTableSeeder::class
+            Ubigeo2TableSeeder::class
         ]);
     }
 }
