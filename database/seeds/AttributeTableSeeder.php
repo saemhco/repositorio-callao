@@ -7,7 +7,7 @@ class AttributeTableSeeder extends Seeder {
 
 	public function run(){
 		$tipo_programa = [
-			'Pregrado', 'segunda especialidad profesional', 'Maestria', 'Doctorado'
+			'Pregrado', 'Segunda Especialidad', 'Maestria', 'Doctorado'
 		];
 		$modalidad = ['con ciclo taller de tesis', 'sin ciclo taller de tesis'];
 		$prioridad = [  // 2019 - 2023 (MINSA)

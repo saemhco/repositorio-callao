@@ -18,8 +18,13 @@ Route::get('inicio', function () {
 });
 
 //Rutas AUTH
-Route::get('login', function(){return view('auth.login');})->name('login');
+Route::get('/login', function(){
+   // When user is already logged redirect to home
+   return Illuminate\Support\Facades\Auth::check() ? redirect('home') : view('auth.login');
+})->name('login');
 Route::post('validaracceso', 'Auth\LoginController@login')->name('validaracceso');
+Route::get('/registrar/usuario', 'UserController@index')->name('register.user');
+Route::post('registrarusuario', 'UserController@create')->name('register.user');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/home', 'HomeController@index')->name('home');
 //Fin Auth

@@ -315,25 +315,25 @@ class ReportController extends Controller {
    }
    private function getAttributes(){
       $attr = [  // Attribute types
-			'tipo_programa' => [],  // 1
-         'modalidad' => [],  // 2
-         'prioridad' => [],  // 3
-         'fuente_financiamiento' => [],  // 4
-         'nivel' => [],  // 5
-         'naturaleza' => [],  // 6
-         'enfoque' => [],  // 7
-         'corte' => [],  // 8
-         'temporalidad' => [],  // 9
-         'diseno' => [],  // 10
-         'area_estudio' => [],  // 11
-         'poblacion' => [],  // 12
-         'muestra' => [],  // 13
-         'unidad_analisis' => [],  // 14
-         'producto' => [],  // 15
-         'condicion_autor' => [],  // 16
-         'linea_fisica' => [],  // 17
-         'linea_enfermeria' => [],  // 18
-         'linea_general' => []  // 19
+			'tipo_programa' => [],
+         'modalidad' => [],
+         'prioridad' => [],
+         'fuente_financiamiento' => [],
+         'nivel' => [],
+         'naturaleza' => [],
+         'enfoque' => [],
+         'corte' => [],
+         'temporalidad' => [],
+         'diseno' => [],
+         'area_estudio' => [],
+         'poblacion' => [],
+         'muestra' => [],
+         'unidad_analisis' => [],
+         'producto' => [],
+         'condicion_autor' => [],
+         'linea_fisica' => [],
+         'linea_enfermeria' => [],
+         'linea_general' => []
 		];
       $_i = 1;
       foreach($attr as $k=>$at) {
