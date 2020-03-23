@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'ReportController@index')->name('index');
+// Reports
+Route::get('/', 'ReportController@index')->name('index');  // Search
+Route::get('/home', 'HomeController@index')->name('home');  // Insert
 
 
 Route::get('inicio', function () {
@@ -30,7 +32,6 @@ Route::post('validaracceso', 'Auth\LoginController@login')->name('validaracceso'
 Route::get('/registrar/usuario', 'UserController@index')->name('register.user');
 Route::post('registrarusuario', 'UserController@create')->name('register.user');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('/home', 'HomeController@index')->name('home');
 //Fin Auth
 // Rutas Report
 Route::post('/report/basic', 'ReportController@BasicSearch')->name('search.basic');
