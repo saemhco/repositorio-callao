@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-       return $facultades=Programa::where('tipo_programa_id',null)->pluck('descripcion','id');
+       //return $facultades=Programa::where('tipo_programa_id',null)->pluck('descripcion','id');
         //return view('registrar_informe.index',compact('facultades'));
     }
 }

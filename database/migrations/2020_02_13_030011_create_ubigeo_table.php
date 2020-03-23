@@ -12,11 +12,11 @@ class CreateUbigeoTable extends Migration {
          // $table->char('ubigeo', 8); // Ubigeo
          // $table->char('descripcion', 255); // Nombre
             $table->string('id',6);
-            $table->primary('id');
-            $table->integer('type', 2);
+            $table->char('type', 2);
             $table->string('descripcion');
             $table->string('prov_id',4)->nullable();
-            $table->string('dep_id',2)->nullable();;
+            $table->string('dep_id',2)->nullable();
+            $table->primary('id');
       });
    }
 
