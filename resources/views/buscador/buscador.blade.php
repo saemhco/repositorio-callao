@@ -36,6 +36,7 @@
       background-color: white;
    }
    .group-form{
+      min-height: 210px;
       margin-top: 15px;
       border: 2px solid gray;
       margin-right: 30px;
@@ -107,12 +108,12 @@
                   <option value="">- Facultad -</option>
                   <option value="1">One</option>
                </select>
-               <span class="col-12" style="display: inline-block;">&nbsp;</span> <!-- nothing, just a blank space -->
+               <span class="col-12" style="display: inline-block;">&nbsp;</span>
                <select name="i-program-school" class="custom-select col-11"> <!-- school -->
                   <option value="">- Escuela -</option>
                   <option value="1">One</option>
                </select>
-               <span class="col-12" style="display: inline-block;">&nbsp;</span> <!-- nothing, just a blank space -->
+               <span class="col-12" style="display: inline-block;">&nbsp;</span>
                <select name="i-program-type" class="custom-select col-11"> <!-- type -->
                   <option value="">- Programa -</option>
                   <option value="1">One</option>
@@ -159,7 +160,6 @@
                   <option value="">- Facultad -</option>
                   <option value="1">One</option>
                </select>
-               <!-- nothing, just a blank space -->
                <span class="col-12" style="display: inline-block;">&nbsp;</span>
                <select name="a-program-school" class="custom-select col-11"> <!-- school -->
                   <option value="">- Escuela -</option>
@@ -168,7 +168,7 @@
                <span class="col-12" style="display: inline-block;">&nbsp;</span>
                <select name="a-program-type" class="custom-select col-11"> <!-- type -->
                   <option value="">- Programa -</option>
-                  <option value="1">One</option>
+                  @foreach($attr['tipo_programa'] as $v) <option value="{{$v->id}}">{{$v->descripcion}}</option> @endforeach
                </select>
             </div>
          </div>
@@ -228,12 +228,12 @@
             <div class="form-group">
                @foreach($attr['unidad_analisis'] as $k=>$v)
                   @if($k%3==0)
-                     <span class="col-12" style="display: inline-block;">&nbsp;</span> <!-- nothing, just a blank space -->
+                     <span class="col-12" style="display: inline-block;">&nbsp;</span>
                   @else
-                     <span class="col-1" style="display: inline-block;">&nbsp;</span> <!-- nothing, just a blank space -->
+                     <span class="col-1" style="display: inline-block;">&nbsp;</span>
                   @endif
                   <input name="a-analysis_unity-{{$k}}" id="a-au-{{$k}}" type="checkbox" class="filled-in chk-col-grey" value="{{$v->id}}">
-                  <label for="a-au-{{$k}}" class="checkbox col-md-6" style="vertical-align: middle; text-align: left;">{{$v->descripcion}}</label>
+                  <label for="a-au-{{$k}}" class="checkbox col-md-3" style="vertical-align: middle; text-align: left;">{{$v->descripcion}}</label>
                @endforeach
             </div>
          </div>
@@ -247,7 +247,7 @@
                   <option value="{{str_pad(5,$i,'0')}}">{{str_pad(5,$i,'0')}}</option>
                   @endfor
                </select>
-               <span class="col-12" style="display: inline-block;">&nbsp;</span> <!-- nothing, just a blank space -->
+               <span class="col-12" style="display: inline-block;">&nbsp;</span>
                <select name="a-budget-max" class="custom-select col-11">
                   <option value="">Hasta</option>
                   @for($i=2; $i<=5; $i++)
@@ -255,24 +255,24 @@
                   <option value="{{str_pad(5,$i,'0')}}">{{str_pad(5,$i,'0')}}</option>
                   @endfor
                </select>
-               <span class="col-12" style="display: inline-block;">&nbsp;</span> <!-- nothing, just a blank space -->
+               <span class="col-12" style="display: inline-block;">&nbsp;</span>
                <select name="a-budget-financed" class="custom-select col-11">
                   <option value="">Financiado por</option>
-                  <option value="1">asdkj</option>
+                  @foreach($attr['fuente_financiamiento'] as $v) <option value="{{$v->id}}">{{$v->descripcion}}</option> @endforeach
                </select>
             </div>
          </div>
-         <div class="form-group col-md-3 choose"> <!-- others -->
-            <span class="form-tittle"></span>
+         <div class="form-group col-md-3 choose group-form"> <!-- lugar -->
+            <span class="form-tittle">Lugar </span>
             <div class="form-group">
                <select name="a-place" class="custom-select col-11"> <!-- place -->
                   <option value="">Lugar</option>
                   <option value="1">One</option>
                </select>
-               <span class="col-12" style="display: inline-block;">&nbsp;</span> <!-- nothing, just a blank space -->
+               <span class="col-12" style="display: inline-block;">&nbsp;</span>
                <select name="a-area" class="custom-select col-11"> <!-- area -->
                   <option value="">Area</option>
-                  <option value="1">One</option>
+                  @foreach($attr['area_estudio'] as $v) <option value="{{$v->id}}">{{$v->descripcion}}</option> @endforeach
                </select>
             </div>
          </div>
