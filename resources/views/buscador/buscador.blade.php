@@ -285,7 +285,7 @@
 {{-- Resultados --}}
 <div class="card">
    <div class="card-body">
-      //vista de los resultados
+      RESULTADOS
    </div>
 </div>
 @endsection

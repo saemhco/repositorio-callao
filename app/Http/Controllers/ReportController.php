@@ -7,7 +7,6 @@ use App\Informe;
 use DB;
 
 class ReportController extends Controller {
-
    public function __construct(){
       $this->middleware('auth');
       $this->DB_TO_SELECT = [
@@ -84,9 +83,15 @@ class ReportController extends Controller {
       if(key_exists('author', $params) && count($params['author'])!=0){
          $temp = $params['author'];
          $flag = False;
-         # DNI
+         # DNI | NOMBRE | APELLIDOS
          if(key_exists('dni', $temp)){
-            $reg->join('autor', 'autor.dni', '=', $temp['dni']);
+            $reg->join('persona', function ($join){  // Join persona table to match author data
+               $join->on('persona.dni', '=', $temp['dni'])  // First check dni
+               // Then check name and lastname
+               ->orOn('persona.nombres', 'like', '%'.$params['dni'].'%')
+               ->orOn('persona.apellidos', 'like', '%'.$params['dni'].'%');
+            });
+            $reg->join('autor', 'persona_id', '=', 'persona.dni');  // Persona has to be author
             $flag = True;  // Author table is joined
             // If this field is not specified, the next fields will add author table
          }
@@ -297,9 +302,15 @@ class ReportController extends Controller {
       if(key_exists('author', $params) && count($params['author'])!=0){
          $temp = $params['author'];
          $flag = False;
-         # DNI
+         # DNI | NOMBRE | APELLIDOS
          if(key_exists('dni', $temp)){
-            $reg->join('autor', 'autor.dni', '=', $temp['dni']);
+            $reg->join('persona', function ($join){  // Join persona table to match author data
+               $join->on('persona.dni', '=', $temp['dni'])  // First check dni
+               // Then check name and lastname
+               ->orOn('persona.nombres', 'like', '%'.$params['dni'].'%')
+               ->orOn('persona.apellidos', 'like', '%'.$params['dni'].'%');
+            });
+            $reg->join('autor', 'persona_id', '=', 'persona.dni');  // Persona has to be author
             $flag = True;  // Author table is joined
             // If this field is not specified, the next fields will add author table
          }
@@ -313,7 +324,7 @@ class ReportController extends Controller {
 
       return var_dump($reg);
    }
-   private function getAttributes(){
+   public function getAttributes(){
       $attr = [  // Attribute types
 			'tipo_programa' => [],
          'modalidad' => [],
