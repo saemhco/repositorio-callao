@@ -50,7 +50,7 @@ class CreateInformeTable extends Migration {
          $table->char('unidad_analisis_otro')->nullable();
 
          // Lugar de estudio
-         $table->unsignedBigInteger('ubigeo_id'); // Ubigeo fk
+         $table->string('ubigeo_id'); // Ubigeo fk
          $table->unsignedBigInteger('area_estudio_id')->nullable(); // AreaEstudio fk
          $table->char('area_estudio_otro')->nullable();
 

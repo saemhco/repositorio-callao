@@ -15,6 +15,14 @@ Route::get('/', 'ReportController@index')->name('index');  // Search
 Route::get('/home', 'HomeController@index')->name('home');  // Insert
 
 
+Route::get('inicio', function () {
+    return view('registrar_informe.index');
+});
+//Informe
+Route::group(['prefix' => 'informe'], function () {
+    Route::get('/', 'InformeController@index')->name('informe.index');
+});
+
 //Rutas AUTH
 Route::get('/login', function(){
    // When user is already logged redirect to home
