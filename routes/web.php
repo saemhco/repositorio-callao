@@ -21,6 +21,8 @@ Route::get('inicio', function () {
 //Informe
 Route::group(['prefix' => 'informe'], function () {
     Route::get('/', 'InformeController@index')->name('informe.index');
+    Route::get('set_programa', 'InformeController@detalle_programa')->name('informe.programa');
+    Route::get('set_jurado', 'InformeController@set_jurado')->name('informe.jurados');
 });
 
 //Rutas AUTH

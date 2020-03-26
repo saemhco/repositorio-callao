@@ -11,7 +11,7 @@ class CreateUbigeoTable extends Migration {
          // $table->bigIncrements('id');
          // $table->char('ubigeo', 8); // Ubigeo
          // $table->char('descripcion', 255); // Nombre
-            $table->string('id',6);
+            $table->char('id',6);
             $table->char('type', 2);
             $table->string('descripcion');
             $table->string('prov_id',4)->nullable();

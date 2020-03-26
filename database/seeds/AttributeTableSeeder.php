@@ -118,15 +118,30 @@ class AttributeTableSeeder extends Seeder {
 			'Investigador principal',
 			'Docente colaborador ',
 			'Personal administrativo',
-			'Estudiantes de apoyo'
+			'Estudiante de apoyo'
+		];
+		$asesor = [
+			'Asesor 1',
+			'Asesor 2',			
+		];
+		$jurado_pregrado_seg_esp = [
+			'Presidente',
+			'Secretario',
+			'Vocal'
+		];
+		$jurado_maestria_doctorado = [
+			'Presidente',
+			'Secretario',
+			'Miembro',
+			'Miembro'
 		];
 
 
 		$types = [  // Attribute types
-			$tipo_programa, $modalidad, $prioridad, $fuente_financiamiento, $nivel,
-			$naturaleza, $enfoque, $corte, $temporalidad, $diseno, $area_estudio,
-			$poblacion, $muestra, $unidad_analisis, $producto, $condicion_autor,
-			$linea_fisica, $linea_enfermeria, $linea_general
+			$tipo_programa, $modalidad, $prioridad, $fuente_financiamiento, $nivel, $naturaleza, 
+			$enfoque, $corte, $temporalidad, $diseno, $area_estudio, $poblacion, $muestra, 
+			$unidad_analisis, $producto, $linea_fisica, $linea_enfermeria, $linea_general, 
+			$condicion_autor, $asesor, $jurado_pregrado_seg_esp, $jurado_maestria_doctorado
 		];
 
 		// Walk all types fields

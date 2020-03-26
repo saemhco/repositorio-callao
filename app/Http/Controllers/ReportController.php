@@ -341,10 +341,13 @@ class ReportController extends Controller {
          'muestra' => [],
          'unidad_analisis' => [],
          'producto' => [],
-         'condicion_autor' => [],
          'linea_fisica' => [],
          'linea_enfermeria' => [],
-         'linea_general' => []
+         'linea_general' => [],
+         'condicion_autor' => [],
+         'asesor' => [], 
+         'jurado_pregrado_seg_esp'=>[], 
+         'jurado_maestria_doctorado'=>[]
 		];
       $_i = 1;
       foreach($attr as $k=>$at) {
