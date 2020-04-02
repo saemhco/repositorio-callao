@@ -122,7 +122,7 @@ class ProgramaTableSeeder extends Seeder {
 			foreach ($programas[$i] as $key => $programa){
 				$temp = new Programa;
 				$temp->descripcion = $programa['descripcion'];
-				$temp->tipo_programa_id = $programa['tipo'];
+				$temp->nivel_acad_id = $programa['tipo'];
 				$temp->programa_id = $programa['facultad'];
 				$temp->save();
 				unset($temp); // Unset variable $temp

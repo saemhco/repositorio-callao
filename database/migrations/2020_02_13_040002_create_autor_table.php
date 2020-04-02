@@ -8,11 +8,12 @@ class CreateAutorTable extends Migration {
 
    public function up(){
       Schema::create('autor', function(Blueprint $table){
-         $table->unsignedBigInteger('persona_id');  // Persona fk
+         $table->increments('id');
+         $table->char('persona_id',8);  // Persona fk
          $table->unsignedBigInteger('informe_id');  // Informe fk
          $table->unsignedBigInteger('condicion_id');  // Condicion fk
 
-         $table->primary('persona_id');  // Primary Key
+         $table->foreign('persona_id')->references('dni')->on('persona')->onDelete('cascade');
          $table->foreign('informe_id')->references('id')->on('informe')->onDelete('cascade');
          $table->foreign('condicion_id')->references('id')->on('attribute')->onDelete('cascade');
       });

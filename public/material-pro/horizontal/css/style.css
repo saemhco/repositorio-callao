@@ -10032,7 +10032,7 @@ Form Material page
   position: relative; }
 
 .floating-labels .form-control {
-  padding: 10px 10px 10px 0;
+  /*padding: 10px 10px 10px 0;*/
   display: block;
   border: none;
   font-family: "Poppins", sans-serif;

@@ -3,48 +3,37 @@ namespace App;
 
 
 use Illuminate\Database\Eloquent\Model;
+use App\Autor;
+use DB;
 
 class Informe extends Model {
 
 	protected $table = 'informe';
    protected $primaryKey = 'id';
    protected $fillable = [
-      'titulo', 'programa_id',
+      'titulo', 'programa_id','nivel_acad_id',
       // Metadatos de la investigación
       'modalidad_id', 'prioridad_id', 'linea_id', 'presupuesto', 'fuente_financiamiento_id', 'fuente_financiamiento_otro',
       // Personal relacionado
-      'asesor', 'jurado1', 'jurado2', 'jurado3', 'jurado4',
+      // 'asesor', 'jurado1', 'jurado2', 'jurado3', 'jurado4',
       // Cronograma
       'cronograma_inicio', 'cronograma_fin', 'fecha_sustentacion',
       // Datos de la investigación
       'naturaleza_id', 'enfoque_id', 'corte_id', 'temporalidad_id', 'diseno_id', 'nivel_id',
       // Muestra y población
-      'poblacion_id', 'poblacion_otro', 'muestra_id', 'muestra_otro', 'unidad_analisis_id', 'unidad_analisis_otro',
+      'poblacion_id', 'poblacion_otro', 'muestra_id', 'muestra_otro', 'unidad_analisis', 'unidad_analisis_otro',
       // Lugar de estudio
       'ubigeo_id', 'area_estudio_id', 'area_estudio_otro',
       // Relacionado al documento
-      'resumen', 'objetivo_general', 'objetivos_especificos', 'producto_id'
+      'resumen', 'objetivos', 'producto_id','url'
    ];
 	public $timestamps = False;
 
-   public function asesor(){  // ASESOR fk
-      return $this->belongsto(Persona::class, 'asesor', 'codigo');
-   }
-   public function jurado1(){  // JURADO1 fk
-      return $this->belongsto(Persona::class, 'jurado1', 'codigo');
-   }
-   public function jurado2(){  // JURADO2 fk
-      return $this->belongsto(Persona::class, 'jurado2', 'codigo');
-   }
-   public function jurado3(){  // JURADO3 fk
-      return $this->belongsto(Persona::class, 'jurado3', 'codigo');
-   }
-   public function jurado4(){  // JURADO4 fk
-      return $this->belongsto(Persona::class, 'jurado4', 'codigo');
-   }
-
    public function programa(){  // PROGRAMA fk
       return $this->belongsto(Programa::class, 'programa_id', 'id');
+   }
+   public function nivel_acad(){  // PROGRAMA fk
+      return $this->belongsto(Attribute::class, 'nivel_acad_id', 'id');
    }
    public function modalidad(){  // MODALIDAD fk
       return $this->belongsto(Attribute::class, 'modalidad_id', 'id');
@@ -82,9 +71,6 @@ class Informe extends Model {
    public function muestra(){  // MUESTRA fk
       return $this->belongsto(Attribute::class, 'muestra_id', 'id');
    }
-   public function unidad_analisis(){  // UNIDAD ANALISIS fk
-      return $this->belongsto(Attribute::class, 'unidad_analisis_id', 'id');
-   }
    public function ubigeo(){  // UBIGEO fk
       return $this->belongsto(Ubigeo::class, 'ubigeo_id', 'id');
    }
@@ -93,6 +79,21 @@ class Informe extends Model {
    }
    public function producto(){  // PRODUCTO fk
       return $this->belongsto(Attribute::class, 'producto_id', 'id');
+   }
+   public function autor(){  // PRODUCTO fk
+      $query = Autor::join('attribute','attribute.id','=','autor.condicion_id')
+                      ->select(
+                              DB::raw("(GROUP_CONCAT(CONCAT(persona.nombres,' ',persona.apellidos) SEPARATOR '; ')) as nombres"))
+                     ->join('persona','persona.dni','=','autor.persona_id')
+                     ->where('attribute.type',19)
+                     ->where('autor.informe_id',$this->id)
+                     ->first();
+      if($query->nombres){
+         return $query->nombres;
+      }
+      else{
+         return "No registrado";
+      }
    }
 
 }

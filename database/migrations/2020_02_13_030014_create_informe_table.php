@@ -11,6 +11,7 @@ class CreateInformeTable extends Migration {
          $table->bigIncrements('id');
          $table->char('titulo', 255);
          $table->unsignedBigInteger('programa_id'); // Programa fk
+         $table->unsignedBigInteger('nivel_acad_id'); // Programa fk
          // Referencia padre a Autor (M2M)
 
          // Metadatos
@@ -19,14 +20,7 @@ class CreateInformeTable extends Migration {
          $table->unsignedBigInteger('linea_id'); // Linea fk
          $table->float('presupuesto');
          $table->unsignedBigInteger('fuente_financiamiento_id')->nullable(); // FuenteFinanciamiento fk
-         $table->char('fuente_financiamiento_otro')->nullable();
-
-         // Personal relacionado
-         $table->char('asesor', 8); // Asesor fk
-         $table->char('jurado1', 8); // Docente fk
-         $table->char('jurado2', 8); // Docente fk
-         $table->char('jurado3', 8); // Docente fk
-         $table->char('jurado4', 8); // Docente fk
+         $table->string('fuente_financiamiento_otro')->nullable();
 
          // Cronograma
          $table->date('fecha_sustentacion');
@@ -45,37 +39,31 @@ class CreateInformeTable extends Migration {
          $table->unsignedBigInteger('poblacion_id')->nullable(); // Poblacion fk
          $table->char('poblacion_otro')->nullable();
          $table->unsignedBigInteger('muestra_id')->nullable(); // Muestra fk
-         $table->char('muestra_otro')->nullable();
-         $table->unsignedBigInteger('unidad_analisis_id')->nullable(); // UnidadAnalisis fk
-         $table->char('unidad_analisis_otro')->nullable();
+         $table->string('muestra_otro')->nullable();
+         $table->string('unidad_analisis')->nullable(); // UnidadAnalisis fk
+         $table->string('unidad_analisis_otro')->nullable();
 
          // Lugar de estudio
          $table->string('ubigeo_id'); // Ubigeo fk
          $table->unsignedBigInteger('area_estudio_id')->nullable(); // AreaEstudio fk
-         $table->char('area_estudio_otro')->nullable();
+         $table->string('area_estudio_otro')->nullable();
 
          // Relacionado al documento
-         $table->text('resumen');
-         $table->char('objetivo_general', 125);
-         $table->char('objetivos_especificos', 255);
+         $table->longText('resumen')->nullable();
+         $table->longText('objetivos')->nullable();
          $table->unsignedBigInteger('producto_id'); // Producto fk
-
+         $table->text('url')->nullable();
          /* Nota:
             los campos de llave foranea que pueden contener valores 'otro',
             tienen un registro nulo que será seleccionado cuando se tenga que especificar el campo otros
          */
          $table->foreign('programa_id')->references('id')->on('programa')->onDelete('cascade');
+         $table->foreign('nivel_acad_id')->references('id')->on('attribute')->onDelete('cascade');
 
          $table->foreign('modalidad_id')->references('id')->on('attribute')->onDelete('cascade');
          $table->foreign('prioridad_id')->references('id')->on('attribute')->onDelete('cascade');
          $table->foreign('linea_id')->references('id')->on('attribute')->onDelete('cascade');
          $table->foreign('fuente_financiamiento_id')->references('id')->on('attribute')->onDelete('cascade');
-
-         $table->foreign('asesor')->references('dni')->on('persona')->onDelete('cascade');
-         $table->foreign('jurado1')->references('dni')->on('persona')->onDelete('cascade');
-         $table->foreign('jurado2')->references('dni')->on('persona')->onDelete('cascade');
-         $table->foreign('jurado3')->references('dni')->on('persona')->onDelete('cascade');
-         $table->foreign('jurado4')->references('dni')->on('persona')->onDelete('cascade');
 
          $table->foreign('naturaleza_id')->references('id')->on('attribute')->onDelete('cascade');
          $table->foreign('enfoque_id')->references('id')->on('attribute')->onDelete('cascade');
@@ -86,8 +74,7 @@ class CreateInformeTable extends Migration {
 
          $table->foreign('poblacion_id')->references('id')->on('attribute')->onDelete('cascade');
          $table->foreign('muestra_id')->references('id')->on('attribute')->onDelete('cascade');
-         $table->foreign('unidad_analisis_id')->references('id')->on('attribute')->onDelete('cascade');
-
+         
          $table->foreign('ubigeo_id')->references('id')->on('ubigeo')->onDelete('cascade');
          $table->foreign('area_estudio_id')->references('id')->on('attribute')->onDelete('cascade');
 

@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Autor extends Model {
 
 	protected $table = 'autor';
-   protected $primaryKey = 'persona_id';
-   protected $fillable = ['informe_id', 'condicion_id'];
+   protected $fillable = ['persona_id','informe_id', 'condicion_id'];
 	public $timestamps = False;
 
 
@@ -19,7 +18,7 @@ class Autor extends Model {
       return $this->belongsto(Informe::class, 'informe_id', 'id');
    }
    public function condicion(){  // CONDICION fk
-      return $this->belongsto(Condicion::class, 'condicion_id', 'id');
+      return $this->belongsto(Attribute::class, 'condicion_id', 'id');
    }
 
 }

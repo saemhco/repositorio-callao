@@ -1473,6 +1473,13 @@ $.fn.steps.skip = function (count)
 {
     throw new Error("Not yet implemented!");
 };
+$.fn.steps.reset = function ()
+{
+    var wizard = this,
+    options = getOptions(this),
+    state = getState(this);
+    return goToStep(wizard, options, state, 0);
+};
 
 /**
  * An enum represents the different content types of a step and their loading mechanisms.

@@ -21,8 +21,15 @@ Route::get('inicio', function () {
 //Informe
 Route::group(['prefix' => 'informe'], function () {
     Route::get('/', 'InformeController@index')->name('informe.index');
-    Route::get('set_programa', 'InformeController@detalle_programa')->name('informe.programa');
+    Route::get('data', 'InformeController@data')->name('informe.data');
+    Route::get('set_programa', 'InformeController@get_programa')->name('informe.programa');
     Route::get('set_jurado', 'InformeController@set_jurado')->name('informe.jurados');
+    Route::get('set_personas', 'InformeController@get_personas')->name('informe.personas');
+    Route::get('set_tabla_personas', 'InformeController@get_tabla_personas')->name('informe.tabla_personas');
+    Route::post('nueva_persona', 'InformeController@store_personas')->name('informe.store_personas');
+    Route::post('eliminar_persona', 'InformeController@delete_persona')->name('informe.delete_personas');
+    Route::post('store', 'InformeController@store')->name('informe.store');
+    Route::post('eliminar', 'InformeController@delete')->name('informe.eliminar');
 });
 
 //Rutas AUTH

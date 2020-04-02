@@ -10,13 +10,13 @@ class Programa extends Model {
    protected $primaryKey = 'id';
    protected $fillable = [
       'descripcion',  // Nombre
-      'tipo_programa_id',  // Tipo de programa (facultad, escuela, maestria, doctorado, especialidad)
+      'nivel_acad_id',  // Nivel Académico (facultad, escuela, maestria, doctorado, especialidad)
       'programa_id'  // Opcional, referencia otro registro de Programa
    ];
 	public $timestamps = False;
 
    public function padre(){
-      return $this->belongsto(Program::class, 'programa_id', 'id');
+      return $this->belongsto(Programa::class, 'programa_id', 'id');
    }
 
 }
