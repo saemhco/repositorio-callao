@@ -33,11 +33,16 @@ Route::group(['prefix' => 'informe'], function () {
     Route::get('editar/{id}', 'InformeController@edit')->name('informe.editar_personas');
     Route::post('form_editar', 'InformeController@update')->name('informe.actualizar');
 });
+//Personas
+Route::group(['prefix' => 'personas'], function () {
+    Route::get('/', 'PersonaController@index')->name('personas.index');
+    Route::get('data', 'PersonaController@data')->name('personas.data');
+});
 
 //Rutas AUTH
-Route::get('/login', function(){
+Route::get('login', function(){
    // When user is already logged redirect to home
-   return Illuminate\Support\Facades\Auth::check() ? redirect()->route('informe') : view('auth.login');
+   return Illuminate\Support\Facades\Auth::check() ? redirect()->route('informe.index') : view('auth.login');
 })->name('login');
 Route::post('validaracceso', 'Auth\LoginController@login')->name('validaracceso');
 Route::get('/registrar/usuario', 'UserController@index')->name('register.user');

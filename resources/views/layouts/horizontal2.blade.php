@@ -137,25 +137,25 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="nav-small-cap">PERSONAS</li>
+                        <li class="nav-small-cap">Registro</li>
                         <li>
                             <a class="has-arrow" href="{{ route('informe.index') }}" aria-expanded="false">
                                 <i class="mdi mdi-file-document"></i><span class="hide-menu">Registro </span>
                             </a>
-                            <ul aria-expanded="false" class="collapse">
+                            {{-- <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{ route('informe.index') }}">Según investigación</a></li>
                                 <li><a href="#">Según registrador</a></li>
-                            </ul>
+                            </ul> --}}
                         </li>
                         <li>
-                            <a class="has-arrow " href="#" aria-expanded="false">
+                            <a class="has-arrow " href="{{ route('personas.index') }}" aria-expanded="false">
                                 <i class="mdi mdi-account-multiple"></i><span class="hide-menu">Personas</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-calendar.html">Investigación (personas)</a></li>
-                                @if(Auth::user())
+                           {{--  <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ route('personas.index') }}">Investigación (personas)</a></li>
+                                @if(Auth::user()->rol=='0')
                                 <li><a href="app-chat.html">Administración  (usuarios)</a></li>
                                 @endif
-                            </ul>
+                            </ul> --}}
                         </li>
                     </ul>
                 </nav>
