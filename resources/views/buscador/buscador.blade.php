@@ -4,6 +4,7 @@
 <li class="breadcrumb-item active">Buscador</li>
 @endsection
 @section('css')
+<link href="{{asset('material-pro/assets/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
 <style media="screen">
    .middle{
       margin-left: auto;
@@ -104,19 +105,19 @@
          <div class="form-group col-md-3 choose group-form"> <!-- program -->
             <span class="form-tittle">Programa </span>
             <div class="form-group">
-               <select name="i-program-faculty" class="custom-select col-11"> <!-- faculty -->
+               <select name="i-program-faculty" class="custom-select col-11 set_programa_2" id="facultad_2"> <!-- faculty -->
                   <option value="">- Facultad -</option>
-                  <option value="1">One</option>
+                  @foreach($facultades as $i=>$v) <option value="{{$i}}">{{$v}}</option> @endforeach
                </select>
                <span class="col-12" style="display: inline-block;">&nbsp;</span>
-               <select name="i-program-school" class="custom-select col-11"> <!-- school -->
+               <select name="i-program-type" class="custom-select col-11 set_programa_2" id="escuela_2"> <!-- level -->
+                  <option value="">- Nivel academico -</option>
+                  @foreach($attr['tipo_programa'] as $v) <option value="{{$v->id}}">{{$v->descripcion}}</option> @endforeach
+               </select>
+               <span class="col-12" style="display: inline-block;">&nbsp;</span>
+               <select name="i-program-school" class="custom-select col-11" id="programa_academico_2"> <!-- school -->
                   <option value="">- Escuela -</option>
-                  <option value="1">One</option>
-               </select>
-               <span class="col-12" style="display: inline-block;">&nbsp;</span>
-               <select name="i-program-type" class="custom-select col-11"> <!-- type -->
-                  <option value="">- Programa -</option>
-                  <option value="1">One</option>
+                  @foreach($escuela as $i=>$v) <option value="{{$i}}">{{$v}}</option> @endforeach
                </select>
             </div>
          </div>
@@ -156,19 +157,19 @@
          <div class="form-group col-md-3 choose group-form"> <!-- program -->
             <span class="form-tittle">Programa </span>
             <div class="form-group">
-               <select name="a-program-faculty" class="custom-select col-11"> <!-- faculty -->
+               <select name="a-program-faculty" class="custom-select col-11 set_programa_3" id="facultad_3"> <!-- faculty -->
                   <option value="">- Facultad -</option>
-                  <option value="1">One</option>
+                  @foreach($facultades as $i=>$v) <option value="{{$i}}">{{$v}}</option> @endforeach
                </select>
                <span class="col-12" style="display: inline-block;">&nbsp;</span>
-               <select name="a-program-school" class="custom-select col-11"> <!-- school -->
-                  <option value="">- Escuela -</option>
-                  <option value="1">One</option>
-               </select>
-               <span class="col-12" style="display: inline-block;">&nbsp;</span>
-               <select name="a-program-type" class="custom-select col-11"> <!-- type -->
+               <select name="a-program-type" class="custom-select col-11 set_programa_3" id="escuela_3"> <!-- type -->
                   <option value="">- Programa -</option>
                   @foreach($attr['tipo_programa'] as $v) <option value="{{$v->id}}">{{$v->descripcion}}</option> @endforeach
+               </select>
+               <span class="col-12" style="display: inline-block;">&nbsp;</span>
+               <select name="a-program-school" class="custom-select col-11" id="programa_academico_3"> <!-- school -->
+                  <option value="">- Escuela -</option>
+                  @foreach($escuela as $i=>$v) <option value="{{$i}}">{{$v}}</option> @endforeach
                </select>
             </div>
          </div>
@@ -265,9 +266,9 @@
          <div class="form-group col-md-3 choose group-form"> <!-- lugar -->
             <span class="form-tittle">Lugar </span>
             <div class="form-group">
-               <select name="a-place" class="custom-select col-11"> <!-- place -->
-                  <option value="">Lugar</option>
-                  <option value="1">One</option>
+               <select id="ubigeo" name="a-place" class="custom-select col-11 select2" placeholder="'Distrio - Provincia - Departamento'"> <!-- place -->
+                  <option value="">Distrio - Provincia - Departamento</option>
+                  @foreach($ubigeo as $i=>$v) <option value="{{$i}}">{{$v}}</option> @endforeach
                </select>
                <span class="col-12" style="display: inline-block;">&nbsp;</span>
                <select name="a-area" class="custom-select col-11"> <!-- area -->
@@ -290,6 +291,8 @@
 </div>
 @endsection
 @section('js')
+<script src="{{asset('material-pro/assets/plugins/select2/dist/js/select2.full.min.js')}}"></script>
+<script src="{{asset('material-pro/assets/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
 <script type="text/javascript">
    function formBasic(){
       console.log("BASIC FORM")
@@ -550,5 +553,43 @@
       document.querySelector('div#AdvancedSearch').classList.add('none');
       show_div.classList.remove('none');
    }
+
+   // Change programa
+   $(".set_programa_2" ).change(function(){
+      var facultad = $('#facultad_2').val();
+      var escuela = $('#escuela_2').val();
+      $.ajax({
+         url: '/informe/set_programa',
+         type: 'GET',
+         data: {fac:facultad,nivel_acad:escuela},
+         success: function (data) {
+            $("#programa_academico_2").find('option').remove();
+            $.each(data,function(key, registro) {
+               $("#programa_academico_2").append('<option value='+registro.id+'>'+registro.descripcion+'</option>');
+            });
+         },
+         error: function(error){
+            alert(error);
+         }
+      })
+   });
+   $(".set_programa_3" ).change(function(){
+      var facultad = $('#facultad_3').val();
+      var escuela = $('#escuela_3').val();
+      $.ajax({
+         url: '/informe/set_programa',
+         type: 'GET',
+         data: {fac:facultad,nivel_acad:escuela},
+         success: function (data) {
+            $("#programa_academico_3").find('option').remove();
+            $.each(data,function(key, registro) {
+               $("#programa_academico_3").append('<option value='+registro.id+'>'+registro.descripcion+'</option>');
+            });
+         },
+         error: function(error){
+            alert(error);
+         }
+      })
+   });
 </script>
 @endsection

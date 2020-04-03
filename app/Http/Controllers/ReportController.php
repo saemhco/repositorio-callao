@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Informe;
+use App\Programa;
+use App\Ubigeo;
 use DB;
 
 class ReportController extends Controller {
@@ -15,7 +16,14 @@ class ReportController extends Controller {
    }
    public function index(){  // SEARCH - RESULT view
       $attr = $this->getAttributes();
-      return view('buscador.buscador', compact('attr'));
+      $facultades = Programa::where('nivel_acad_id',null)->pluck('descripcion','id');
+      $escuela = Programa::where('nivel_acad_id','1')->where('programa_id','1')->pluck('descripcion','id');
+      $ubigeo = Ubigeo::join('ubigeo AS prov','ubigeo.prov_id','=','prov.id')
+               ->join('ubigeo AS dep','dep.id','=','ubigeo.dep_id')
+               ->where('ubigeo.type','3')
+               ->select(DB::raw("CONCAT(ubigeo.descripcion,' - ',prov.descripcion,' - ',dep.descripcion) AS descripcion"), 'ubigeo.id as ubigeo')
+                ->pluck('descripcion','ubigeo');
+      return view('buscador.buscador', compact('attr', 'facultades', 'escuela', 'ubigeo'));
    }
 
    private function saveInforme($data){  // SAVE REPORT
@@ -23,17 +31,15 @@ class ReportController extends Controller {
    }
    public function BasicSearch(Request $r){
       $params = $r->data;  // Get data from request
+      $to_select = $this->DB_TO_SELECT;
 
-      # PALABRA CLAVE
-      if(key_exists('keyword', $params)){
-         $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
-      }
       // Query
       $reg = DB::table('informe')->select($to_select);
+      # PALABRA CLAVE
       $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
 
       $reg = $reg->get();
-      return var_dump($reg);
+      return $reg;
       /* If we woudl like to search the keyword in more than one field we should use
       $query->orWhere('table.field_1', 'like', '%'.$keyword.'%')
          ->orWhere('table.field_2', 'like', '%'.$keyword.'%')
@@ -84,14 +90,17 @@ class ReportController extends Controller {
          $temp = $params['author'];
          $flag = False;
          # DNI | NOMBRE | APELLIDOS
-         if(key_exists('dni', $temp)){
-            $reg->join('persona', function ($join){  // Join persona table to match author data
-               $join->on('persona.dni', '=', $temp['dni'])  // First check dni
+         if(key_exists('dni', $temp) && strlen($temp['dni'])>2){
+            $reg->join('persona', function ($join) use ($params, $temp){  // Join persona table to match author data
+               $join->on('persona.dni', 'like', DB::raw("'$temp[dni]%'"))  // First check dni
                // Then check name and lastname
-               ->orOn('persona.nombres', 'like', '%'.$params['dni'].'%')
-               ->orOn('persona.apellidos', 'like', '%'.$params['dni'].'%');
+               ->orOn('persona.nombres', 'like', DB::raw("'%$temp[dni]%'"))
+               ->orOn('persona.apellidos', 'like', DB::raw("'%$temp[dni]%'"));
             });
-            $reg->join('autor', 'persona_id', '=', 'persona.dni');  // Persona has to be author
+            $reg->join('autor', function($join){
+               $join->on('autor.persona_id', '=', 'persona.dni')  // Persona has to be author
+               ->on('autor.informe_id', '=', 'informe.id');
+            });
             $flag = True;  // Author table is joined
             // If this field is not specified, the next fields will add author table
          }
@@ -345,12 +354,12 @@ class ReportController extends Controller {
          'linea_enfermeria' => [],
          'linea_general' => [],
          'condicion_autor' => [],
-         'asesor' => [], 
-         'jurado_pregrado_seg_esp'=>[], 
+         'asesor' => [],
+         'jurado_pregrado_seg_esp'=>[],
          'jurado_maestria_doctorado'=>[]
 		];
       $_i = 1;
-      foreach($attr as $k=>$at) {
+      foreach($attr as $k=>$at){
          $temp = DB::table('attribute')->where('type', $_i)->get();
          $attr[$k] = $temp;
          $_i++;
