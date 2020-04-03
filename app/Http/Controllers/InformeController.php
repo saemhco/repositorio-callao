@@ -49,7 +49,7 @@ class InformeController extends Controller
     foreach ($query as $dato) {
         $acciones="<div class='btn-group'>";
         $acciones .= "<a href='#' target='_blank'  class='btn btn-success btn-circle'>
-                        <i class='fa fa-plus'></i></a>";
+                        <i class='mdi mdi-launch'></i></a>";
         $acciones .= "<button type='button' class='btn btn-info btn-circle' onclick='personas($dato->id,$dato->programa_id)'>
                         <i class='fa fa-users' ></i></button>";
         $acciones .= "<button type='button' class='btn btn-warning btn-circle' onclick='editar($dato->id)'>

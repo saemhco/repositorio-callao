@@ -67,27 +67,28 @@
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="{{ asset('/material-pro/assets/images/users/1.jpg')}}" alt="user" class="profile-pic" /></a>
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ asset('/material-pro/assets/images/users/'.Auth::user()->foto)}}" alt="user" class="profile-pic" />
+                            </a>
                             <div class="dropdown-menu dropdown-menu-right scale-up">
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img"><img src="{{ asset('/material-pro/assets/images/users/1.jpg')}}" alt="user"></div>
+                                            <div class="u-img">
+                                                <img src="{{ asset('/material-pro/assets/images/users/'.Auth::user()->foto)}}" alt="user"></div>
                                             <div class="u-text">
-                                                <h4>Steave Jobs</h4>
-                                                <p class="text-muted">varun@gmail.com</p><a href="profile.html"
-                                                    class="btn btn-rounded btn-danger btn-sm">View
-                                                    Profile</a>
+                                                <h5>{{ Auth::user()->nombres }}</h5>
+                                                <h6>{{ Auth::user()->apellidos }}</h6>
+                                                <label class="btn btn-rounded btn-danger btn-sm">{{ Auth::user()->descripcion_rol() }}</label>
                                             </div>
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                                    <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                                    <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
+                                    <li><a href="#"><i class="ti-user"></i> Mi Perfil</a></li>
+                                    <li><a href="#"><i class="ti-wallet"></i> Mis Registros</a></li>
+                                    <li><a href="#"><i class="icon-people"></i> Administrar Usuarios</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
+                                    <li><a href="#"><i class="ti-settings"></i> Configurar mi cuenta</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="{{route('logout')}}" onclick="event.preventDefault();
                                         document.getElementById('salir').submit();"><i class="fa fa-power-off"></i> Salir</a>
@@ -107,12 +108,16 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
-                                    class="flag-icon flag-icon-us"></i></a>
+                                    class="mdi mdi-help-circle-outline" title="ayuda"></i></a>
                             <div class="dropdown-menu dropdown-menu-right scale-up"> <a class="dropdown-item"
-                                    href="#"><i class="flag-icon flag-icon-in"></i> Tutorial 1</a> <a class="dropdown-item"
-                                    href="#"><i class="flag-icon flag-icon-fr"></i> Video Tutorial 2</a> <a class="dropdown-item"
-                                    href="#"><i class="flag-icon flag-icon-cn"></i> China</a> <a class="dropdown-item"
-                                    href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a> </div>
+                                    href="#"><i class="mdi mdi-play-box-outline"></i> Video tutorial</a> <a class="dropdown-item"
+                                    href="#"><i class="mdi mdi-file-pdf"></i> Manual</a>
+                                    @if(Auth::user())
+                                    <hr> <a class="dropdown-item"
+                                    href="#"><i class="mdi mdi-play-box-outline"></i> AMD - Video tutorial</a> <a class="dropdown-item"
+                                    href="#"><i class="mdi mdi-file-pdf"></i> AMD - Manual</a> 
+                                    @endif
+                            </div>
                         </li>
                         
                     </ul>
@@ -135,14 +140,21 @@
                         <li class="nav-small-cap">PERSONAS</li>
                         <li>
                             <a class="has-arrow" href="{{ route('informe.index') }}" aria-expanded="false">
-                                <i class="mdi mdi-gauge"></i><span class="hide-menu">Registrar </span></a>
+                                <i class="mdi mdi-file-document"></i><span class="hide-menu">Registro </span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ route('informe.index') }}">Según investigación</a></li>
+                                <li><a href="#">Según registrador</a></li>
+                            </ul>
                         </li>
                         <li>
                             <a class="has-arrow " href="#" aria-expanded="false">
-                                <i class="mdi mdi-bullseye"></i><span class="hide-menu">Personas</span></a>
+                                <i class="mdi mdi-account-multiple"></i><span class="hide-menu">Personas</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-calendar.html">Investigación</a></li>
-                                <li><a href="app-chat.html">Administración</a></li>
+                                <li><a href="app-calendar.html">Investigación (personas)</a></li>
+                                @if(Auth::user())
+                                <li><a href="app-chat.html">Administración  (usuarios)</a></li>
+                                @endif
                             </ul>
                         </li>
                     </ul>
@@ -201,7 +213,8 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © 2019 Material Pro Admin by wrappixel.com
+                Copyright © 2020 REPOSITORIO Callao, Todos los derechos Reservados. Universidad Nacional del Callao 
+                <small>| Desarrollado por saem</small>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
