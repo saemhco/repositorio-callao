@@ -25,7 +25,7 @@ class Informe extends Model {
       // Lugar de estudio
       'ubigeo_id', 'area_estudio_id', 'area_estudio_otro',
       // Relacionado al documento
-      'resumen', 'objetivos', 'producto_id','url'
+      'resumen', 'objetivos', 'producto_id','producto_otro','url'
    ];
 	public $timestamps = False;
 

@@ -28,8 +28,10 @@ Route::group(['prefix' => 'informe'], function () {
     Route::get('set_tabla_personas', 'InformeController@get_tabla_personas')->name('informe.tabla_personas');
     Route::post('nueva_persona', 'InformeController@store_personas')->name('informe.store_personas');
     Route::post('eliminar_persona', 'InformeController@delete_persona')->name('informe.delete_personas');
-    Route::post('store', 'InformeController@store')->name('informe.store');
+    Route::post('form_nuevo', 'InformeController@store')->name('informe.store');
     Route::post('eliminar', 'InformeController@delete')->name('informe.eliminar');
+    Route::get('editar/{id}', 'InformeController@edit')->name('informe.editar_personas');
+    Route::post('form_editar', 'InformeController@update')->name('informe.actualizar');
 });
 
 //Rutas AUTH

@@ -52,17 +52,16 @@ class InformeController extends Controller
                         <i class='fa fa-plus'></i></a>";
         $acciones .= "<button type='button' class='btn btn-info btn-circle' onclick='personas($dato->id,$dato->programa_id)'>
                         <i class='fa fa-users' ></i></button>";
-        $acciones .= "<button type='button' class='btn btn-warning btn-circle accion-editar' data-id='$dato->id'>
+        $acciones .= "<button type='button' class='btn btn-warning btn-circle' onclick='editar($dato->id)'>
                         <i class='fa fa-edit'></i></button>";
         $acciones .="<button type='button' class='btn btn-danger btn-circle' onclick='eliminar($dato->id)'>
                         <i class='fa fa-trash'></i></button>";
         $acciones.="</div>";
         $data['aaData'][] = [$dato->titulo, $dato->autor(), $dato->programa->padre->descripcion, $dato->nivel_acad->descripcion,$dato->programa->descripcion, $acciones];
     }
-    return json_encode($data, true);
-
-        
+    return json_encode($data, true);        
    }
+
     public function get_programa(Request $r){
      return  Programa::where('nivel_acad_id',$r->nivel_acad)->where('programa_id',$r->fac)->select('descripcion','id')->get();
    }
@@ -109,13 +108,8 @@ class InformeController extends Controller
       }
       return Attribute::where('type',$type)->get();
    }
-   public function store(Request $r){
-    //Buscar parecidos
-    $query=Informe::where('titulo','like','%'.$r->titulo.'%')->first();
-    if($query){
-        return array('resultado' => false,'msj'=>'El título ya está registrado.' );
-    }
-      $q = new Informe;
+
+   public function guardar_datos_informe($q,$r){
       $q->titulo=$r->titulo;
       $q->programa_id=$r->programa;
       $q->nivel_acad_id=$r->nivel_acad;
@@ -147,9 +141,39 @@ class InformeController extends Controller
       $q->resumen=$r->resumen;
       $q->objetivos=$r->objetivos;
       $q->producto_id=$r->producto;
+      $q->producto_otro=$r->producto_otro;
       $q->url=$r->url;
       $q->save();
-      return array('resultado' => true,'msj'=>'Se registró correctamente','data'=>['programa'=>$q->programa_id,'id'=>$q->id]);
+   }
+   public function store(Request $r){
+        //Buscar parecidos
+        $query=Informe::where('titulo','like','%'.$r->titulo.'%')->first();
+        if($query)
+            return array('resultado' => false,'msj'=>'El título ya está registrado.' );
+          $q = new Informe;
+          $this->guardar_datos_informe($q,$r);
+          return array('resultado' => true,
+                        'msj'=>'Se registró una nueva investigación. Continúe registrando los datos del autor y otros (personas).',
+                        'data'=>['programa'=>$q->programa_id,'id'=>$q->id]
+                     );
+   }
+   public function edit($id){
+    return Informe::select('informe.*','programa.programa_id AS facultad_id')
+                    ->join('programa','programa.id','=','informe.programa_id')
+                    ->where('informe.id',$id)->first();
+   }
+
+   public function update(Request $r){
+        //Buscar parecidos
+        $query=Informe::where('titulo','like','%'.$r->titulo.'%')->where('id','<>',$r->id)->first();
+        if($query)
+            return array('resultado' => false,'msj'=>'El título ya está registrado.' );
+       $q = Informe::find($r->id);
+       $this->guardar_datos_informe($q,$r);
+       return array('resultado' => true,
+                     'msj'=>'Se actualizó correctamente. Continúe con los datos del autor y otros (personas).',
+                     'data'=>['programa'=>$q->programa_id,'id'=>$q->id]
+                  );
    }
 
 }

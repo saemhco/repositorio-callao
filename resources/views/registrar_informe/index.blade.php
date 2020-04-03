@@ -18,6 +18,7 @@
    <div class="card-body">
       {{-- modal --}}
       @include('registrar_informe.nuevo')
+      @include('registrar_informe.editar')
       @include('registrar_informe.personas')
       <h4 class="card-title">
     <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-success" data-toggle="modal" data-target="#modal_nuevo">
@@ -60,6 +61,7 @@
 {{-- Wizard --}}
 <script src="{{asset('material-pro/assets/plugins/moment/moment.js')}}"></script>
 <script src="{{asset('material-pro/assets/plugins/wizard/jquery.steps.min.js')}}"></script>
+
 <script src="{{asset('material-pro/assets/plugins/wizard/jquery.validate.min.js')}}"></script>
 <!-- wysuhtml5 Plugin JavaScript -->
 <script src="{{asset('material-pro/assets/plugins/html5-editor/wysihtml5-0.3.0.js')}}"></script>
