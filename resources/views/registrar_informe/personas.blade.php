@@ -33,7 +33,7 @@
                                                       ]
                                                       ,null,['id'=>'condicion_persona','class'=>'form-control col-md-4'])!!}
                                                    <div class="col-md-2">
-                                                      <button class="btn btn-primary btn-block" id="btn_guardar">Añadir</button>
+                                                      <button class="btn btn-primary" id="btn_guardar">Añadir</button>
                                                    </div>
                                                 </div><br>
                                                    <table id="tabla_personas" class="table color-bordered-table info-bordered-table">

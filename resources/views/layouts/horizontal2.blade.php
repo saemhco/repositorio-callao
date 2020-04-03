@@ -47,7 +47,7 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header" style="margin:0;">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="{{ route('index') }}">
                         <img src="{{asset('/material-pro/assets/images/logo.png')}}" alt="homepage" class="light-logo" height="45px" /> <img src="{{ asset('/material-pro/assets/images/logo-light-text.png')}}" class="light-logo" alt="homepage" />
                     </a>
                 </div>
@@ -61,6 +61,7 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav mr-auto mt-md-0"></ul><!--Para que el sgt UL esté alineado a la derecha-->
                     <ul class="navbar-nav my-lg-0">
+                        @if(Auth::user())
                         <!-- ============================================================== -->
                         <!-- Profile -->
                         <!-- ============================================================== -->
@@ -88,23 +89,32 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li><a href="{{route('logout')}}" onclick="event.preventDefault();
+                                        document.getElementById('salir').submit();"><i class="fa fa-power-off"></i> Salir</a>
+                                        <form id="salir" action="{{route('logout')}}" method='POST'>
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+
+                                
                                 </ul>
                             </div>
                         </li>
+                        @endif
                         <!-- ============================================================== -->
-                        <!-- Language -->
+                        <!-- Tutoriales -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
                                     class="flag-icon flag-icon-us"></i></a>
                             <div class="dropdown-menu dropdown-menu-right scale-up"> <a class="dropdown-item"
-                                    href="#"><i class="flag-icon flag-icon-in"></i> India</a> <a class="dropdown-item"
-                                    href="#"><i class="flag-icon flag-icon-fr"></i> French</a> <a class="dropdown-item"
+                                    href="#"><i class="flag-icon flag-icon-in"></i> Tutorial 1</a> <a class="dropdown-item"
+                                    href="#"><i class="flag-icon flag-icon-fr"></i> Video Tutorial 2</a> <a class="dropdown-item"
                                     href="#"><i class="flag-icon flag-icon-cn"></i> China</a> <a class="dropdown-item"
                                     href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a> </div>
                         </li>
+                        
                     </ul>
                 </div>
             </nav>
@@ -115,33 +125,24 @@
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        <aside class="left-sidebar">
+        @if(Auth::user())
+        <aside class="left-sidebar" >
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="nav-small-cap">PERSONAL</li>
+                        <li class="nav-small-cap">PERSONAS</li>
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard </span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="index.html">Dashboard 1</a></li>
-                                <li><a href="index2.html">Dashboard 2</a></li>
-                                <li><a href="index3.html">Dashboard 3</a></li>
-                                <li><a href="index4.html">Dashboard 4</a></li>
-                                <li><a href="index5.html">Dashboard 5</a></li>
-                                <li><a href="index6.html">Dashboard 6</a></li>
-                            </ul>
+                            <a class="has-arrow" href="{{ route('informe.index') }}" aria-expanded="false">
+                                <i class="mdi mdi-gauge"></i><span class="hide-menu">Registrar </span></a>
                         </li>
                         <li>
-                            <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Apps</span></a>
+                            <a class="has-arrow " href="#" aria-expanded="false">
+                                <i class="mdi mdi-bullseye"></i><span class="hide-menu">Personas</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-calendar.html">Calendar</a></li>
-                                <li><a href="app-chat.html">Chat app</a></li>
-                                <li><a href="app-ticket.html">Support Ticket</a></li>
-                                <li><a href="app-contact.html">Contact / Employee</a></li>
-                                <li><a href="app-contact2.html">Contact Grid</a></li>
-                                <li><a href="app-contact-detail.html">Contact Detail</a></li>
+                                <li><a href="app-calendar.html">Investigación</a></li>
+                                <li><a href="app-chat.html">Administración</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -150,6 +151,7 @@
             </div>
             <!-- End Sidebar scroll-->
         </aside>
+        @endif
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
