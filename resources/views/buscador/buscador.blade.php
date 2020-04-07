@@ -188,7 +188,7 @@
                   @foreach($attr['naturaleza'] as $v) <option value="{{$v->id}}">{{$v->descripcion}}</option> @endforeach
                </select>
                <span class="col-1" style="display: inline-block;">&nbsp;</span>
-               <select name="a-research-aproach" class="custom-select col-3"> <!-- aproach -->
+               <select name="a-research-approach" class="custom-select col-3"> <!-- approach -->
                   <option value="">- Enfoque -</option>
                   @foreach($attr['enfoque'] as $v) <option value="{{$v->id}}">{{$v->descripcion}}</option> @endforeach
                </select>
@@ -294,6 +294,7 @@
 <script src="{{asset('material-pro/assets/plugins/select2/dist/js/select2.full.min.js')}}"></script>
 <script src="{{asset('material-pro/assets/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
 <script type="text/javascript">
+   // const otros_id = ["21", "52", "58", "66", "85", "90"];
    function formBasic(){
       console.log("BASIC FORM")
       let data = {};  // Data storage
@@ -507,7 +508,7 @@
          switch(_struct.length){  // ['exposition', 'from_date']
             case 1:  // ID PARAM
                /* FIX EMPTY INPUTS */
-               if(value=="") return;;  // Skip if value is empty
+               if(value=="") return;  // Skip if value is empty
                data[_struct[0]] = value;
                break;
             case 2:  // ARRAY PARAM
@@ -558,10 +559,18 @@
    $(".set_programa_2" ).change(function(){
       var facultad = $('#facultad_2').val();
       var escuela = $('#escuela_2').val();
+      if(!facultad && !escuela){  // Fix no selected options
+         $("#programa_academico_2").find('option').remove();
+         return;
+      }
       $.ajax({
-         url: '/informe/set_programa',
-         type: 'GET',
-         data: {fac:facultad,nivel_acad:escuela},
+         url: '{{ route("search.getprograma") }}',
+         type: 'POST',
+         data: {
+            _token: "{{ csrf_token() }}",
+            fac: facultad,
+            nivel_acad: escuela
+         },
          success: function (data) {
             $("#programa_academico_2").find('option').remove();
             $.each(data,function(key, registro) {
@@ -576,10 +585,18 @@
    $(".set_programa_3" ).change(function(){
       var facultad = $('#facultad_3').val();
       var escuela = $('#escuela_3').val();
+      if(!facultad && !escuela){  // Fix no selected options
+         $("#programa_academico_2").find('option').remove();
+         return;
+      }
       $.ajax({
-         url: '/informe/set_programa',
-         type: 'GET',
-         data: {fac:facultad,nivel_acad:escuela},
+         url: '{{ route("search.getprograma") }}',
+         type: 'POST',
+         data: {
+            _token: "{{ csrf_token() }}",
+            fac: facultad,
+            nivel_acad: escuela
+         },
          success: function (data) {
             $("#programa_academico_3").find('option').remove();
             $.each(data,function(key, registro) {
