@@ -52,6 +52,7 @@ class CreateInformeTable extends Migration {
          $table->longText('resumen')->nullable();
          $table->longText('objetivos')->nullable();
          $table->unsignedBigInteger('producto_id'); // Producto fk
+         $table->string('producto_otro')->nullable(); 
          $table->text('url')->nullable();
          /* Nota:
             los campos de llave foranea que pueden contener valores 'otro',

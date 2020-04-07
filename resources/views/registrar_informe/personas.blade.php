@@ -11,14 +11,14 @@
                                             <div class="modal-body">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <a href="#" class="col-12">
+                                                        <a href="#" class=" btn btn-success btn-xs">
                                                             <i class="fa fa-plus"></i> Ir al módulo PERSONAS
                                                         </a>
                                                     </div>
                                                     <div class="col-md-6" align="right">
-                                                        <a href="#" class="col-12">
+                                                        <button class=" btn btn-success btn-xs" id="btn_refrescar">
                                                             <i class="fa fa-sync-alt"></i> Refrescar
-                                                        </a> 
+                                                        </button>  
                                                     </div>
                                                    <div class="col-12"><br></div>
                                                    <div class="col-md-6">

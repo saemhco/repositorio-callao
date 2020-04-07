@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('material-pro/assets/images/favicon.png') }}">
-    <title>Login</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('material-pro/assets/images/icono.ico') }}">
+    <title>Iniciar Sesión</title>
 	<link rel="canonical" href="https://www.wrappixel.com/templates/materialpro/" />
     <!-- Custom CSS -->
     <!-- Custom CSS -->
@@ -42,7 +42,13 @@
                 <div class="card-body">
                     <form class="form-horizontal form-material" id="loginform" method="POST" action="{{ route('validaracceso') }}">
                         @csrf
-                        <h3 class="p-2 rounded-title mb-3">Iniciar Sesión</h3>
+                        <div class="navbar-header" align="center">
+                            <a class="navbar-brand" href="{{ route('index') }}" title="Ir al buscador">
+                                <img src="{{asset('/material-pro/assets/images/logo.png')}}" alt="homepage" class="light-logo" height="45px" /> <img src="{{ asset('/material-pro/assets/images/logo-text.png')}}" class="logo" alt="Respositorio - Callao" width="300px" />
+                            </a>
+                        </div>
+                        <br>
+                        {{-- <h3 class="p-2 rounded-title mb-3" align="center"><u>Iniciar Sesión</u></h3> --}}
                         <div class="form-group ">
                             <div class="col-xs-12">
                                 <input id="dni" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="Usuario" autofocus>
@@ -65,7 +71,7 @@
                         </div>
                         <div class="form-group text-center mt-3">
                             <div class="col-xs-12">
-                                <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>
+                                <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Ingresar</button>
                             </div>
                         </div>
                        

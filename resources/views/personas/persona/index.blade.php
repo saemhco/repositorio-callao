@@ -9,32 +9,48 @@
 <link href="{{asset('material-pro/assets/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css" />
 
 @endsection
-@section('title','Registrar')
+@section('title','Personas')
 @section('routes')
-<li class="breadcrumb-item active">Registrar</li>
+<li class="breadcrumb-item active">Personas</li>
+<li class="breadcrumb-item active">Investigación (personas)</li>
 @endsection
 @section('content')
 <div class="card">
    <div class="card-body">
-      {{-- modal --}}
-      @include('registrar_informe.nuevo')
-      @include('registrar_informe.editar')
-      @include('registrar_informe.personas')
+   @include('personas.persona.nuevo')
+   @include('personas.persona.editar')
+   <div class="row">
+      <div class="col-6" align="left">
       <h4 class="card-title">
-    <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-success" data-toggle="modal" data-target="#modal_nuevo">
-        <i class="fa fa-plus"></i> Nuevo</button>
+        <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-success" data-toggle="modal" data-target="#modal_nuevo">
+           <i class="fa fa-plus"></i> Nuevo
+        </button>
       </h4>
+      </div>
+      <div class="btn-group col-6" align="right" style="display: block; ">      
+         <h4 class="card-title"  align="right">
+            <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-success" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+              <i class="far fa-file-excel"></i> Carga masiva 
+              <i class="mdi mdi-menu-down-outline"></i>
+            </button>
+           <div class="dropdown-menu dropdown-menu-sm-right">
+              <label class="dropdown-item" type="button" for="importar-usuarios">Cargar archivo</label>
+              <input id="importar-usuarios" onChange="importar()" type="file" style='display: none;' accept=".xlsx"/>
+              <a class="dropdown-item" href="{{ url('files/plantilla/personas.xlsx') }}" target="_blank">Descargar plantilla</a>
+           </div>
+         </h4>
+       </div>
+   </div>
 
       <div class="table-responsive mt-4">
          <table id="datatable-ajax" class="table display table-bordered table-striped">
             <thead>
                <tr>
-                  <th>Título</th>
-                  <th>Autor(es)</th>
-                  <th>Facultad</th>
-                  <th>Nivel Académico</th>
-                  <th>Programa</th>
-                  <th>Acciones</th>
+                  <th>DNI</th>
+                  <th>Nombres</th>
+                  <th>Apellidos</th>
+                  <th>Género</th>
+                  <th style="text-align: center;">Acciones</th>
                </tr>
             </thead>
             <tbody>
@@ -73,5 +89,5 @@
 <script src="{{asset('material-pro/assets/plugins/sweetalert/sweetalert.min.js')}}"></script>
 <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
 {{-- Ajustes de vista --}}
-<script src="{{asset('js/informe.js')}}"></script>
+<script src="{{asset('js/persona.js')}}"></script>
 @endsection

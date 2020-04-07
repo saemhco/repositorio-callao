@@ -28,14 +28,26 @@ Route::group(['prefix' => 'informe'], function () {
     Route::get('set_tabla_personas', 'InformeController@get_tabla_personas')->name('informe.tabla_personas');
     Route::post('nueva_persona', 'InformeController@store_personas')->name('informe.store_personas');
     Route::post('eliminar_persona', 'InformeController@delete_persona')->name('informe.delete_personas');
-    Route::post('store', 'InformeController@store')->name('informe.store');
+    Route::post('form_nuevo', 'InformeController@store')->name('informe.store');
     Route::post('eliminar', 'InformeController@delete')->name('informe.eliminar');
+    Route::get('editar/{id}', 'InformeController@edit')->name('informe.editar_personas');
+    Route::post('form_editar', 'InformeController@update')->name('informe.actualizar');
+});
+//Personas
+Route::group(['prefix' => 'personas'], function () {
+    Route::get('/', 'PersonaController@index')->name('personas.index');
+    Route::get('data', 'PersonaController@data')->name('personas.data');
+    Route::post('nuevo', 'PersonaController@store')->name('personas.nuevo');
+    Route::post('eliminar', 'PersonaController@delete')->name('personas.eliminar');
+    Route::post('actualizar', 'PersonaController@update')->name('personas.actualizar');
+    Route::get('editar/{dni}', 'PersonaController@edit')->name('personas.editar');
+    Route::post('importacion_masiva', 'PersonaController@importar')->name('personas.importar');  
 });
 
 //Rutas AUTH
-Route::get('/login', function(){
+Route::get('login', function(){
    // When user is already logged redirect to home
-   return Illuminate\Support\Facades\Auth::check() ? redirect('home') : view('auth.login');
+   return Illuminate\Support\Facades\Auth::check() ? redirect()->route('informe.index') : view('auth.login');
 })->name('login');
 Route::post('validaracceso', 'Auth\LoginController@login')->name('validaracceso');
 Route::get('/registrar/usuario', 'UserController@index')->name('register.user');

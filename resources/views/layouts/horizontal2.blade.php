@@ -47,7 +47,7 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header" style="margin:0;">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="{{ route('index') }}">
                         <img src="{{asset('/material-pro/assets/images/logo.png')}}" alt="homepage" class="light-logo" height="45px" /> <img src="{{ asset('/material-pro/assets/images/logo-light-text.png')}}" class="light-logo" alt="homepage" />
                     </a>
                 </div>
@@ -61,50 +61,65 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav mr-auto mt-md-0"></ul><!--Para que el sgt UL esté alineado a la derecha-->
                     <ul class="navbar-nav my-lg-0">
+                        @if(Auth::user())
                         <!-- ============================================================== -->
                         <!-- Profile -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                                    src="{{ asset('/material-pro/assets/images/users/1.jpg')}}" alt="user" class="profile-pic" /></a>
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ asset('/material-pro/assets/images/users/'.Auth::user()->foto)}}" alt="user" class="profile-pic" />
+                            </a>
                             <div class="dropdown-menu dropdown-menu-right scale-up">
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img"><img src="{{ asset('/material-pro/assets/images/users/1.jpg')}}" alt="user"></div>
+                                            <div class="u-img">
+                                                <img src="{{ asset('/material-pro/assets/images/users/'.Auth::user()->foto)}}" alt="user"></div>
                                             <div class="u-text">
-                                                <h4>Steave Jobs</h4>
-                                                <p class="text-muted">varun@gmail.com</p><a href="profile.html"
-                                                    class="btn btn-rounded btn-danger btn-sm">View
-                                                    Profile</a>
+                                                <h5>{{ Auth::user()->nombres }}</h5>
+                                                <h6>{{ Auth::user()->apellidos }}</h6>
+                                                <label class="btn btn-rounded btn-danger btn-sm">{{ Auth::user()->descripcion_rol() }}</label>
                                             </div>
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                                    <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                                    <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
+                                    <li><a href="#"><i class="ti-user"></i> Mi Perfil</a></li>
+                                    <li><a href="#"><i class="ti-wallet"></i> Mis Registros</a></li>
+                                    <li><a href="#"><i class="icon-people"></i> Administrar Usuarios</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
+                                    <li><a href="#"><i class="ti-settings"></i> Configurar mi cuenta</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li><a href="{{route('logout')}}" onclick="event.preventDefault();
+                                        document.getElementById('salir').submit();"><i class="fa fa-power-off"></i> Salir</a>
+                                        <form id="salir" action="{{route('logout')}}" method='POST'>
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+
+                                
                                 </ul>
                             </div>
                         </li>
+                        @endif
                         <!-- ============================================================== -->
-                        <!-- Language -->
+                        <!-- Tutoriales -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
-                                    class="flag-icon flag-icon-us"></i></a>
+                                    class="mdi mdi-help-circle-outline" title="ayuda"></i></a>
                             <div class="dropdown-menu dropdown-menu-right scale-up"> <a class="dropdown-item"
-                                    href="#"><i class="flag-icon flag-icon-in"></i> India</a> <a class="dropdown-item"
-                                    href="#"><i class="flag-icon flag-icon-fr"></i> French</a> <a class="dropdown-item"
-                                    href="#"><i class="flag-icon flag-icon-cn"></i> China</a> <a class="dropdown-item"
-                                    href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a> </div>
+                                    href="#"><i class="mdi mdi-play-box-outline"></i> Video tutorial</a> <a class="dropdown-item"
+                                    href="#"><i class="mdi mdi-file-pdf"></i> Manual</a>
+                                    @if(Auth::user())
+                                    <hr> <a class="dropdown-item"
+                                    href="#"><i class="mdi mdi-play-box-outline"></i> AMD - Video tutorial</a> <a class="dropdown-item"
+                                    href="#"><i class="mdi mdi-file-pdf"></i> AMD - Manual</a> 
+                                    @endif
+                            </div>
                         </li>
+                        
                     </ul>
                 </div>
             </nav>
@@ -115,34 +130,32 @@
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        <aside class="left-sidebar">
+        @if(Auth::user())
+        <aside class="left-sidebar" >
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="nav-small-cap">PERSONAL</li>
+                        <li class="nav-small-cap">Registro</li>
                         <li>
-                            <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard </span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="index.html">Dashboard 1</a></li>
-                                <li><a href="index2.html">Dashboard 2</a></li>
-                                <li><a href="index3.html">Dashboard 3</a></li>
-                                <li><a href="index4.html">Dashboard 4</a></li>
-                                <li><a href="index5.html">Dashboard 5</a></li>
-                                <li><a href="index6.html">Dashboard 6</a></li>
-                            </ul>
+                            <a class="has-arrow" href="{{ route('informe.index') }}" aria-expanded="false">
+                                <i class="mdi mdi-file-document"></i><span class="hide-menu">Registro </span>
+                            </a>
+                            {{-- <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ route('informe.index') }}">Según investigación</a></li>
+                                <li><a href="#">Según registrador</a></li>
+                            </ul> --}}
                         </li>
                         <li>
-                            <a class="has-arrow " href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Apps</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-calendar.html">Calendar</a></li>
-                                <li><a href="app-chat.html">Chat app</a></li>
-                                <li><a href="app-ticket.html">Support Ticket</a></li>
-                                <li><a href="app-contact.html">Contact / Employee</a></li>
-                                <li><a href="app-contact2.html">Contact Grid</a></li>
-                                <li><a href="app-contact-detail.html">Contact Detail</a></li>
-                            </ul>
+                            <a class="has-arrow " href="{{ route('personas.index') }}" aria-expanded="false">
+                                <i class="mdi mdi-account-multiple"></i><span class="hide-menu">Personas</span></a>
+                           {{--  <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{ route('personas.index') }}">Investigación (personas)</a></li>
+                                @if(Auth::user()->rol=='0')
+                                <li><a href="app-chat.html">Administración  (usuarios)</a></li>
+                                @endif
+                            </ul> --}}
                         </li>
                     </ul>
                 </nav>
@@ -150,6 +163,7 @@
             </div>
             <!-- End Sidebar scroll-->
         </aside>
+        @endif
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -199,7 +213,8 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer">
-                © 2019 Material Pro Admin by wrappixel.com
+                Copyright © 2020 REPOSITORIO Callao, Todos los derechos Reservados. Universidad Nacional del Callao 
+                <small>| Desarrollado por saem</small>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
