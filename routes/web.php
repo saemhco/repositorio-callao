@@ -37,6 +37,11 @@ Route::group(['prefix' => 'informe'], function () {
 Route::group(['prefix' => 'personas'], function () {
     Route::get('/', 'PersonaController@index')->name('personas.index');
     Route::get('data', 'PersonaController@data')->name('personas.data');
+    Route::post('nuevo', 'PersonaController@store')->name('personas.nuevo');
+    Route::post('eliminar', 'PersonaController@delete')->name('personas.eliminar');
+    Route::post('actualizar', 'PersonaController@update')->name('personas.actualizar');
+    Route::get('editar/{dni}', 'PersonaController@edit')->name('personas.editar');
+    Route::post('importacion_masiva', 'PersonaController@importar')->name('personas.importar');  
 });
 
 //Rutas AUTH

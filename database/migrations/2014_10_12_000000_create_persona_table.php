@@ -11,13 +11,12 @@ class CreatePersonaTable extends Migration{
          $table->char('dni', 8);
          $table->string('nombres');
          $table->string('apellidos');
-         $table->char('codigo', 11);  // Longitud exacta del código
+         $table->char('codigo', 11)->nullable();  // Longitud exacta del código - ¿no son 10?
          $table->boolean('genero');  // True:Male False:Female
 
          $table->primary('dni');
       });
    }
-
    public function down(){
       Schema::dropIfExists('persona');
    }

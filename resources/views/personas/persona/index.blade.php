@@ -17,7 +17,8 @@
 @section('content')
 <div class="card">
    <div class="card-body">
-   
+   @include('personas.persona.nuevo')
+   @include('personas.persona.editar')
    <div class="row">
       <div class="col-6" align="left">
       <h4 class="card-title">
@@ -33,8 +34,9 @@
               <i class="mdi mdi-menu-down-outline"></i>
             </button>
            <div class="dropdown-menu dropdown-menu-sm-right">
-              <button class="dropdown-item" type="button">Cargar archivo</button>
-              <button class="dropdown-item" type="button">Descargar plantilla</button>
+              <label class="dropdown-item" type="button" for="importar-usuarios">Cargar archivo</label>
+              <input id="importar-usuarios" onChange="importar()" type="file" style='display: none;' accept=".xlsx"/>
+              <a class="dropdown-item" href="{{ url('files/plantilla/personas.xlsx') }}" target="_blank">Descargar plantilla</a>
            </div>
          </h4>
        </div>
@@ -48,7 +50,7 @@
                   <th>Nombres</th>
                   <th>Apellidos</th>
                   <th>Género</th>
-                  <th>Acciones</th>
+                  <th style="text-align: center;">Acciones</th>
                </tr>
             </thead>
             <tbody>
