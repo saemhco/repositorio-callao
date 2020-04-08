@@ -55,6 +55,10 @@ Route::post('registrarusuario', 'UserController@create')->name('register.user');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 //Fin Auth
 // Rutas Report
-Route::post('/report/basic', 'ReportController@BasicSearch')->name('search.basic');
-Route::post('/report/intermediate', 'ReportController@IntermediateSearch')->name('search.intermediate');
-Route::post('/report/advanced', 'ReportController@AdvancedSearch')->name('search.advanced');
+Route::group(['prefix' => 'busqueda'], function(){
+   Route::get('/', 'ReportController@index')->name('search');  // Search
+   Route::post('basic', 'ReportController@BasicSearch')->name('search.basic');
+   Route::post('intermediate', 'ReportController@IntermediateSearch')->name('search.intermediate');
+   Route::post('advanced', 'ReportController@AdvancedSearch')->name('search.advanced');
+   Route::post('set_programa', 'ReportController@get_programa')->name('search.getprograma');
+});

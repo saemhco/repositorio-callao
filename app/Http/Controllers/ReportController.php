@@ -9,7 +9,7 @@ use DB;
 
 class ReportController extends Controller {
    public function __construct(){
-      $this->middleware('auth')->except('index');
+      // $this->middleware('auth')->except('index');
       $this->DB_TO_SELECT = [
          'informe.titulo'
       ];
@@ -90,12 +90,15 @@ class ReportController extends Controller {
          $temp = $params['author'];
          $flag = False;
          # DNI | NOMBRE | APELLIDOS
-         if(key_exists('dni', $temp) && strlen($temp['dni'])>2){
-            $reg->join('persona', function ($join) use ($params, $temp){  // Join persona table to match author data
-               $join->on('persona.dni', 'like', DB::raw("'$temp[dni]%'"))  // First check dni
-               // Then check name and lastname
-               ->orOn('persona.nombres', 'like', DB::raw("'%$temp[dni]%'"))
-               ->orOn('persona.apellidos', 'like', DB::raw("'%$temp[dni]%'"));
+         if(key_exists('dni', $temp)){
+            $reg->join('persona', function ($join) use ($temp){  // Join persona table to match author data
+               if(strlen($temp['dni'])==8)
+                  $join->on('persona.dni', 'like', DB::raw("'$temp[dni]%'"));  // First check dni
+               else{
+                  // Then check name and lastname
+                  $join->on('persona.nombres', 'like', DB::raw("'%$temp[dni]%'"))
+                  ->orOn('persona.apellidos', 'like', DB::raw("'%$temp[dni]%'"));
+               }
             });
             $reg->join('autor', function($join){
                $join->on('autor.persona_id', '=', 'persona.dni')  // Persona has to be author
@@ -113,21 +116,30 @@ class ReportController extends Controller {
       # PROGRAMA
       if(key_exists('program', $params) && count($params['program'])!=0){
          $temp = $params['program'];
-         # TIPO
-         if(key_exists('type', $temp)){
-            $reg->where('informe.tipo_programa_id', $temp['type']);
-         }
          # ESCUELA
          if(key_exists('school', $temp)){  // If school is specified
             $reg->where('informe.programa_id', $temp['school']);
          }elseif(key_exists('faculty', $temp)){  // If only faculty is specified
             # FACULTAD
-            $reg->where('informe.programa_id', $temp['faculty']);
+            $reg->join('programa', function($join) use ($temp){
+               $join->on('informe.programa_id', '=', 'programa.id')
+               ->on('programa.programa_id', '=', DB::raw("'$temp[faculty]%'"));
+            });
+            # NIVEL ACADEMICO
+            if(key_exists('type', $temp)){
+               $reg->where('programa.nivel_acad_id', $temp['type']);
+            }
+         }elseif(key_exists('type', $temp)){
+            # NIVEL ACADEMICO
+            $reg->join('programa', function($join) use ($temp){
+               $join->on('informe.programa_id', '=', 'programa.id')
+               ->on('programa.nivel_acad_id', DB::raw("'$temp[type]'"));
+            });
          }
       }
       $reg = $reg->get(); // Get data
 
-      return var_dump($reg);
+      return $reg;
    }
    public function AdvancedSearch(Request $r){
       $params = $r->data;  // Get data from request
@@ -176,7 +188,6 @@ class ReportController extends Controller {
 
       /*** SPECIFIC FILTERS ***/
       # PALABRA CLAVE
-      # PALABRA CLAVE
       if(key_exists('keyword', $params)){
          $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
       }
@@ -192,9 +203,8 @@ class ReportController extends Controller {
       if(key_exists('area', $params)){
          if( is_numeric($params['area']) ){  # LLAVE FORANEA
             $reg->where('informe.area_estudio_id', $params['area']);
-         }else{  # OTRO
-            $reg->whereNull('informe.area_estudio_id');
-            $reg->where('informe.area_estudio_otro', 'like', '%'.$params['area'].'%');
+         // }else{  # OTRO
+         //    $reg->whereNull('informe.area_estudio_id');
          }
       }
 
@@ -202,16 +212,25 @@ class ReportController extends Controller {
       # PROGRAMA
       if(key_exists('program', $params) && count($params['program'])!=0){
          $temp = $params['program'];
-         # TIPO
-         if(key_exists('type', $temp)){
-            $reg->where('informe.tipo_programa_id', $temp['type']);
-         }
          # ESCUELA
          if(key_exists('school', $temp)){  // If school is specified
             $reg->where('informe.programa_id', $temp['school']);
          }elseif(key_exists('faculty', $temp)){  // If only faculty is specified
             # FACULTAD
-            $reg->where('informe.programa_id', $temp['faculty']);
+            $reg->join('programa', function($join) use ($temp){
+               $join->on('informe.programa_id', '=', 'programa.id')
+               ->on('programa.programa_id', '=', DB::raw("'$temp[faculty]%'"));
+            });
+            # NIVEL ACADEMICO
+            if(key_exists('type', $temp)){
+               $reg->where('programa.nivel_acad_id', $temp['type']);
+            }
+         }elseif(key_exists('type', $temp)){
+            # NIVEL ACADEMICO
+            $reg->join('programa', function($join) use ($temp){
+               $join->on('informe.programa_id', '=', 'programa.id')
+               ->on('programa.nivel_acad_id', DB::raw("'$temp[type]'"));
+            });
          }
       }
       # INVESTIGACIÓN
@@ -249,30 +268,32 @@ class ReportController extends Controller {
          if(key_exists('population', $temp)){
             if( is_numeric($temp['population']) ){  # LLAVE FORANEA
                $reg->where('informe.poblacion_id', $temp['population']);
-            }else{  # OTRO
-               $reg->whereNull('informe.poblacion_id');
-               $reg->where('informe.poblacion_otro', 'like', '%'.$temp['population'].'%');
+            // }else{  # OTRO
+            //    $reg->whereNull('informe.poblacion_id');
             }
          }
          # MUESTRA
          if(key_exists('sample', $temp)){
             if( is_numeric($temp['sample']) ){  # LLAVE FORANEA
                $reg->where('informe.muestra_id', $temp['sample']);
-            }else{  # OTRO
-               $reg->whereNull('informe.muestra_id');
-               $reg->where('informe.muestra_otro', 'like', '%'.$temp['sample'].'%');
+            // }else{  # OTRO
+            //    $reg->whereNull('informe.muestra_id');
             }
          }
       }
       # UNIDAD DE ANALISIS
       if(key_exists('analysis_unity', $params) && count($params['analysis_unity'])!=0){
          if( is_array($params['analysis_unity']) ){  # LLAVES FORANEAS
-            $reg->whereIn('informe.unidad_analisis_id', $params['analysis_unity']);
-         }else{  # OTRO
-            $reg->whereNull('informe.unidad_analisis_id');
-            $reg->where('informe.unidad_analisis_otro', 'like', '%'.$params['analysis_unity'].'%');
+            $reg->where(function($query) use ($params){
+               foreach($params['analysis_unity'] as $v){
+                  $query->orWhere('informe.unidad_analisis', 'like', "%$v%");
+               }
+            });
+         // }else{  # OTRO
+         //    $reg->whereNull('informe.unidad_analisis');
          }
       }
+
       /*** SPECIAL CASES ***/
       # PRESENTACION
       if(key_exists('exposition', $params) && count($params['exposition'])!=0){
@@ -301,9 +322,8 @@ class ReportController extends Controller {
          if(key_exists('financed', $temp)){
             if( is_numeric($temp['financed']) ){  # LLAVE FORANEA
                $reg->where('informe.fuente_financiamiento_id', $temp['financed']);
-            }else{  # OTRO
-               $reg->whereNull('informe.fuente_financiamiento_id');
-               $reg->where('informe.fuente_financiamiento_otro', 'like', '%'.$temp['financed'].'%');
+            // }else{  # OTRO
+            //    $reg->whereNull('informe.fuente_financiamiento_id');
             }
          }
       }
@@ -313,13 +333,19 @@ class ReportController extends Controller {
          $flag = False;
          # DNI | NOMBRE | APELLIDOS
          if(key_exists('dni', $temp)){
-            $reg->join('persona', function ($join){  // Join persona table to match author data
-               $join->on('persona.dni', '=', $temp['dni'])  // First check dni
-               // Then check name and lastname
-               ->orOn('persona.nombres', 'like', '%'.$params['dni'].'%')
-               ->orOn('persona.apellidos', 'like', '%'.$params['dni'].'%');
+            $reg->join('persona', function ($join) use ($temp){  // Join persona table to match author data
+               if(strlen($temp['dni'])==8)
+                  $join->on('persona.dni', 'like', DB::raw("'$temp[dni]%'"));  // First check dni
+               else{
+                  // Then check name and lastname
+                  $join->on('persona.nombres', 'like', DB::raw("'%$temp[dni]%'"))
+                  ->orOn('persona.apellidos', 'like', DB::raw("'%$temp[dni]%'"));
+               }
             });
-            $reg->join('autor', 'persona_id', '=', 'persona.dni');  // Persona has to be author
+            $reg->join('autor', function($join){
+               $join->on('autor.persona_id', '=', 'persona.dni')  // Persona has to be author
+               ->on('autor.informe_id', '=', 'informe.id');
+            });
             $flag = True;  // Author table is joined
             // If this field is not specified, the next fields will add author table
          }
@@ -329,9 +355,13 @@ class ReportController extends Controller {
             else $reg->join('autor', 'autor.condicion', '=', $temp['condition']);
          }
       }
-      $reg = $reg->get(); // Get data
+      // $reg = $reg->get(); // Get data
 
-      return var_dump($reg);
+      // Get generated query
+      DB::enableQueryLog();
+      $reg = $reg->get(); // Get data
+      return [DB::getQueryLog(), $reg];
+      // return $reg;
    }
    public function getAttributes(){
       $attr = [  // Attribute types
@@ -365,5 +395,8 @@ class ReportController extends Controller {
          $_i++;
       }
       return $attr;
+   }
+   public function get_programa(Request $r){
+      return  Programa::where('nivel_acad_id',$r->nivel_acad)->where('programa_id',$r->fac)->select('descripcion','id')->get();
    }
 }
