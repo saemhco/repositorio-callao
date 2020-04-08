@@ -19,6 +19,9 @@ $(document).ready(function() {
  
 
     function nuevo (){
+      if(!validar_formulario('#'))
+         return false;
+
       var route = "/personas/nuevo";
           $.ajax({
             headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, 
@@ -136,6 +139,8 @@ $(document).ready(function() {
     }
 
     function actualizar (){
+      if(!validar_formulario('#e-'))
+         return false;
       var route = "/personas/actualizar";
           $.ajax({
             headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, 
@@ -146,7 +151,7 @@ $(document).ready(function() {
               console.log('enviando....');
             },
             success:  function (response){
-               console.log(response);
+               //console.log(response);
                if(!response.resultado){
                 Swal.fire({
                         title: "¡Error!",
@@ -226,22 +231,23 @@ $(document).ready(function() {
         document.getElementById("importar-usuarios").value = "";
     }
 
-    function zfill(number, width) {
-       var numberOutput = Math.abs(number); /* Valor absoluto del número */
-       var length = number.toString().length; /* Largo del número */ 
-       var zero = "0"; /* String de cero */  
-       
-       if (width <= length) {
-           if (number < 0) {
-                return ("-" + numberOutput.toString()); 
-           } else {
-                return numberOutput.toString(); 
-           }
-       } else {
-           if (number < 0) {
-               return ("-" + (zero.repeat(width - length)) + numberOutput.toString()); 
-           } else {
-               return ((zero.repeat(width - length)) + numberOutput.toString()); 
-           }
+    function validar_formulario(pre){
+      var result;
+      var a = validar_dom(pre+'dni');
+      var b = validar_dom(pre+'nombres');
+      var c = validar_dom(pre+'apellidos');
+      var d = validar_dom(pre+'genero');
+      result = a&&b&&c&&d;
+      return result;  
     }
-}
+
+    function validar_dom(id_input){
+      if($(id_input).val()==""){
+         $(id_input+"_error").show();
+         return false;
+      }
+      else{
+         $(id_input+"_error").hide();
+         return true;
+      }
+    }

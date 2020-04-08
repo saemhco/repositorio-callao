@@ -11,7 +11,7 @@
                                             <div class="modal-body">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <a href="#" class=" btn btn-success btn-xs">
+                                                        <a href="{{ route('personas.index') }}" target="_blank" class=" btn btn-success btn-xs">
                                                             <i class="fa fa-plus"></i> Ir al módulo PERSONAS
                                                         </a>
                                                     </div>

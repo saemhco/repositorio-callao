@@ -12,26 +12,34 @@
                                             <div class="modal-body">
                                                 <div class="row floating-labels">
                                                     <div class="form-group col-md-12">
-                                                       <input type="text" maxlength="8" class="form-control" name="dni" id="e-dni" value=" ">
+                                                       <input type="text" maxlength="8" class="form-control" name="dni" id="e-dni" onkeypress="return validar(event);validar_dom('#e-dni')" value=" ">
                                                        <span class="bar"></span>
-                                                       <label for="dni">DNI </label>
+                                                       <label for="e-dni">DNI
+                                                          <small id="e-dni_error" style="color: red; display: none"> *este campo es obligatorio</small>
+                                                        </label>
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                       <input type="text" class="form-control" name="nombres" id="e-nombres" value=" ">
+                                                       <input type="text" class="form-control" name="nombres" id="e-nombres" onkeypress="validar_dom('#e-nombres')" value=" ">
                                                        <span class="bar"></span>
-                                                       <label for="nombres">Nombres </label>
+                                                       <label for="e-nombres">Nombres
+                                                          <small id="e-nombres_error" style="color: red; display: none"> *este campo es obligatorio</small>
+                                                       </label>
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                       <input type="text" class="form-control" name="apellidos" id="e-apellidos" value=" ">
+                                                       <input type="text" class="form-control" name="apellidos" id="e-apellidos" onkeypress="validar_dom('#e-apellidos')"  value=" ">
                                                        <span class="bar"></span>
-                                                       <label for="apellidos">Apellidos </label>
+                                                       <label for="e-apellidos">Apellidos
+                                                         <small id="e-apellidos_error" style="color: red; display: none"> *este campo es obligatorio</small>
+                                                       </label>
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                       <select class="form-control" name="genero" id="e-genero">
+                                                       <select class="form-control" name="genero" id="e-genero" onchange="validar_dom('#e-genero')">
                                                           <option value="1">Masculino</option>
                                                           <option value="0">Femenino</option>
                                                        </select>
-                                                       <label for="genero">Género </label>
+                                                       <label for="e-genero">Género
+                                                         <small id="e-genero_error" style="color: red; display: none"> *este campo es obligatorio</small>
+                                                       </label>
                                                     </div>                                                   
                                                 </div>
                                               

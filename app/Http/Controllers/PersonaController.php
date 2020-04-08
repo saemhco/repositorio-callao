@@ -58,7 +58,8 @@ class PersonaController extends Controller
     	return array('resultado' => true, 'msj'=>'Se registraron los datos.');
     }
     public function delete(Request $r){
-    	 Persona::destroy($r->dni);
+    	$dni = str_pad($r->dni, 8, "0", STR_PAD_LEFT);
+    	 Persona::destroy($dni);
     }
     public function edit($dni){
     	$dni = str_pad($dni, 8, "0", STR_PAD_LEFT);
@@ -70,18 +71,6 @@ class PersonaController extends Controller
    		$query=Persona::where('dni',$dni)->where('dni','<>',$id)->first();
         if($query)
             return array('resultado' => false,'msj'=>'El DNI ya está registrado en la Base de Datos.');
-    	$q = Persona::where('dni',$id)->first();
-    	$this->guardar_datos($r,$q);
-    	return array('resultado' => true, 'msj'=>'Se actualizaron los datos.' );
-   }
-
-   public function actualizar(Request $r){
-   		$dni = str_pad($r->dni, 8, "0", STR_PAD_LEFT);
-   		$id = str_pad($r->id, 8, "0", STR_PAD_LEFT);
-   		$query=Persona::where('dni',$dni)->where('dni','<>',$id)->first();
-   		return $query;
-        if($query)
-          { return array('resultado' => false,'msj'=>'El DNI ya está registrado en la Base de Datos.');}
     	$q = Persona::where('dni',$id)->first();
     	$this->guardar_datos($r,$q);
     	return array('resultado' => true, 'msj'=>'Se actualizaron los datos.' );

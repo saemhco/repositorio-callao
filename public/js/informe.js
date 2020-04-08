@@ -204,7 +204,7 @@ $(document).ready(function() {
               $("#persona").find('option').remove();
                 $("#persona").append('<option value="'+'">DNI - Nombres y Apellidos</option>');
               $.each(data,function(key, persona) {
-                $("#persona").append('<option value='+persona.dni+'>'+persona.datos+'</option>');
+                $("#persona").append('<option value='+zfill(persona.dni, 8)+'>'+persona.datos+'</option>');
               });
             },
             error: function(error){
