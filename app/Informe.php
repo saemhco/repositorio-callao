@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Autor;
+use App\User;
 use DB;
 
 class Informe extends Model {
@@ -25,7 +26,7 @@ class Informe extends Model {
       // Lugar de estudio
       'ubigeo_id', 'area_estudio_id', 'area_estudio_otro',
       // Relacionado al documento
-      'resumen', 'objetivos', 'producto_id','producto_otro','url'
+      'resumen', 'objetivos', 'producto_id','producto_otro','url','file','registrado_por','actualizado_por'
    ];
 	public $timestamps = False;
 
@@ -80,7 +81,7 @@ class Informe extends Model {
    public function producto(){  // PRODUCTO fk
       return $this->belongsto(Attribute::class, 'producto_id', 'id');
    }
-   public function autor(){  // PRODUCTO fk
+   public function autor(){ 
       $query = Autor::join('attribute','attribute.id','=','autor.condicion_id')
                       ->select(
                               DB::raw("(GROUP_CONCAT(CONCAT(persona.nombres,' ',persona.apellidos) SEPARATOR '; ')) as nombres"))
@@ -96,4 +97,26 @@ class Informe extends Model {
       }
    }
 
+   public function personas(){
+      return $this->belongsToMany(Persona::class, 'autor', 'informe_id', 'persona_id')->withPivot('condicion_id');
+   }
+   // public function get_row_autor($persona_id,$informe_id,$condicion_id){
+   //    return Autor::where('informe_id',$id)->first();
+   // }
+   public function registrado_por(){  
+      return User::where('id', $this->registrado_por)
+                 ->select(DB::raw("CONCAT(nombres,' ',apellidos)  as nombres"))
+                 ->first()->nombres;
+   }
+   public function actualizado_por(){  
+      return User::where('id', $this->actualizado_por)
+                 ->select(DB::raw("CONCAT(nombres,' ',apellidos)  as nombres"))
+                 ->first()->nombres;
+   }
+   public function unidad_analisis_explode(){
+      if($this->unidad_analisis)
+         return explode(",", $this->unidad_analisis);   
+      else 
+         return "";
+   }
 }

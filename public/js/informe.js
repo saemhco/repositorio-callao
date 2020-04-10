@@ -383,3 +383,55 @@ $(document).ready(function() {
              }
          })
     }
+
+    function press_btn_file(id){ //uso la función para no dejar de usar el boton upload, ya que el label luce diferente
+      $('#file').attr('onchange','save_file('+id+')');
+      $('#file').click();
+    }
+
+    function save_file(id){
+      var file=document.getElementById('file').files[0];
+        //console.log(file);
+        var route="/informe/guardar_archivo";
+        var formData = new FormData();
+            formData.append('file', file);
+            formData.append('id', id);
+            formData.append('_token', $('input[name=_token]').val());
+        $.ajax({
+          data: formData,
+          url:   route,
+          type: 'POST',
+          cache:false,
+          contentType: false,
+          processData: false,
+          beforeSend: function () {
+          Swal.fire({
+              // title: 'Importando Usuarios',
+              html:
+                "<h3><span><i class=\"fa fa-spinner fa-spin fa-lg\"></i></span> Guardando...</h3>"+
+                            'Por favor espere, este proceso puede tardar varios segundos.<br>'
+                        }
+                      )
+          },
+          success:  function (response) {
+            $('#datatable-ajax').DataTable().ajax.reload();
+            Swal.fire({
+                        title: "¡Éxito!",
+                        text: 'Se guardo el documento',
+                        icon: "success",
+                        timer: 1500,
+                    })
+            //console.log(response);
+          },
+          error:  function (response) {
+            Swal.fire({
+                        title: "¡Error!",
+                        text: 'Ocurrió un error, pruebe con un archivo ligero',
+                        icon: "error",
+                        timer: 2000,
+                    })
+            console.log(response);
+          }
+        });
+        file.value = "";
+    }

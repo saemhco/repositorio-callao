@@ -24,6 +24,7 @@
     <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-success" data-toggle="modal" data-target="#modal_nuevo">
         <i class="fa fa-plus"></i> Nuevo</button>
       </h4>
+      <input type="file" name="file" id="file" accept=".pdf" style="display: none;">
 
       <div class="table-responsive mt-4">
          <table id="datatable-ajax" class="table display table-bordered table-striped">

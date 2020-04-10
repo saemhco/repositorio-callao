@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="author" content="Ing. Saúl Escandón Munguía">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="material-pro/assets/images/icono.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('material-pro/assets/images/icono.ico') }}">
     <title>Repositorio Callao</title>
     <link rel="canonical" href="{{ route('index') }}"/>
     @yield('css')

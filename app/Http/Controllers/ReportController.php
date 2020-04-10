@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Programa;
 use App\Ubigeo;
+use App\Informe;
 use DB;
 
 class ReportController extends Controller {
@@ -398,5 +399,27 @@ class ReportController extends Controller {
    }
    public function get_programa(Request $r){
       return  Programa::where('nivel_acad_id',$r->nivel_acad)->where('programa_id',$r->fac)->select('descripcion','id')->get();
+   }
+
+   public function search_found($id){
+      $id = (int) $id;
+      $informe=Informe::find($id);
+      if (!$informe)
+         return back();
+      $personas = [
+         [
+            'titulo' => 'Autor(es)', 'condiciones' => [107,108,109,110],
+         ],
+         [
+            'titulo' => 'Asesor', 'condiciones' => [111,112]
+         ],
+         [
+            'titulo' => 'Jurados', 'condiciones' => [113,114,115,116,117,118,119]
+         ]
+      ];
+      $attr = $this->getAttributes();
+      //return $informe->unidad_analisis;
+      //return $informe->unidad_analisis_explode();
+      return view('buscador.result',compact('informe','personas','attr'));
    }
 }

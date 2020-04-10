@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Attribute;
 use App\Programa;
 use App\Ubigeo;
 use App\Persona;
 use App\Informe;
 use App\Autor;
+use Auth;
 use DB;
 
 class InformeController extends Controller
@@ -47,11 +49,18 @@ class InformeController extends Controller
         return $this->data_null;
     
     foreach ($query as $dato) {
-        $acciones="<div class='btn-group'>";
-        $acciones .= "<a href='#' target='_blank'  class='btn btn-success btn-circle'>
+        $acciones = "<div class='btn-group'>";
+        $acciones .= "<a href='busqueda/$dato->id' target='_blank'  class='btn btn-success btn-circle'>
                         <i class='mdi mdi-launch'></i></a> ";
         $acciones .= "<button type='button' class='btn btn-info btn-circle' onclick='personas($dato->id,$dato->programa_id)'>
                         <i class='fa fa-users' ></i></button> ";
+        if(!$dato->file){
+        $acciones .= "<button type='button' class='btn waves-effect waves-light btn-outline-primary' onclick='press_btn_file($dato->id)'>
+                        <i class='fa fa-upload'></i></button>";
+        }else{
+        $acciones .= "<label type='button' class='btn btn-primary btn-circle' onclick='press_btn_file($dato->id)'>
+                        <i class='fa fa-upload'></i></label>";
+        }//llamo a la f(x) para no dejar de usar el boton upload, ya que el label luce diferente
         $acciones .= "<button type='button' class='btn btn-warning btn-circle' onclick='editar($dato->id)'>
                         <i class='fa fa-edit'></i></button>";
         $acciones .="<button type='button' class='btn btn-danger btn-circle' onclick='eliminar($dato->id)'>
@@ -74,7 +83,7 @@ class InformeController extends Controller
 
    public function get_tabla_personas(Request $r){
         $id=(int) $r->id;
-        return Autor::select('persona.dni',DB::raw("CONCAT(persona.dni,' ',persona.nombres,' ',persona.apellidos) AS datos"),'attribute.descripcion AS responsabilidad','autor.id','autor.informe_id AS informe_id')
+        return Autor::select('persona.dni',DB::raw("CONCAT(persona.nombres,' ',persona.apellidos) AS datos"),'attribute.descripcion AS responsabilidad','autor.id','autor.informe_id AS informe_id')
                             ->join('persona','persona.dni','=','autor.persona_id')
                             ->join('attribute','attribute.id','=','autor.condicion_id')
                             ->where('autor.informe_id',$id)
@@ -109,7 +118,7 @@ class InformeController extends Controller
       return Attribute::where('type',$type)->get();
    }
 
-   public function guardar_datos_informe($q,$r){
+   private function guardar_datos_informe($q,$r){
       $q->titulo=$r->titulo;
       $q->programa_id=$r->programa;
       $q->nivel_acad_id=$r->nivel_acad;
@@ -143,6 +152,7 @@ class InformeController extends Controller
       $q->producto_id=$r->producto;
       $q->producto_otro=$r->producto_otro;
       $q->url=$r->url;
+      $q->actualizado_por = Auth::user()->id;
       $q->save();
    }
    public function store(Request $r){
@@ -151,6 +161,7 @@ class InformeController extends Controller
         if($query)
             return array('resultado' => false,'msj'=>'El título ya está registrado.' );
           $q = new Informe;
+          $q->registrado_por = Auth::user()->id;
           $this->guardar_datos_informe($q,$r);
           return array('resultado' => true,
                         'msj'=>'Se registró una nueva investigación. Continúe registrando los datos del autor y otros (personas).',
@@ -174,6 +185,18 @@ class InformeController extends Controller
                      'msj'=>'Se actualizó correctamente. Continúe con los datos del autor y otros (personas).',
                      'data'=>['programa'=>$q->programa_id,'id'=>$q->id]
                   );
+   }
+
+   public function save_file(Request $r){
+        $q= Informe::find($r->id);
+        //si se cargaron archivos que guarden las imagenes en el servidor
+        if($r->file('file')){
+            //Eliminamos el imagen que existía
+            Storage::delete($q->file);
+            $name= $r->file('file')->store('public/documentos');
+            $q->file=$name;
+            $q->save();
+        }
    }
 
 }

@@ -14,10 +14,9 @@
 Route::get('/', 'ReportController@index')->name('index');  // Search
 Route::get('/home', 'HomeController@index')->name('home');  // Insert
 
-
-Route::get('inicio', function () {
-    return view('registrar_informe.index');
-});
+// Route::get('inicio', function () {
+//     return view('registrar_informe.index');
+// });
 //Informe
 Route::group(['prefix' => 'informe'], function () {
     Route::get('/', 'InformeController@index')->name('informe.index');
@@ -30,8 +29,9 @@ Route::group(['prefix' => 'informe'], function () {
     Route::post('eliminar_persona', 'InformeController@delete_persona')->name('informe.delete_personas');
     Route::post('form_nuevo', 'InformeController@store')->name('informe.store');
     Route::post('eliminar', 'InformeController@delete')->name('informe.eliminar');
-    Route::get('editar/{id}', 'InformeController@edit')->name('informe.editar_personas');
+    Route::get('editar/{id}', 'InformeController@edit')->where(['id' => '[0-9]+'])->name('informe.editar_personas');
     Route::post('form_editar', 'InformeController@update')->name('informe.actualizar');
+    Route::post('guardar_archivo', 'InformeController@save_file')->name('informe.guardar_archivo');
 });
 //Personas
 Route::group(['prefix' => 'personas'], function () {
@@ -50,9 +50,9 @@ Route::get('login', function(){
    return Illuminate\Support\Facades\Auth::check() ? redirect()->route('informe.index') : view('auth.login');
 })->name('login');
 Route::post('validaracceso', 'Auth\LoginController@login')->name('validaracceso');
-Route::get('/registrar/usuario', 'UserController@index')->name('register.user');
-Route::post('registrarusuario', 'UserController@create')->name('register.user');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+//Route::get('/registrar/usuario', 'UserController@index')->name('register.user');
+//Route::post('registrarusuario', 'UserController@create')->name('register.user');
 //Fin Auth
 // Rutas Report
 Route::group(['prefix' => 'busqueda'], function(){
@@ -61,4 +61,5 @@ Route::group(['prefix' => 'busqueda'], function(){
    Route::post('intermediate', 'ReportController@IntermediateSearch')->name('search.intermediate');
    Route::post('advanced', 'ReportController@AdvancedSearch')->name('search.advanced');
    Route::post('set_programa', 'ReportController@get_programa')->name('search.getprograma');
+   Route::get('/{id}', 'ReportController@search_found')->where(['id' => '[0-9]+'])->name('search.found');
 });

@@ -54,6 +54,9 @@ class CreateInformeTable extends Migration {
          $table->unsignedBigInteger('producto_id'); // Producto fk
          $table->string('producto_otro')->nullable(); 
          $table->text('url')->nullable();
+         $table->string('file')->nullable();
+         $table->unsignedInteger('registrado_por');
+         $table->unsignedInteger('actualizado_por');
          /* Nota:
             los campos de llave foranea que pueden contener valores 'otro',
             tienen un registro nulo que será seleccionado cuando se tenga que especificar el campo otros
@@ -80,6 +83,8 @@ class CreateInformeTable extends Migration {
          $table->foreign('area_estudio_id')->references('id')->on('attribute')->onDelete('cascade');
 
          $table->foreign('producto_id')->references('id')->on('attribute')->onDelete('cascade');
+         $table->foreign('registrado_por')->references('id')->on('users')->onDelete('cascade');
+         $table->foreign('actualizado_por')->references('id')->on('users')->onDelete('cascade');
       });
    }
 

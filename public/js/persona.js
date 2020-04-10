@@ -188,7 +188,7 @@ $(document).ready(function() {
     }
     function importar(){
       var file=document.getElementById('importar-usuarios').files[0];
-        console.log(file);
+        //console.log(file);
         var route="/personas/importacion_masiva";
         var formData = new FormData();
             formData.append('file', file);
@@ -228,7 +228,7 @@ $(document).ready(function() {
             console.log(response);
           }
         });
-        document.getElementById("importar-usuarios").value = "";
+       file.value = "";
     }
 
     function validar_formulario(pre){
