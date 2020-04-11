@@ -11,8 +11,17 @@ use DB;
 class ReportController extends Controller {
    public function __construct(){
       // $this->middleware('auth')->except('index');
+      /*
+      programa_id|nivel_acad_id|modalidad_id|prioridad_id|linea_id
+      presupuesto|fuente_financiamiento_id|fuente_financiamiento_otro
+      fecha_sustentacion|cronograma_inicio|cronograma_fin|naturaleza_id
+      enfoque_id|corte_id|temporalidad_id|diseno_id|nivel_id|poblacion_id
+      poblacion_otro|muestra_id|muestra_otro|unidad_analisis|unidad_analisis_otro
+      ubigeo_id|area_estudio_id|area_estudio_otro|producto_id
+      producto_otro|url|file|registrado_por|actualizado_por
+      */
       $this->DB_TO_SELECT = [
-         'informe.titulo'
+         'informe.id', 'informe.titulo', 'informe.resumen', 'informe.url'
       ];
    }
    public function index(){  // SEARCH - RESULT view
@@ -20,29 +29,31 @@ class ReportController extends Controller {
       $facultades = Programa::where('nivel_acad_id',null)->pluck('descripcion','id');
       $escuela = Programa::where('nivel_acad_id','1')->where('programa_id','1')->pluck('descripcion','id');
       $ubigeo = Ubigeo::join('ubigeo AS prov','ubigeo.prov_id','=','prov.id')
-               ->join('ubigeo AS dep','dep.id','=','ubigeo.dep_id')
-               ->where('ubigeo.type','3')
-               ->select(DB::raw("CONCAT(ubigeo.descripcion,' - ',prov.descripcion,' - ',dep.descripcion) AS descripcion"), 'ubigeo.id as ubigeo')
-                ->pluck('descripcion','ubigeo');
+         ->join('ubigeo AS dep','dep.id','=','ubigeo.dep_id')
+         ->where('ubigeo.type','3')
+         ->select(DB::raw("CONCAT(ubigeo.descripcion,' - ',prov.descripcion,' - ',dep.descripcion) AS descripcion"), 'ubigeo.id as ubigeo')
+         ->pluck('descripcion','ubigeo');
       return view('buscador.buscador', compact('attr', 'facultades', 'escuela', 'ubigeo'));
    }
 
-   private function saveInforme($data){  // SAVE REPORT
-      return var_dump(false);
-   }
    public function BasicSearch(Request $r){
       $params = $r->data;  // Get data from request
       $to_select = $this->DB_TO_SELECT;
 
       // Query
-      $reg = DB::table('informe')->select($to_select);
+      $reg = Informe::select($to_select);
       # PALABRA CLAVE
-      $reg->where('informe.titulo', 'like', '%'.$params['keyword'].'%');
+      $reg = Informe::where('informe.titulo', 'like', '%'.$params['keyword'].'%');
+      $reg = $reg->paginate(15);
 
-      $reg = $reg->get();
+      // Add author to object in array
+      foreach($reg as $r){  // $r is data[n]
+         $r->autor = $r->autor();
+      }
+
       return $reg;
       /* If we woudl like to search the keyword in more than one field we should use
-      $query->orWhere('table.field_1', 'like', '%'.$keyword.'%')
+         $query->orWhere('table.field_1', 'like', '%'.$keyword.'%')
          ->orWhere('table.field_2', 'like', '%'.$keyword.'%')
       */
    }
@@ -68,7 +79,7 @@ class ReportController extends Controller {
       $to_select = $this->DB_TO_SELECT;
 
       // Query
-      $reg = DB::table('informe')->select($to_select);
+      $reg = Informe::select($to_select);
 
       # PALABRA CLAVE
       if(key_exists('keyword', $params)){
@@ -138,7 +149,12 @@ class ReportController extends Controller {
             });
          }
       }
-      $reg = $reg->get(); // Get data
+      $reg = $reg->paginate(15);
+
+      // Add author to object in array
+      foreach($reg as $r){  // $r is data[n]
+         $r->autor = $r->autor();
+      }
 
       return $reg;
    }
@@ -185,7 +201,7 @@ class ReportController extends Controller {
       $to_select = $this->DB_TO_SELECT;
 
       // Query
-      $reg = DB::table('informe')->select($to_select);
+      $reg = Informe::select($to_select);
 
       /*** SPECIFIC FILTERS ***/
       # PALABRA CLAVE
@@ -356,13 +372,19 @@ class ReportController extends Controller {
             else $reg->join('autor', 'autor.condicion', '=', $temp['condition']);
          }
       }
-      // $reg = $reg->get(); // Get data
+      $reg = $reg->paginate(15);
 
-      // Get generated query
+      // Add author to object in array
+      foreach($reg as $r){  // $r is data[n]
+         $r->autor = $r->autor();
+      }
+
+      return $reg;
+      /* Get generated query
       DB::enableQueryLog();
       $reg = $reg->get(); // Get data
       return [DB::getQueryLog(), $reg];
-      // return $reg;
+      */
    }
    public function getAttributes(){
       $attr = [  // Attribute types
