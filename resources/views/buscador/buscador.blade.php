@@ -285,8 +285,8 @@
 </div>
 {{-- Resultados --}}
 <div class="card">
-   <div class="card-body">
-      RESULTADOS
+   <div id="resultados" class="card-body">
+      <i>Aquí se mostrarán los resultados</i>
    </div>
 </div>
 @endsection
@@ -294,9 +294,10 @@
 <script src="{{asset('material-pro/assets/plugins/select2/dist/js/select2.full.min.js')}}"></script>
 <script src="{{asset('material-pro/assets/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
 <script type="text/javascript">
-   // const otros_id = ["21", "52", "58", "66", "85", "90"];
+   const _debug = false;
+
    function formBasic(){
-      console.log("BASIC FORM")
+      if(_debug) console.log("BASIC FORM")
       let data = {};  // Data storage
       document.querySelectorAll("div#BasicSearch input").forEach((v)=>{  // INPUT
          // Validar que el input tenga un valor valido, sino no agregarlo a data
@@ -321,7 +322,7 @@
          }
       });
 
-      console.log("Data: ", data);
+      if(_debug) console.log("Data: ", data);
       if(Object.entries(data).length==0) return;  // Skip if object is empty
       $.ajax({
          type: 'POST',
@@ -331,7 +332,8 @@
             data: data,
          },
          success: (e) => {
-            console.log(e)
+            if(_debug) console.log(e);
+            insertNav(e);
          },
          error: (e) => {
             console.log(e)
@@ -339,7 +341,7 @@
       });
    }
    function formIntermediate(){
-      console.log("INTERMEDIATE FORM")
+      if(_debug) console.log("INTERMEDIATE FORM")
       /*
       data = {
          keyword: 'something to search for',
@@ -412,7 +414,7 @@
          }
       });
 
-      console.log("Data: ", data);
+      if(_debug) console.log("Data: ", data);
       if(Object.entries(data).length==0) return;  // Skip if object is empty
       $.ajax({
          type: 'POST',
@@ -422,7 +424,8 @@
             data: data,
          },
          success: (e) => {
-            console.log(e)
+            if(_debug) console.log(e);
+            insertNav(e);
          },
          error: (e) => {
             console.log(e)
@@ -430,7 +433,7 @@
       });
    }
    function formAdvanced(){
-      console.log("ADVANCED FORM")
+      if(_debug) console.log("ADVANCED FORM")
       /* Values are Attribute's id
       data = {
          keyword: 'something to search for',
@@ -524,7 +527,7 @@
          }
       });
 
-      console.log("Data: ", data);
+      if(_debug) console.log("Data: ", data);
       if(Object.entries(data).length==0) return;  // Skip if object is empty
       $.ajax({
          type: 'POST',
@@ -534,7 +537,8 @@
             data: data,
          },
          success: (e) => {
-            console.log(e)
+            if(_debug) console.log(e);
+            insertNav(e);
          },
          error: (e) => {
             console.log(e)
@@ -553,6 +557,91 @@
       document.querySelector('div#IntermediateSearch').classList.add('none');
       document.querySelector('div#AdvancedSearch').classList.add('none');
       show_div.classList.remove('none');
+   }
+   function insertNav(nav){
+      // Prepare container
+      res = document.getElementById("resultados");
+      // res.parentElement.classList.remove("fade");  // Mosstrar div
+
+      // There is not enought results to make a nav
+      let navigation = ``;
+      if(nav.next_page_url || nav.prev_page_url){
+         // Links
+         let links = ``;
+         links += `
+         <li class="page-item ${!nav.prev_page_url?'disabled':''}">
+         <span data-link="${nav.first_page_url}" class="page-link" style="cursor: ${!nav.prev_page_url?'default':'pointer'}" onclick="changePage(this)">&lsaquo;&lsaquo;</span>
+         </li>`;
+         if(nav.prev_page_url){  // Prev page
+            links += `
+            <li class="page-item" style="cursor: pointer">
+            <span data-link="${nav.prev_page_url}" class="page-link" onclick="changePage(this)">${nav.current_page-1}</span>
+            </li>`;
+         }
+         links += `
+         <li class="page-item active" aria-current="page" style="cursor: pointer">
+         <span class="page-link">${nav.current_page}</span>
+         </li>`;
+         if(nav.next_page_url){
+            links += `
+            <li class="page-item" style="cursor: pointer">
+            <span data-link="${nav.next_page_url}" class="page-link" onclick="changePage(this)">${nav.current_page+1}</span>
+            </li>`;
+         }
+         links += `
+         <li class="page-item ${!nav.next_page_url?'disabled':''}">
+         <span data-link="${nav.last_page_url}" class="page-link" style="cursor: ${!nav.next_page_url?'default':'pointer'}" onclick="changePage(this)">&rsaquo;&rsaquo;</span>
+         </li>`;
+
+         // General nav
+         navigation = `
+         <nav>
+         <ul class="pagination">
+         ${links}
+         </ul>
+         </nav>
+         `;
+      }
+
+      // Result
+      let results = ``;
+      nav.data.forEach((v) => {
+         results += `
+         <div>
+            <h2><a href="{{route('search.index')}}/${v.id}">${v.titulo}</a></h2>
+            <h4>${v.autor}</h4>
+            <p>${v.resumen}</p>
+         </div>
+         `;
+      })
+
+      // Content
+      let html = `
+      <div>
+         <b>RESULTADOS</b>
+         ${results}
+      </div>
+      <br>
+      <span>Mostrando ítems ${nav.from} - ${nav.to} de ${nav.total}</span>
+      ${navigation}
+      `;
+
+      res.innerHTML = html;  // Add to container
+   }
+   function changePage(e){
+      $.ajax({
+         type: 'POST',
+         url: e.getAttribute('data-link'),
+         data: {
+            _token: "{{ csrf_token() }}",
+         },
+         success: (e) => {
+            insertNav(e);
+         },
+         error: (e) => {
+            console.log(e)
+         }
+      });
    }
 
    // Change programa

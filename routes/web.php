@@ -41,7 +41,7 @@ Route::group(['prefix' => 'personas'], function () {
     Route::post('eliminar', 'PersonaController@delete')->name('personas.eliminar');
     Route::post('actualizar', 'PersonaController@update')->name('personas.actualizar');
     Route::get('editar/{dni}', 'PersonaController@edit')->name('personas.editar');
-    Route::post('importacion_masiva', 'PersonaController@importar')->name('personas.importar');  
+    Route::post('importacion_masiva', 'PersonaController@importar')->name('personas.importar');
 });
 //usuario
 Route::group(['prefix' => 'usuarios'], function () {
@@ -64,7 +64,7 @@ Route::post('configurar_mi_cuenta', 'Auth\MeController@update')->name('me.update
 //Fin Auth
 // Rutas Report
 Route::group(['prefix' => 'busqueda'], function(){
-   Route::get('/', 'ReportController@index')->name('search');  // Search
+   Route::get('/', 'ReportController@index')->name('search.index');  // Search
    Route::post('basic', 'ReportController@BasicSearch')->name('search.basic');
    Route::post('intermediate', 'ReportController@IntermediateSearch')->name('search.intermediate');
    Route::post('advanced', 'ReportController@AdvancedSearch')->name('search.advanced');
