@@ -319,11 +319,11 @@ const _debug = false;
          <div data-icon="&#xe012;" class="linea-icon linea-basic col-md-2" style="font-size: 110px; margin-top: -20px; text-align: center; ${nivel_academico[v.nivel_acad_id]["color"]}">
                <h4 style="margin-top: -45px; ${nivel_academico[v.nivel_acad_id]["color"]}">${nivel_academico[v.nivel_acad_id]["text"]}</h4>
          </div>
-         <div class="col-md-9">
+         <div class="col-md-10">
             <h3><a href="/busqueda/${v.id}" target="_blank"><u>${v.titulo}</u></a></h3>
             <h5>${v.autor}</h5>
             <p style="text-align:justify">${resumen}</p>
-         </div><hr class="col-10">
+         </div><hr class="col-11">
          `;
       })
 
@@ -358,10 +358,10 @@ const _debug = false;
 
    function getNivelAcademico(){
       var nivel_acad={};
-          nivel_acad[1]={'text':'PREGRADO','color':'color:blue;'};
-          nivel_acad[2]={'text':'SEGUNDA ESPECIALIDAD','color':'color:green;'};
-          nivel_acad[3]={'text':'MAESTRIA','color':'color:red;'};
-          nivel_acad[4]={'text':'DOCTORADO','color':'color:red;'};
+          nivel_acad[1]={'text':'PREGRADO','color':'color:rgba(51,51,153,0.7);'};
+          nivel_acad[2]={'text':'SEGUNDA ESPECIALIDAD','color':'color:rgba(51,153,153,0.6);'};
+          nivel_acad[3]={'text':'MAESTRIA','color':'color:rgba(240,50,40,0.6);'};
+          nivel_acad[4]={'text':'DOCTORADO','color':'color:rgba(170,70,70,0.6);'};
           return nivel_acad;
    }
 

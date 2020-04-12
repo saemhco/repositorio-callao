@@ -7,7 +7,17 @@
 <link rel="stylesheet"href="{{asset('material-pro/assets/plugins/html5-editor/bootstrap-wysihtml5.css')}}" />
 <link href="{{asset('material-pro/assets/plugins/select2/dist/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('material-pro/assets/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet" type="text/css" />
+<style type="text/css">
+      .color-1{color:rgba(51,51,153,0.7)}
+      .color-2{color:rgba(51,153,153,0.6)}
+      .color-3{color:rgba(240,50,40,0.6)}
+      .color-4{color:rgba(170,70,70,0.6)}
 
+      .color-fondo-1{background-color: rgba(51,51,153,0.9)}
+      .color-fondo-2{background-color: rgba(51,153,153,0.9)}
+      .color-fondo-3{background-color: rgba(240,50,40,0.9)}
+      .color-fondo-4{background-color: rgba(170,70,70,0.9)}
+</style>
 @endsection
 @section('title','Buscador')
 @section('routes')
@@ -20,11 +30,11 @@
       <h3 class="card-title">{{ $informe->titulo}}</h3><hr>
       <div class="row">
       	<div class="col-md-3">
-      		<span style="background-color: rgb(0, 0, 0,0.5); color: white;position:absolute; z-index: 2; padding: 1px;">
+      		<span style="color: white;position:absolute; z-index: 2; padding: 0 10px 0 10px; border-radius: 10px;" class="color-fondo-{{$informe->nivel_acad_id}}">
       		{{ $informe->programa->padre->descripcion }}<br>
       		{{ $informe->programa->descripcion }}</span>
-      		<div data-icon="&#xe012;" class="linea-icon linea-basic" style="font-size: 150px; margin-top: 25px; text-align: center">
-      			<h3 style="margin-top: -60px;">{{strtoupper($informe->nivel_acad->descripcion)}}</h3>
+      		<div data-icon="&#xe012;" class="linea-icon linea-basic color-{{$informe->nivel_acad_id }}" style="font-size: 150px; margin-top: 25px; text-align: center;">
+      			<h3 style="margin-top: -60px;" class="color-{{$informe->nivel_acad_id }}">{{strtoupper($informe->nivel_acad->descripcion)}}</h3>
       		</div><hr>
       		@foreach($personas as $p)
       		@if(in_array($informe->personas()->whereIn('condicion_id',$p['condiciones'])->pluck('condicion_id')->first(), $p['condiciones']))
