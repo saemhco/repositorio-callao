@@ -102,9 +102,10 @@ class InformeController extends Controller
    }
 
    public function delete(Request $r){
+        $q=Informe::find($r->id);
+        Storage::delete($q->file);
         Informe::destroy($r->id);
    }
-
 
    public function get_condicion_persona($id){
         $id=(int) $id;

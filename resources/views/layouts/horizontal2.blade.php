@@ -86,9 +86,12 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="ti-user"></i> Mi Perfil</a></li>
                                     <li><a href="#"><i class="ti-wallet"></i> Mis Registros</a></li>
-                                    <li><a href="#"><i class="icon-people"></i> Administrar Usuarios</a></li>
+                                    @if(Auth::user()->rol=='0')
+                                    <li><a href="{{ route('user.index') }}"><i class="icon-people"></i> Administrar Usuarios</a></li>
+                                    @endif
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-settings"></i> Configurar mi cuenta</a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#configurar_mi_cuenta">
+                                        <i class="ti-settings"></i> Configurar mi cuenta</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="{{route('logout')}}" onclick="event.preventDefault();
                                         document.getElementById('salir').submit();"><i class="fa fa-power-off"></i> Salir</a>
@@ -199,6 +202,68 @@
                 <div class="row" >
                     <div class="col-12">
                         @yield('content')
+                        @if(Auth::user())
+                        <!--  Modal content for the above example -->
+                                <div class="modal fade" id="configurar_mi_cuenta" tabindex="-1" role="dialog"
+                                    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myLargeModalLabel">
+                                                    <i class="ti-settings"></i> Configurar mi cuenta
+                                                </h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">×</button>
+                                            </div><br>
+                                            <form action="#" id="home_form_editar">
+                                            <div class="modal-body">
+                                                <div class="row floating-labels">
+                                                    <div class="form-group col-md-12">
+                                                       <input value="{{ Auth::user()->nombres}}" type="text" class="form-control" name="nombres" 
+                                                       onkeypress="validar_dom('#home-nombres')" required="true" id="home-nombres">
+                                                       <span class="bar"></span>
+                                                       <label for="nombres">Nombres
+                                                          <small id="home-nombres_error" style="color: red; display: none"> *este campo es obligatorio</small>
+                                                       </label>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                       <input value="{{ Auth::user()->apellidos}}" type="text" class="form-control" name="apellidos" id="home-apellidos" onkeypress="validar_dom('#home-apellidos')" required>
+                                                       <span class="bar"></span>
+                                                       <label for="e-apellidos">Apellidos
+                                                         <small id="home-apellidos_error" style="color: red; display: none"> *este campo es obligatorio</small>
+                                                       </label>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                       <input value="{{ Auth::user()->email}}" type="text" class="form-control" name="email" id="home-email" onkeypress="validar_dom('#home-email');">
+                                                       <span class="bar"></span>
+                                                       <label for="home-email" required>E-mail
+                                                          <small id="home-email_error" style="color: red; display: none"> *este campo es obligatorio</small>
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                       <input value="{{ Auth::user()->username}}" type="text" class="form-control" disabled="none">
+                                                       <span class="bar"></span>
+                                                       <label for="home-username">Usuario </label>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                       <input type="password" maxlength="15" class="form-control" name="password" id="home-password" required>
+                                                       <span class="bar"></span>
+                                                       <label for="home-password">Contraseña (opcional)
+                                                        </label>
+                                                    </div>                                                  
+                                                </div>
+                                              
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="hidden" name="id" id="id">
+                                                <label class="btn btn-success btn-block" type="button" onclick="configurar_mi_cuenta()">Actualizar</label>
+                                            </div>
+                                            </form>
+                                        </div><!-- /.modal-content -->
+
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                        @endif
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -284,6 +349,53 @@
            }
         }
     }
+
+
+    function configurar_mi_cuenta (){
+      if(   $('#home-nombres').val()=='' ||
+            $('#home-apellidos').val()=='' ||
+            $('#home-email').val()==''
+        ){
+            Swal.fire({
+                title: "¡Error!",
+                text: 'Llenar todos los campos',
+                icon: "alert",
+                timer: 2500,
+            })
+            return false;
+        }
+      var route = "/configurar_mi_cuenta";
+          $.ajax({
+            headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, 
+            data:  $("#home_form_editar").serialize(),
+            url:   route,
+            type: 'POST',
+            beforeSend: function () {
+              console.log('enviando....');
+            },
+            success:  function (response){
+                Swal.fire({
+                        title: "¡Éxito!",
+                        text: 'Se actualizaron sus datos',
+                        icon: "success",
+                        timer: 1000,
+                        showConfirmButton: false
+                    })
+                $('#configurar_mi_cuenta').modal('hide');
+                setTimeout(function(){  location.reload(); }, 300); //esperar < 1 seg antes de recargar
+            },
+            error: function (response){
+               console.log(response);
+              Swal.fire({
+                  title: "¡Error!",
+                  text: response.responseJSON.message,
+                  icon: "error",
+                  timer: 3500,
+              })
+            }
+          });
+    }
+
     </script>
 </body>
 
