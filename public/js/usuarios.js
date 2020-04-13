@@ -2,7 +2,7 @@ $(document).ready(function() {
         var myTable=$('#datatable-ajax').DataTable( {
         // dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
         bProcessing: true,
-        sAjaxSource: '/personas/data',
+        sAjaxSource: '/usuarios/data',
         "language" : {'url':'/js/latino.json'},
         // bPaginate: true,
         // bLengthChange: true,
@@ -22,7 +22,7 @@ $(document).ready(function() {
       if(!validar_formulario('#'))
          return false;
 
-      var route = "/personas/nuevo";
+      var route = "/usuarios/nuevo";
           $.ajax({
             headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, 
             data:  $("#form_nuevo").serialize(),
@@ -76,19 +76,27 @@ $(document).ready(function() {
                 }).then((result) => {
                   if (result.value) {
                     $.ajax({ 
-                            url: '/personas/eliminar',
+                            url: '/usuarios/eliminar',
                             type: 'POST',
                             headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, 
-                            data: {dni:id},
+                            data: {id:id},
                             success: function (data) {
-                                $('#datatable-ajax').DataTable().ajax.reload();
-                                Swal.fire({
-                                    title: "¡Eliminado!",
-                                    text: "Se ha eliminado una fila correctamente.",
-                                    icon: "success",
-                                    timer: 1500,
-                                    showConfirmButton: false
-                                })
+                                if(data){
+                                	$('#datatable-ajax').DataTable().ajax.reload();
+	                                Swal.fire({
+	                                    title: "¡Eliminado!",
+	                                    text: "Se ha eliminado una fila correctamente.",
+	                                    icon: "success",
+	                                    timer: 1500,
+	                                    showConfirmButton: false
+	                                })
+                                }else{
+                                	Swal.fire(
+	                                  'Error',
+	                                  'El usuario registro varios trabajos de investigación, no se puede borrar porque se perderian esos registros',
+	                                  'error'
+	                                )
+                                }
                             },
                             error: function(error){
                                 Swal.fire(
@@ -113,18 +121,16 @@ $(document).ready(function() {
     function editar (id){ 
       //resetar el modal
          $.ajax({ 
-             url: '/personas/editar/'+id,
+             url: '/usuarios/editar/'+id,
              type: 'GET',
-             //headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, 
-             //data: {id:id},
              success: function (data) {
-               console.log(data);
+               //console.log(data);
                  //Cargar datos
-                 $('#e-dni').val(zfill(data.dni, 8)); 
                  $('#e-nombres').val(data.nombres);
                  $('#e-apellidos').val(data.apellidos);
-                 $('#e-genero').val(data.genero);
-                 $('#id').val(data.dni);
+                 $('#e-username').val(data.username);
+				 $('#e-email').val(data.email);
+                 $('#id').val(data.id);
                  $('#modal_editar').modal('show'); 
              },
              error: function(error){
@@ -141,7 +147,7 @@ $(document).ready(function() {
     function actualizar (){
       if(!validar_formulario('#e-'))
          return false;
-      var route = "/personas/actualizar";
+      var route = "/usuarios/actualizar";
           $.ajax({
             headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}, 
             data:  $("#form_editar").serialize(),
@@ -185,58 +191,17 @@ $(document).ready(function() {
             }
           });
     }
-    function importar(){
-      var file=document.getElementById('importar-usuarios').files[0];
-        //console.log(file);
-        var route="/personas/importacion_masiva";
-        var formData = new FormData();
-            formData.append('file', file);
-            formData.append('_token', $('input[name=_token]').val());
-        $.ajax({
-          data: formData,
-          url:   route,
-          type: 'POST',
-          cache:false,
-          contentType: false,
-          processData: false,
-          beforeSend: function () {
-          Swal.fire({
-              // title: 'Importando Usuarios',
-              html:
-                "<h3><span><i class=\"fa fa-spinner fa-spin fa-lg\"></i></span> Importando Usuarios</h3>"+
-                            'Por favor espere, este proceso puede tardar unos minutos...<br>'+
-                '<br><p><b>NOTA:</b> Evite repetir valores en la coluna DNI, estos registros se omitirán para evitar errores.</p>'
-                        }
-                      )
-          },
-          success:  function (response) {
-            $('#datatable-ajax').DataTable().ajax.reload();
-            Swal.fire(
-                      '¡Éxito!',
-                      'Se registraron correctamente',
-                      'success'
-                      )
-            console.log(response);
-          },
-          error:  function (response) {
-            Swal.fire(
-                      '¡Error!',
-                      'Ocurrió un error, revise lo siguiente: <br> -Que todos los datos del archivo .xlsx sean válidos (no nulos). <br> -Pruebe con menos registros.',
-                      'error'
-                      )
-            console.log(response);
-          }
-        });
-       file.value = "";
-    }
 
     function validar_formulario(pre){
       var result;
-      var a = validar_dom(pre+'dni');
-      var b = validar_dom(pre+'nombres');
-      var c = validar_dom(pre+'apellidos');
-      var d = validar_dom(pre+'genero');
-      result = a&&b&&c&&d;
+      var e=true;
+      var a = validar_dom(pre+'nombres');
+      var b = validar_dom(pre+'apellidos');
+      var c = validar_dom(pre+'email');
+      var d = validar_dom(pre+'username');
+      if(pre=='#')
+      	{e = validar_dom(pre+'password');}
+      result = a&&b&&c&&d&&e;
       return result;  
     }
 

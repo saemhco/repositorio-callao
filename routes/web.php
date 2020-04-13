@@ -43,6 +43,15 @@ Route::group(['prefix' => 'personas'], function () {
     Route::get('editar/{dni}', 'PersonaController@edit')->name('personas.editar');
     Route::post('importacion_masiva', 'PersonaController@importar')->name('personas.importar');
 });
+//usuario
+Route::group(['prefix' => 'usuarios'], function () {
+    Route::get('/', 'UserController@index')->name('user.index');
+    Route::get('data', 'UserController@data')->name('user.data');
+    Route::post('nuevo', 'UserController@store')->name('user.nuevo');
+    Route::post('eliminar', 'UserController@delete')->name('user.eliminar');
+    Route::post('actualizar', 'UserController@update')->name('user.actualizar');
+    Route::get('editar/{id}', 'UserController@edit')->where(['id' => '[0-9]+'])->name('user.editar');
+});
 
 //Rutas AUTH
 Route::get('login', function(){
@@ -51,8 +60,7 @@ Route::get('login', function(){
 })->name('login');
 Route::post('validaracceso', 'Auth\LoginController@login')->name('validaracceso');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-//Route::get('/registrar/usuario', 'UserController@index')->name('register.user');
-//Route::post('registrarusuario', 'UserController@create')->name('register.user');
+Route::post('configurar_mi_cuenta', 'Auth\MeController@update')->name('me.update');
 //Fin Auth
 // Rutas Report
 Route::group(['prefix' => 'busqueda'], function(){

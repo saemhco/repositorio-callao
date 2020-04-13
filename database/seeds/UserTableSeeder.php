@@ -13,21 +13,43 @@ class UserTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'username' => 'Administrador',
+                'username' => 'Admin',
                 'nombres' => 'Saúl Angel',
                 'apellidos' => 'Escandón Munguía',
+                'password' => bcrypt('12345678'),
+                'rol' => '0',
+            ]
+         ]);
+        DB::table('users')->insert([
+            [
+                'username' => 'Administrador',
+                'nombres' => 'MERCEDES LULILEA',
+                'apellidos' => 'FERRER MEJIA',
+                'email' => 'mlferrerm@unac.edu.pe',
                 'password' => bcrypt('12345678'),
                 'rol' => '0'
             ]
          ]);
+        // DB::table('rsu_ejes')->insert([
+        //     [
+        //         'eje' => 'Proyección Social',
+        //         'abr' => 'PS',
+        //     ],  [
+        //         'eje' => 'Extensión Cultural',
+        //         'abr' => 'EC',
+        //     ],  [
+        //         'eje' => 'Mixto (Proyección Social y Extensión cultural)',
+        //         'abr' => 'MA',
+        //     ],
+        //  ]);
+
 
         DB::table('persona')->insert([
             [
                 'dni'       => '12345678',
-                'apellidos' => 'Paterno Materno',
-                'nombres'   => 'Nombre1 Nombre2',
-                'codigo'    => '12345678901',
-                'genero'    => true,
+                'apellidos' => 'FERRER MEJIA',
+                'nombres'   => 'MERCEDES LULILEA',
+                'genero'    => false,
 
             ]
          ]);

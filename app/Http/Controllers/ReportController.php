@@ -21,7 +21,7 @@ class ReportController extends Controller {
       producto_otro|url|file|registrado_por|actualizado_por
       */
       $this->DB_TO_SELECT = [
-         'informe.id', 'informe.titulo', 'informe.resumen', 'informe.url'
+         'informe.id', 'informe.titulo', 'informe.resumen', 'informe.url', 'nivel_acad_id'
       ];
    }
    public function index(){  // SEARCH - RESULT view

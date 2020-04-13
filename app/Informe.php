@@ -93,7 +93,7 @@ class Informe extends Model {
          return $query->nombres;
       }
       else{
-         return "No registrado";
+         return "Autor(es) no registrado(s)";
       }
    }
 
