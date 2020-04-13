@@ -294,7 +294,8 @@
 <script src="{{asset('material-pro/assets/plugins/select2/dist/js/select2.full.min.js')}}"></script>
 <script src="{{asset('material-pro/assets/plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
 <script type="text/javascript">
-   const _debug = false;
+   const _debug = true;
+   let _data = {};
 
    function formBasic(){
       if(_debug) console.log("BASIC FORM")
@@ -324,6 +325,7 @@
 
       if(_debug) console.log("Data: ", data);
       if(Object.entries(data).length==0) return;  // Skip if object is empty
+      _data = data;  // Set this data to global object
       $.ajax({
          type: 'POST',
          url: '{{ route("search.basic") }}',
@@ -416,6 +418,7 @@
 
       if(_debug) console.log("Data: ", data);
       if(Object.entries(data).length==0) return;  // Skip if object is empty
+      _data = data;  // Set this data to global object
       $.ajax({
          type: 'POST',
          url: '{{ route("search.intermediate") }}',
@@ -529,6 +532,7 @@
 
       if(_debug) console.log("Data: ", data);
       if(Object.entries(data).length==0) return;  // Skip if object is empty
+      _data = data;  // Set this data to global object
       $.ajax({
          type: 'POST',
          url: '{{ route("search.advanced") }}',
@@ -634,8 +638,10 @@
          url: e.getAttribute('data-link'),
          data: {
             _token: "{{ csrf_token() }}",
+            data: _data,
          },
          success: (e) => {
+            if(_debug) console.log(e);
             insertNav(e);
          },
          error: (e) => {
