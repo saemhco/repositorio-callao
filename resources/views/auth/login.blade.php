@@ -37,7 +37,7 @@
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <section id="wrapper">
-        <div class="login-register" style="background-image:url(/material-pro/assets/images/background/login-register.jpg);">
+        <div class="login-register" style="background-image:url(/material-pro/assets/images/background/login.jpg);">
             <div class="login-box card">
                 <div class="card-body">
                     <form class="form-horizontal form-material" id="loginform" method="POST" action="{{ route('validaracceso') }}">

@@ -30,7 +30,7 @@
       <h3 class="card-title">{{ $informe->titulo}}</h3><hr>
       <div class="row">
       	<div class="col-md-3">
-      		<span style="color: white;position:absolute; z-index: 2; padding: 0 10px 0 10px; border-radius: 10px;" class="color-fondo-{{$informe->nivel_acad_id}}">
+      		<span style="color: white;position:absolute; left: 0; right: 0; margin: auto; text-align: center ;z-index: 2; padding: 0 10px 0 10px; border-radius: 10px;" class="color-fondo-{{$informe->nivel_acad_id}}" >
       		{{ $informe->programa->padre->descripcion }}<br>
       		{{ $informe->programa->descripcion }}</span>
       		<div data-icon="&#xe012;" class="linea-icon linea-basic color-{{$informe->nivel_acad_id }}" style="font-size: 150px; margin-top: 25px; text-align: center;">

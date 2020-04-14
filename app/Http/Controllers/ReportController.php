@@ -47,7 +47,7 @@ class ReportController extends Controller {
       $reg = Informe::select($to_select);
       # PALABRA CLAVE
       $reg = Informe::where('informe.titulo', 'like', '%'.$params['keyword'].'%');
-      $reg = $reg->paginate(15);
+      $reg = $reg->paginate(5);
 
       // Add author to object in array
       foreach($reg as $r){  // $r is data[n]
@@ -152,7 +152,7 @@ class ReportController extends Controller {
             });
          }
       }
-      $reg = $reg->paginate(15);
+      $reg = $reg->paginate(5);
 
       // Add author to object in array
       foreach($reg as $r){  // $r is data[n]
@@ -375,7 +375,7 @@ class ReportController extends Controller {
             else $reg->join('autor', 'autor.condicion', '=', $temp['condition']);
          }
       }
-      $reg = $reg->paginate(15);
+      $reg = $reg->paginate(5);
 
       // Add author to object in array
       foreach($reg as $r){  // $r is data[n]
