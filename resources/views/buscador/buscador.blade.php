@@ -93,14 +93,10 @@
          <div class="form-group col-md-3 choose group-form"> <!-- author -->
             <span class="form-tittle">Autor </span>
             <div class="form-group">
-               <input type="text" class="form-control form-control-line" placeholder="DNI - Apellidos Nombres" name="i-author-dni">
+              <select id="i-select_author" class="select2" name="i-author-dni" style="width: 100%">
+                 @foreach($autores as $a) <option value="{{$a->dni}}">{{$a->datos}}</option> @endforeach
+              </select>
             </div>
-            <!-- <div class="form-group">
-               <input name="i-author-genre" type="radio" id="i-genre-m" class="with-gap radio-col-red" value="M" checked>
-               <label for="i-genre-m">Masculino</label>
-               <input name="i-author-genre" type="radio" id="i-genre-f" class="with-gap radio-col-red" value="F">
-               <label for="i-genre-f">Femenino</label>
-            </div> -->
          </div>
          <div class="form-group col-md-3 choose group-form"> <!-- program -->
             <span class="form-tittle">Programa </span>
@@ -145,14 +141,10 @@
          <div class="form-group col-md-3 choose group-form"> <!-- author -->
             <span class="form-tittle">Autor </span>
             <div class="form-group">
-               <input name="a-author-dni" type="text" class="form-control form-control-line" placeholder="DNI - Apellidos Nombres">
+              <select id="a-select_author" class="select2" name="a-author-dni" style="width: 100%">
+                 @foreach($autores as $a) <option value="{{$a->dni}}">{{$a->datos.' - '.$a->dni}}</option> @endforeach
+              </select>
             </div>
-            <!-- <div class="form-group">
-               <input name="a-author-genre" type="radio" id="a-genre-m" class="with-gap radio-col-red" value="M" checked>
-               <label for="a-genre-m">Masculino</label>
-               <input name="a-author-genre" type="radio" id="a-genre-f" class="with-gap radio-col-red" value="F">
-               <label for="a-genre-f">Femenino</label>
-            </div> -->
          </div>
          <div class="form-group col-md-3 choose group-form"> <!-- program -->
             <span class="form-tittle">Programa </span>

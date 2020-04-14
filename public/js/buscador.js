@@ -428,3 +428,7 @@ let _data = {};
          }
       })
    });
+
+   // Add select2
+   $('#i-select_author').select2();
+   $('#a-select_author').select2();

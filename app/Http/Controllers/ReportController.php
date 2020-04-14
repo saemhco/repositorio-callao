@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Programa;
 use App\Ubigeo;
 use App\Informe;
+use App\Autor;
 use DB;
 
 class ReportController extends Controller {
@@ -33,7 +34,9 @@ class ReportController extends Controller {
          ->where('ubigeo.type','3')
          ->select(DB::raw("CONCAT(ubigeo.descripcion,' - ',prov.descripcion,' - ',dep.descripcion) AS descripcion"), 'ubigeo.id as ubigeo')
          ->pluck('descripcion','ubigeo');
-      return view('buscador.buscador', compact('attr', 'facultades', 'escuela', 'ubigeo'));
+      $autores = Autor::select(DB::raw("CONCAT(nombres,' ',apellidos) AS datos"), 'dni')
+         ->join('persona', 'persona.dni', '=', 'autor.persona_id')->groupBy('persona_id')->get();
+      return view('buscador.buscador', compact('attr', 'facultades', 'escuela', 'ubigeo', 'autores'));
    }
 
    public function BasicSearch(Request $r){
