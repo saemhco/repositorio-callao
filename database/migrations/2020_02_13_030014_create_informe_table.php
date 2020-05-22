@@ -18,14 +18,14 @@ class CreateInformeTable extends Migration {
          $table->unsignedBigInteger('modalidad_id'); // Modalidad fk
          $table->unsignedBigInteger('prioridad_id'); // Prioridad fk
          $table->unsignedBigInteger('linea_id'); // Linea fk
-         $table->float('presupuesto');
+         $table->float('presupuesto')->nullable();
          $table->unsignedBigInteger('fuente_financiamiento_id')->nullable(); // FuenteFinanciamiento fk
          $table->string('fuente_financiamiento_otro')->nullable();
 
          // Cronograma
          $table->date('fecha_sustentacion');
-         $table->date('cronograma_inicio');
-         $table->date('cronograma_fin');
+         $table->date('cronograma_inicio')->nullable();
+         $table->date('cronograma_fin')->nullable();
 
          // Datos de la investigación
          $table->unsignedBigInteger('naturaleza_id'); // Naturaleza fk

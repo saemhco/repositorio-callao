@@ -10,8 +10,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="author" content="Ing. Saúl Escandón Munguía">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('material-pro/assets/images/icono.ico') }}">
-    <title>Repositorio Callao</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{substr(\App\Ajuste::find(1)->elemento('icono'), 0,6)=='public'
+                                    ?Storage::url(\App\Ajuste::find(1)->elemento('icono'))
+                                    :asset(\App\Ajuste::find(1)->elemento('icono'))}}">
+    <title>{{\App\Ajuste::find(1)->elemento('título')}}</title>
     <link rel="canonical" href="{{ route('index') }}"/>
     @yield('css')
     <!-- Custom CSS -->
@@ -48,7 +50,14 @@
                 <!-- ============================================================== -->
                 <div class="navbar-header" style="margin:0;">
                     <a class="navbar-brand" href="{{ route('index') }}">
-                        <img src="{{asset('/material-pro/assets/images/logo.png')}}" alt="homepage" class="light-logo" height="45px" /> <img src="{{ asset('/material-pro/assets/images/logo-light-text.png')}}" class="light-logo" alt="homepage" />
+                        <img src="{{substr(\App\Ajuste::find(1)->elemento('logo'), 0,6)=='public'
+                                    ?Storage::url(\App\Ajuste::find(1)->elemento('logo'))
+                                    :asset(\App\Ajuste::find(1)->elemento('logo'))}}" 
+                              alt="Logo" class="light-logo" height="45px" />
+                        <img src="{{substr(\App\Ajuste::find(1)->elemento('logo texto 1'), 0,6)=='public'
+                                    ?Storage::url(\App\Ajuste::find(1)->elemento('logo texto 1'))
+                                    :asset(\App\Ajuste::find(1)->elemento('logo texto 1'))}}" 
+                                    class="light-logo" alt="Logo-Texto"  style="max-width: 198px; max-height: 45px"/>
                     </a>
                 </div>
                 <!-- ============================================================== -->
@@ -62,6 +71,17 @@
                     <ul class="navbar-nav mr-auto mt-md-0"></ul><!--Para que el sgt UL esté alineado a la derecha-->
                     <ul class="navbar-nav my-lg-0">
                         @if(Auth::user())
+                        {{-- Las tres lineas del menú, cuando se comprima --}}
+                         <li class="nav-item"> 
+                            <a class="nav-link nav-toggler d-block d-md-none text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-close mdi mdi-menu"></i>
+                            </a> 
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link sidebartoggler d-none d-md-block text-muted waves-effect waves-dark" href="javascript:void(0)"><i class=""></i>
+                         </a>
+                        </li>
+                        {{-- Fin de las tres lineas --}}
+
                         <!-- ============================================================== -->
                         <!-- Profile -->
                         <!-- ============================================================== -->
@@ -84,14 +104,18 @@
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-user"></i> Mi Perfil</a></li>
-                                    <li><a href="#"><i class="ti-wallet"></i> Mis Registros</a></li>
+                                    {{-- <li><a href="#"><i class="ti-user"></i> Mi Perfil</a></li> --}}
+                                    {{-- <li><a href="#"><i class="ti-wallet"></i> Mis Registros</a></li> --}}
                                     @if(Auth::user()->rol=='0')
                                     <li><a href="{{ route('user.index') }}"><i class="icon-people"></i> Administrar Usuarios</a></li>
                                     @endif
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#" data-toggle="modal" data-target="#configurar_mi_cuenta">
-                                        <i class="ti-settings"></i> Configurar mi cuenta</a></li>
+                                        <i class="mdi mdi-account-settings-variant"></i> Configurar mi cuenta</a>
+                                    </li>
+                                    <li><a href="{{ route('ajustes.index') }}" style="color: red;">
+                                        <i class="ti-settings"></i><b> Ajustes del aplicativo</b></a>
+                                    </li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="{{route('logout')}}" onclick="event.preventDefault();
                                         document.getElementById('salir').submit();"><i class="fa fa-power-off"></i> Salir</a>
@@ -112,13 +136,25 @@
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
                                     class="mdi mdi-help-circle-outline" title="ayuda"></i></a>
-                            <div class="dropdown-menu dropdown-menu-right scale-up"> <a class="dropdown-item"
-                                    href="#"><i class="mdi mdi-play-box-outline"></i> Video tutorial</a> <a class="dropdown-item"
-                                    href="#"><i class="mdi mdi-file-pdf"></i> Manual</a>
+                            <div class="dropdown-menu dropdown-menu-right scale-up">
+                                <a class="dropdown-item"
+                                    href="{{ \App\Ajuste::find(1)->elemento('video tutorial usuario') }}" target="_blank">
+                                    <i class="mdi mdi-play-box-outline"></i> Video tutorial
+                                </a>
+                                <a class="dropdown-item"
+                                    href="{{ \App\Ajuste::find(1)->elemento('manual usuario') }}" target="_blank">
+                                    <i class="mdi mdi-file-pdf"></i> Manual
+                                </a>
                                     @if(Auth::user())
-                                    <hr> <a class="dropdown-item"
-                                    href="#"><i class="mdi mdi-play-box-outline"></i> AMD - Video tutorial</a> <a class="dropdown-item"
-                                    href="#"><i class="mdi mdi-file-pdf"></i> AMD - Manual</a> 
+                                    <hr>
+                                <a class="dropdown-item"
+                                    href="{{ \App\Ajuste::find(1)->elemento('video tutorial administrador') }}" target="_blank">
+                                    <i class="mdi mdi-play-box-outline"></i> AMD - Video tutorial
+                                </a>
+                                <a class="dropdown-item"
+                                    href="{{ \App\Ajuste::find(1)->elemento('manual administrador') }}" target="_blank">
+                                    <i class="mdi mdi-file-pdf"></i> AMD - Manual
+                                </a> 
                                     @endif
                             </div>
                         </li>
@@ -140,7 +176,10 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <li class="nav-small-cap">Registro</li>
+                        {{-- <li class="nav-small-cap">Registro</li> --}}
+                        <li>
+                            <a class="has-arrow" href="{{ route('dasboard.index') }}" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard </span></a>
+                        </li>
                         <li>
                             <a class="has-arrow" href="{{ route('informe.index') }}" aria-expanded="false">
                                 <i class="mdi mdi-file-document"></i><span class="hide-menu">Registro </span>
@@ -159,6 +198,9 @@
                                 <li><a href="app-chat.html">Administración  (usuarios)</a></li>
                                 @endif
                             </ul> --}}
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="{{ route('ajustes.index') }}" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Ajustes</span></a>
                         </li>
                     </ul>
                 </nav>
@@ -210,7 +252,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title" id="myLargeModalLabel">
-                                                    <i class="ti-settings"></i> Configurar mi cuenta
+                                                    <i class="mdi mdi-account-settings-variant"></i> Configurar mi cuenta
                                                 </h4>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-hidden="true">×</button>
@@ -277,9 +319,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer">
-                Copyright © 2020 REPOSITORIO Callao, Todos los derechos Reservados. Universidad Nacional del Callao 
-                <small>| Desarrollado por saem</small>
+            <footer class="footer">{{\App\Ajuste::find(1)->elemento('pie pagina 1')}} <small>| {{\App\Ajuste::find(1)->elemento('pie pagina 2')}}</small>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->

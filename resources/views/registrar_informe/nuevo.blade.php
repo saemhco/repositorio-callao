@@ -42,7 +42,7 @@
                              <textarea class="form-control" id="textarea_editor1" placeholder="Escribir aquí ..." name="resumen"></textarea>
                           </div>
                           <div class="form-group col-md-6"><br>
-                             <label for="fac">Objetivos (General y Especìficos)</label><br>
+                             <label for="fac">Objetivo General</label><br>
                              <textarea class="form-control" id="textarea_editor2" placeholder="Escribir aquí ..." name="objetivos"></textarea>
                           </div>
                         </div>
@@ -63,11 +63,11 @@
                               <div class="row">
                                  <div class="form-group col-md-4 col-sm-12">
                                     <label for="cronograma_inicio">Cronograma - Inicio</label>
-                                    <input type="date" class="form-control required" id="cronograma_inicio" name="cronograma_inicio">
+                                    <input type="date" class="form-control" id="cronograma_inicio" name="cronograma_inicio">
                                  </div>
                                  <div class="form-group col-md-4 col-sm-12">
                                     <label for="cronograma_fin">Cronograma - Fin</label>
-                                    <input type="date" class="form-control required" id="cronograma_fin" name="cronograma_fin">
+                                    <input type="date" class="form-control" id="cronograma_fin" name="cronograma_fin">
                                  </div>
                                  <div class="form-group col-md-4 col-sm-12"> <!-- date -->
                                     <label for="fecha">Fecha de sustentación</label><br>
@@ -185,7 +185,7 @@
                                     <label for="muestra">Muestra </label>
                                  </div>
                                  <div class="form-group col-md-6">
-                                    <input type="number" min="0" class="form-control required" id="presupuesto" name="presupuesto" min="-1">
+                                    <input type="number" min="0" class="form-control" id="presupuesto" name="presupuesto" min="-1">
                                     </input>
                                     <span class="bar"></span>
                                     <label for="presupuesto">Presupuesto</label>

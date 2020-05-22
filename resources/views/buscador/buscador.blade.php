@@ -94,6 +94,7 @@
             <span class="form-tittle">Autor </span>
             <div class="form-group">
               <select id="i-select_author" class="select2" name="i-author-dni" style="width: 100%">
+                 <option value="">Seleccionar autor</option>
                  @foreach($autores as $a) <option value="{{$a->dni}}">{{$a->datos}}</option> @endforeach
               </select>
             </div>
@@ -142,6 +143,7 @@
             <span class="form-tittle">Autor </span>
             <div class="form-group">
               <select id="a-select_author" class="select2" name="a-author-dni" style="width: 100%">
+                 <option value="">Seleccionar autor</option>
                  @foreach($autores as $a) <option value="{{$a->dni}}">{{$a->datos.' - '.$a->dni}}</option> @endforeach
               </select>
             </div>

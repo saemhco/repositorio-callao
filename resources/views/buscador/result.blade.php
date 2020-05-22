@@ -59,9 +59,13 @@
       		<small class="text-muted">Nivel Académico</small><h6>{{ $informe->nivel_acad->descripcion }}</h6>
       		<small class="text-muted">Programa</small><h6>{{ $informe->programa->descripcion }}</h6>
       		<br>
-      		<small class="text-muted">Fecha de sustentación</small><h6>2016-09-10</h6>
-      		<small class="text-muted">Cronograma - inicio</small><h6>2014-09-10</h6>
-      		<small class="text-muted">Cronograma - fin</small><h6>2015-09-10</h6>
+      		<small class="text-muted">Fecha de sustentación</small><h6>{{ $informe->fecha_sustentacion }}</h6>
+                  @if($informe->cronograma_inicio!='')
+      		<small class="text-muted">Cronograma - inicio</small><h6>{{ $informe->cronograma_inicio }}</h6>
+                  @endif
+                  @if($informe->cronograma_fin='')
+      		<small class="text-muted">Cronograma - fin</small><h6>{{ $informe->cronograma_fin }}</h6>
+                  @endif
 			<br>
 			@if($informe->url)
       		<small class="text-muted">URL Callao</small><h6><a href="{{$informe->url}}" target="_blank">{{ $informe->url }}</a></h6>
@@ -82,7 +86,7 @@
       		</div>
       		@endif
       		<small class="text-muted"><b>Resumen</b></small><br><label style="text-align: justify;">{!! $informe->resumen !!}</label><br>
-      		<small class="text-muted"><b>Objetivos</b></small><br><label style="text-align: justify;">{!! $informe->objetivos !!}</label><br>
+      		<small class="text-muted"><b>Objetivo General</b></small><br><label style="text-align: justify;">{!! $informe->objetivos !!}</label><br>
       		<div class="row">
       			<div class="col-md-3">
       				<small class="text-muted"><b>Modalidad</b></small><h6>{!! $informe->modalidad->descripcion !!}</h6>
