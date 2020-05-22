@@ -14,9 +14,16 @@
 Route::get('/', 'ReportController@index')->name('index');  // Search
 Route::get('/home', 'HomeController@index')->name('home');  // Insert
 
-// Route::get('inicio', function () {
-//     return view('registrar_informe.index');
-// });
+//Rutas AUTH
+Route::get('login', function(){
+   // When user is already logged redirect to home
+   return Illuminate\Support\Facades\Auth::check() ? redirect()->route('informe.index') : view('auth.login');
+})->name('login');
+Route::post('validaracceso', 'Auth\LoginController@login')->name('validaracceso');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::post('configurar_mi_cuenta', 'Auth\MeController@update')->name('me.update');
+//Fin Auth
+
 //Informe
 Route::group(['prefix' => 'informe'], function () {
     Route::get('/', 'InformeController@index')->name('informe.index');
@@ -53,15 +60,6 @@ Route::group(['prefix' => 'usuarios'], function () {
     Route::get('editar/{id}', 'UserController@edit')->where(['id' => '[0-9]+'])->name('user.editar');
 });
 
-//Rutas AUTH
-Route::get('login', function(){
-   // When user is already logged redirect to home
-   return Illuminate\Support\Facades\Auth::check() ? redirect()->route('informe.index') : view('auth.login');
-})->name('login');
-Route::post('validaracceso', 'Auth\LoginController@login')->name('validaracceso');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-Route::post('configurar_mi_cuenta', 'Auth\MeController@update')->name('me.update');
-//Fin Auth
 // Rutas Report
 Route::group(['prefix' => 'busqueda'], function(){
    Route::get('/', 'ReportController@index')->name('search.index');  // Search
@@ -70,4 +68,16 @@ Route::group(['prefix' => 'busqueda'], function(){
    Route::post('advanced', 'ReportController@AdvancedSearch')->name('search.advanced');
    Route::post('set_programa', 'ReportController@get_programa')->name('search.getprograma');
    Route::get('/{id}', 'ReportController@search_found')->where(['id' => '[0-9]+'])->name('search.found');
+});
+
+// Rutas dasboard
+Route::group(['prefix' => 'dasboard'], function(){
+   Route::get('/', 'DasboardController@index')->name('dasboard.index');  
+});
+
+// Rutas ajustes
+Route::group(['prefix' => 'ajustes'], function(){
+   Route::get('/', 'AjustesController@index')->name('ajustes.index');  
+   Route::post('update', 'AjustesController@update')->name('ajustes.update');  
+   Route::get('reset', 'AjustesController@restablecer')->name('ajustes.restablecer');  
 });

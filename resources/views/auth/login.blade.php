@@ -9,7 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('material-pro/assets/images/icono.ico') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{substr(\App\Ajuste::find(1)->elemento('icono'), 0,6)=='public'
+                                    ?Storage::url(\App\Ajuste::find(1)->elemento('icono'))
+                                    :asset(\App\Ajuste::find(1)->elemento('icono'))}}">
     <title>Iniciar Sesión</title>
 	<link rel="canonical" href="https://www.wrappixel.com/templates/materialpro/" />
     <!-- Custom CSS -->
@@ -37,14 +39,22 @@
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
     <section id="wrapper">
-        <div class="login-register" style="background-image:url(/material-pro/assets/images/background/login.jpg);">
+        <div class="login-register" style="background-image:url({{substr(\App\Ajuste::find(1)->elemento('imagen fondo login'), 0,6)=='public'
+                                    ?Storage::url(\App\Ajuste::find(1)->elemento('imagen fondo login'))
+                                    :asset(\App\Ajuste::find(1)->elemento('imagen fondo login'))}}); background-repeat: no-repeat; background-size: 100% 100%;">
             <div class="login-box card">
                 <div class="card-body">
                     <form class="form-horizontal form-material" id="loginform" method="POST" action="{{ route('validaracceso') }}">
                         @csrf
                         <div class="navbar-header" align="center">
                             <a class="navbar-brand" href="{{ route('index') }}" title="Ir al buscador">
-                                <img src="{{asset('/material-pro/assets/images/logo.png')}}" alt="homepage" class="light-logo" height="45px" /> <img src="{{ asset('/material-pro/assets/images/logo-text.png')}}" class="logo" alt="Respositorio - Callao" width="300px" />
+                                <img src="{{substr(\App\Ajuste::find(1)->elemento('logo'), 0,6)=='public'
+                                    ?Storage::url(\App\Ajuste::find(1)->elemento('logo'))
+                                    :asset(\App\Ajuste::find(1)->elemento('logo'))}}"  alt="homepage" class="light-logo" height="45px" /> 
+                                <img src="{{substr(\App\Ajuste::find(1)->elemento('logo texto 2'), 0,6)=='public'
+                                    ?Storage::url(\App\Ajuste::find(1)->elemento('logo texto 2'))
+                                    :asset(\App\Ajuste::find(1)->elemento('logo texto 2'))}}" class="logo" alt="Logo-oscuro" 
+                                    style="max-width: 198px; max-height: 45px" />
                             </a>
                         </div>
                         <br>
